@@ -14,7 +14,7 @@ enum DamageSortMode {
 @export var _direction := Vector2.RIGHT
 @export var _ignored: Array[Entity] = []
 @export var _delta_health := 0
-@export var _time := 0
+@export var _time := 0.0
 ## When enabled, the attack heals the affected entities instead.
 @export var _heal_mode := false
 @export var _damage_sort_mode := DamageSortMode.SPLASH
@@ -71,7 +71,7 @@ func get_delta_health() -> float:
 	return _delta_health
 
 
-func set_delta_health(delta_health: float) -> AttackSettings:
+func set_delta_health(delta_health: int) -> AttackSettings:
 	_delta_health = delta_health
 	return self
 
