@@ -19,6 +19,10 @@ config/features=PackedStringArray("4.3", "GL Compatibility")
 Player="*res://singletons/player.tscn"
 Attack="*res://singletons/attack.tscn"
 
+[display]
+
+window/stretch/scale=4.0
+
 [input]
 
 move_left={

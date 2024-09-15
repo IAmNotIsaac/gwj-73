@@ -3,15 +3,20 @@ extends Entity
 
 const _INPUT_ACTION_PRIMARY := 0b10
 const _INPUT_ACTION_ALTERNATE := 0b01
-const _SPEED := 100.0
+const _SPEED := 40.0
 
 var _direction := Vector2.RIGHT
 
 @onready var sm: StateMachine = $StateMachine
+@onready var _anim := $AnimatedSprite2D
 
 
 func _ready() -> void:
 	get_window().grab_focus()
+
+
+func _process(_delta: float) -> void:
+	_anim.rotation = _direction.angle()
 
 
 func get_input_move() -> Vector2:
@@ -33,6 +38,14 @@ func _proc_idle(_delta: float) -> void:
 	if get_input_action() & _INPUT_ACTION_PRIMARY:
 		var settings = AttackSettings.new().set_position(position).set_direction(_direction).move_forward(0.0)
 		Attack.spawn_slash(settings)
+	
+	var a := int(rad_to_deg(_direction.angle()))
+	var axis_name: String
+	if a % 90 == 0:
+		axis_name = "parallel"
+	else:
+		axis_name = "diagonal"
+	_anim.play("idle_" + axis_name)
 
 
 func _proc_run(_delta: float) -> void:
@@ -48,3 +61,12 @@ func _proc_run(_delta: float) -> void:
 	
 	if velocity == Vector2.ZERO:
 		sm.switch(&"Idle")
+		return
+	
+	var a := int(rad_to_deg(_direction.angle()))
+	var axis_name: String
+	if a % 90 == 0:
+		axis_name = "parallel"
+	else:
+		axis_name = "diagonal"
+	_anim.play("run_" + axis_name)
