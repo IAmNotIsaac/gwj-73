@@ -18,6 +18,10 @@ config/features=PackedStringArray("4.3", "GL Compatibility")
 
 Attack="*res://singletons/attack.tscn"
 
+[display]
+
+window/stretch/mode="canvas_items"
+
 [global_group]
 
 pieces=""
