@@ -8,20 +8,59 @@
 
 [node name="PlayerController" type="Node" parent="." node_paths=PackedStringArray("pieces")]
 script = ExtResource("3_hx66h")
-pieces = [NodePath("../Piece2")]
+pieces = [NodePath("../Piece")]
 
 [node name="Board" type="Node2D" parent="."]
 position = Vector2(64, 64)
 script = ExtResource("2_qor4q")
 
 [node name="Piece" parent="." node_paths=PackedStringArray("board") instance=ExtResource("1_k4efd")]
-position = Vector2(416, 320)
-grid_position = Vector2i(5, 7)
+position = Vector2(416, 288)
+grid_position = Vector2i(5, 6)
 board = NodePath("../Board")
 
 [node name="Piece2" parent="." node_paths=PackedStringArray("board") instance=ExtResource("1_k4efd")]
-position = Vector2(96, 256)
+position = Vector2(224, 192)
+team = 1
+type = 2
+grid_position = Vector2i(2, 3)
+board = NodePath("../Board")
+
+[node name="Piece6" parent="." node_paths=PackedStringArray("board") instance=ExtResource("1_k4efd")]
+position = Vector2(160, 192)
+team = 1
+direction = 0
+grid_position = Vector2i(1, 3)
+board = NodePath("../Board")
+
+[node name="Piece3" parent="." node_paths=PackedStringArray("board") instance=ExtResource("1_k4efd")]
+position = Vector2(288, 192)
+team = 1
+type = 3
+direction = 0
+grid_position = Vector2i(3, 3)
+board = NodePath("../Board")
+
+[node name="Piece4" parent="." node_paths=PackedStringArray("board") instance=ExtResource("1_k4efd")]
+position = Vector2(352, 192)
+team = 1
+type = 4
+direction = 0
+grid_position = Vector2i(4, 3)
+board = NodePath("../Board")
+
+[node name="Piece5" parent="." node_paths=PackedStringArray("board") instance=ExtResource("1_k4efd")]
+position = Vector2(416, 192)
 team = 1
 type = 5
-grid_position = Vector2i(0, 5)
+direction = 0
+grid_position = Vector2i(5, 3)
+board = NodePath("../Board")
+
+[node name="Piece7" parent="." node_paths=PackedStringArray("board") instance=ExtResource("1_k4efd")]
+position = Vector2(480, 192)
+team = 1
+type = 6
+direction = 0
+grid_position = Vector2i(6, 3)
 board = NodePath("../Board")

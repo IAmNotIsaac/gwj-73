@@ -3,8 +3,14 @@
 [ext_resource type="Script" path="res://scenes/piece.gd" id="1_jfn20"]
 [ext_resource type="Texture2D" uid="uid://bx03aq0xv012f" path="res://assets/textures/placeholder_pieces.png" id="2_j74uc"]
 
-[node name="Piece" type="Node2D"]
+[node name="Piece" type="Node2D" groups=["pieces"]]
 script = ExtResource("1_jfn20")
+direction = {
+"EAST": 1,
+"NORTH": 0,
+"SOUTH": 2,
+"WEST": 3
+}
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 texture_filter = 1

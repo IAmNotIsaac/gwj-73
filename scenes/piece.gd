@@ -64,26 +64,36 @@ const _DISTANCE_KING := 1
 @export var team := Team.WHITE:
 	set(v):
 		team = v
+		clear_caches()
 		if board and not Engine.is_editor_hint():
 			board.set_piece(grid_position, type, team)
 		_update_sprite()
 @export var type := Type.PAWN:
 	set(v):
 		type = v
+		clear_caches()
 		if board and not Engine.is_editor_hint():
 			board.set_piece(grid_position, type, team)
 		_update_sprite()
-@export var direction := Direction.Cardinal.NORTH
+@export var direction := Direction.Cardinal.NORTH:
+	set(v):
+		direction = v
+		clear_caches()
 @export var grid_position := Vector2i.ZERO:
 	set(v):
 		if board and not Engine.is_editor_hint():
 			board.clear_piece(grid_position)
 		grid_position = v
+		clear_caches()
 		_update_position()
-@export var move_count := 0
+@export var move_count := 0:
+	set(v):
+		move_count = v
+		clear_caches()
 @export var board: Board:
 	set(v):
 		board = v
+		clear_caches()
 		_update_position()
 
 var _docache_movable_positions := false
@@ -244,6 +254,11 @@ func get_strikeable_positions() -> Array[Vector2i]:
 						break
 	
 	return _cache_strikeable_positions
+
+
+func clear_caches() -> void:
+	_docache_movable_positions = false
+	_docache_strikeable_positions = false
 
 
 static func can_team_strike_team(striker_team: Team, victim_team: Team) -> bool:

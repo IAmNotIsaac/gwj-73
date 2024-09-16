@@ -53,6 +53,8 @@ func _enter_tree() -> void:
 	
 	if _click_area_shape.get_parent() == null:
 		_click_area.add_child(_click_area_shape, false, Node.INTERNAL_MODE_BACK)
+	
+	reload_board_state()
 
 
 func _update_size() -> void:
@@ -97,9 +99,17 @@ func get_piece_team(grid_position: Vector2i) -> Piece.Team:
 	return (s & _MASK_TEAM) as Piece.Team
 
 
+func get_piece(grid_position: Vector2i) -> Piece:
+	var pieces := get_tree().get_nodes_in_group(&"pieces")
+	for n in pieces:
+		if n.board == self and n.grid_position == grid_position:
+			return n
+	return null
+
+
 func set_piece(grid_position: Vector2i, type: Piece.Type, team: Piece.Team) -> void:
 	var type_int := int(type) & _MASK_TYPE
-	var team_int := (int(team) & _MASK_TEAM) << 4
+	var team_int := (int(team) << 4) & _MASK_TEAM
 	_board_state[grid_position.x + grid_position.y * size.x] = type_int + team_int
 
 
@@ -108,6 +118,8 @@ func clear_piece(grid_position: Vector2i) -> void:
 
 
 func is_piece_strikeable(grid_position: Vector2i, striker_team: Piece.Team) -> bool:
+	if not is_in_board(grid_position):
+		return false
 	if get_piece_type(grid_position) == 0:
 		return false
 	var victim_team := get_piece_team(grid_position)
