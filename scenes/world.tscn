@@ -5,6 +5,7 @@
 [ext_resource type="Script" path="res://scenes/instantiables/player_controller.gd" id="3_hx66h"]
 
 [node name="World" type="Node2D"]
+y_sort_enabled = true
 
 [node name="PlayerController" type="Node" parent="." node_paths=PackedStringArray("pieces")]
 script = ExtResource("3_hx66h")
