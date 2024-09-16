@@ -4,13 +4,12 @@
 [ext_resource type="Script" path="res://src/board.gd" id="2_qor4q"]
 
 [node name="World" type="Node2D"]
-texture_filter = 1
 
 [node name="Board" type="Node2D" parent="."]
 position = Vector2(64, 64)
 script = ExtResource("2_qor4q")
 
 [node name="Piece" parent="." node_paths=PackedStringArray("board") instance=ExtResource("1_k4efd")]
-position = Vector2(384, 288)
+position = Vector2(416, 320)
 grid_position = Vector2i(5, 7)
 board = NodePath("../Board")

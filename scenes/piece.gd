@@ -94,6 +94,7 @@ func _update_position() -> void:
 		printerr("Piece (%s) is not associated with a board." % self)
 	
 	position = board.position + Vector2(grid_position) * Vector2(Board.TILE_WIDTH, Board.TILE_HEIGHT)
+	position += Vector2(float(Board.TILE_WIDTH) * 0.5, float(Board.TILE_HEIGHT))
 	
 	if not board.is_in_board(grid_position):
 		printerr("Piece (%s) is not inside board!" % self)

@@ -14,10 +14,12 @@ const _BOARD_SHADER := preload("res://shaders/repeat.gdshader")
 	set(value):
 		size = value
 		_update_size()
+
 var _board_state := PackedByteArray()
 var _sprite := Sprite2D.new()
 var _click_area := ClickArea.new()
 var _click_area_shape := CollisionShape2D.new()
+var _selection_hints: Array[Sprite2D] = []
 
 
 func _init() -> void:
@@ -41,6 +43,9 @@ func _init() -> void:
 func _enter_tree() -> void:
 	if _sprite.get_parent() == null:
 		add_child(_sprite, false, Node.INTERNAL_MODE_BACK)
+	
+	if Engine.is_editor_hint():
+		return
 	
 	if _click_area.get_parent() == null:
 		add_child(_click_area, false, Node.INTERNAL_MODE_BACK)

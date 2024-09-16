@@ -7,7 +7,6 @@
 script = ExtResource("1_jfn20")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
-position = Vector2(0, -32)
 texture = ExtResource("2_j74uc")
-centered = false
+offset = Vector2(0, -32)
 vframes = 2
