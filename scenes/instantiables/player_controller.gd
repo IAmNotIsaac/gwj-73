@@ -84,3 +84,11 @@ func _handle_click_move(
 		selected_piece.scale = Vector2(1.0, 1.0)
 		_click_func = _handle_click_root
 		selected_piece.grid_position = grid_position
+	
+	elif grid_position in strikeable_positions:
+		for icon in icons:
+			icon.queue_free()
+		selected_piece.scale = Vector2(1.0, 1.0)
+		_click_func = _handle_click_root
+		board.get_piece(grid_position).queue_free()
+		selected_piece.grid_position = grid_position

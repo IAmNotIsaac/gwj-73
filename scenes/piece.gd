@@ -109,6 +109,11 @@ func _ready() -> void:
 	_update_sprite()
 
 
+func _exit_tree() -> void:
+	if board != null:
+		board.clear_piece(grid_position)
+
+
 func _update_position() -> void:
 	if not is_node_ready():
 		await ready
