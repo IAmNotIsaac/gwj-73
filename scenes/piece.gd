@@ -61,8 +61,14 @@ const _DISTANCE_ROOK := 8
 const _DISTANCE_QUEEN := 8
 const _DISTANCE_KING := 1
 
-@export var team := Team.WHITE
-@export var type := Type.PAWN
+@export var team := Team.WHITE:
+	set(v):
+		team = v
+		_update_sprite()
+@export var type := Type.PAWN:
+	set(v):
+		type = v
+		_update_sprite()
 @export var direction := Direction.Cardinal
 @export var grid_position := Vector2i.ZERO:
 	set(v):
@@ -84,6 +90,7 @@ var _cache_strikeable_positions: Array[Vector2i] = []
 
 func _ready() -> void:
 	_update_position()
+	_update_sprite()
 
 
 func _update_position() -> void:
@@ -99,6 +106,14 @@ func _update_position() -> void:
 	if not board.is_in_board(grid_position):
 		printerr("Piece (%s) is not inside board!" % self)
 		return
+
+
+func _update_sprite() -> void:
+	if not is_node_ready():
+		await ready
+	
+	_sprite.frame_coords.x = clampi(int(type) - 1, 0, 5)
+	_sprite.frame_coords.y = clampi(int(team), 0, 1)
 
 
 func get_movable_positions() -> Array[Vector2i]:
