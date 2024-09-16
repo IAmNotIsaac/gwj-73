@@ -3,6 +3,8 @@ class_name Board
 extends Node2D
 
 
+signal tile_clicked(button_index: MouseButton, grid_position: Vector2i)
+
 const TILE_WIDTH := 64.0
 const TILE_HEIGHT := 32.0
 const _MASK_TYPE := 0b0000_1111
@@ -63,6 +65,7 @@ func _on_clicked(button_index: MouseButton, click_position: Vector2) -> void:
 	var p := click_position - position
 	var g := Vector2i(p / Vector2(TILE_WIDTH, TILE_HEIGHT))
 	print("Clicked %s %s %s" % [button_index, click_position, g])
+	tile_clicked.emit(button_index, g)
 
 
 func reload_board_state() -> void:
