@@ -56,9 +56,9 @@ const _DELTAS_ROYALTY: Array[Vector2i] = [
 	Vector2i(-1, 0),
 ]
 
-const _DISTANCE_BISHOP := 8
-const _DISTANCE_ROOK := 8
-const _DISTANCE_QUEEN := 8
+const _DISTANCE_BISHOP := 7
+const _DISTANCE_ROOK := 7
+const _DISTANCE_QUEEN := 7
 const _DISTANCE_KING := 1
 
 @export var team := Team.WHITE:
@@ -69,7 +69,7 @@ const _DISTANCE_KING := 1
 	set(v):
 		type = v
 		_update_sprite()
-@export var direction := Direction.Cardinal
+@export var direction := Direction.Cardinal.NORTH
 @export var grid_position := Vector2i.ZERO:
 	set(v):
 		grid_position = v
@@ -130,7 +130,7 @@ func get_movable_positions() -> Array[Vector2i]:
 			var p0 := grid_position + Direction.vector(direction)
 			var p1 := grid_position + Direction.vector(direction) * 2
 			
-			if board.is_empty(p0):
+			if board.is_open(p0):
 				_cache_movable_positions.push_back(p0)
 				if move_count == 0 and board.is_open(p1):
 					_cache_movable_positions.push_back(grid_position + Direction.vector(direction) * 2)
@@ -144,7 +144,7 @@ func get_movable_positions() -> Array[Vector2i]:
 		Type.BISHOP:
 			for d in _DELTAS_BISHOP:
 				for i in _DISTANCE_BISHOP:
-					var p: Vector2i = grid_position + d * i
+					var p: Vector2i = grid_position + d * (i  + 1)
 					if not board.is_open(p):
 						break
 					_cache_movable_positions.push_back(p)
@@ -152,7 +152,7 @@ func get_movable_positions() -> Array[Vector2i]:
 		Type.ROOK:
 			for d in _DELTAS_ROOK:
 				for i in _DISTANCE_ROOK:
-					var p: Vector2i = grid_position + d * i
+					var p: Vector2i = grid_position + d * (i  + 1)
 					if not board.is_open(p):
 						break
 					_cache_movable_positions.push_back(p)
@@ -160,7 +160,7 @@ func get_movable_positions() -> Array[Vector2i]:
 		Type.QUEEN:
 			for d in _DELTAS_ROYALTY:
 				for i in _DISTANCE_QUEEN:
-					var p: Vector2i = grid_position + d * i
+					var p: Vector2i = grid_position + d * (i  + 1)
 					if not board.is_open(p):
 						break
 					_cache_movable_positions.push_back(p)
@@ -168,7 +168,7 @@ func get_movable_positions() -> Array[Vector2i]:
 		Type.KING:
 			for d in _DELTAS_ROYALTY:
 				for i in _DISTANCE_KING:
-					var p: Vector2i = grid_position + d * i
+					var p: Vector2i = grid_position + d * (i  + 1)
 					if board.is_open(p):
 						_cache_movable_positions.push_back(p)
 	
@@ -206,7 +206,7 @@ func get_strikeable_positions() -> Array[Vector2i]:
 		Type.BISHOP:
 			for d in _DELTAS_BISHOP:
 				for i in _DISTANCE_BISHOP:
-					var p: Vector2i = grid_position + d * i
+					var p: Vector2i = grid_position + d * (i + 1)
 					if board.is_piece_strikeable(p, team):
 						_cache_strikeable_positions.push_back(p)
 						break
@@ -214,7 +214,7 @@ func get_strikeable_positions() -> Array[Vector2i]:
 		Type.ROOK:
 			for d in _DELTAS_ROOK:
 				for i in _DISTANCE_ROOK:
-					var p: Vector2i = grid_position + d * i
+					var p: Vector2i = grid_position + d * (i + 1)
 					if board.is_piece_strikeable(p, team):
 						_cache_strikeable_positions.push_back(p)
 						break
@@ -222,7 +222,7 @@ func get_strikeable_positions() -> Array[Vector2i]:
 		Type.QUEEN:
 			for d in _DELTAS_ROYALTY:
 				for i in _DISTANCE_QUEEN:
-					var p: Vector2i = grid_position + d * i
+					var p: Vector2i = grid_position + d * (i + 1)
 					if board.is_piece_strikeable(p, team):
 						_cache_strikeable_positions.push_back(p)
 						break
@@ -230,7 +230,7 @@ func get_strikeable_positions() -> Array[Vector2i]:
 		Type.KING:
 			for d in _DELTAS_ROYALTY:
 				for i in _DISTANCE_KING:
-					var p: Vector2i = grid_position + d * i
+					var p: Vector2i = grid_position + d * (i + 1)
 					if board.is_piece_strikeable(p, team):
 						_cache_strikeable_positions.push_back(p)
 						break
