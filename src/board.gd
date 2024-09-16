@@ -21,7 +21,6 @@ var _board_state := PackedByteArray()
 var _sprite := Sprite2D.new()
 var _click_area := ClickArea.new()
 var _click_area_shape := CollisionShape2D.new()
-var _selection_hints: Array[Sprite2D] = []
 
 
 func _init() -> void:
