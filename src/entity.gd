@@ -1,5 +1,5 @@
 class_name Entity
-extends CharacterBody2D
+extends Node2D
 
 
 @export var health := 2
