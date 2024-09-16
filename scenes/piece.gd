@@ -64,14 +64,20 @@ const _DISTANCE_KING := 1
 @export var team := Team.WHITE:
 	set(v):
 		team = v
+		if board and not Engine.is_editor_hint():
+			board.set_piece(grid_position, type, team)
 		_update_sprite()
 @export var type := Type.PAWN:
 	set(v):
 		type = v
+		if board and not Engine.is_editor_hint():
+			board.set_piece(grid_position, type, team)
 		_update_sprite()
 @export var direction := Direction.Cardinal.NORTH
 @export var grid_position := Vector2i.ZERO:
 	set(v):
+		if board and not Engine.is_editor_hint():
+			board.clear_piece(grid_position)
 		grid_position = v
 		_update_position()
 @export var move_count := 0
@@ -106,6 +112,8 @@ func _update_position() -> void:
 	if not board.is_in_board(grid_position):
 		printerr("Piece (%s) is not inside board!" % self)
 		return
+	
+	board.set_piece(grid_position, type, team)
 
 
 func _update_sprite() -> void:
