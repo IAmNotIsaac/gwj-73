@@ -266,6 +266,26 @@ func clear_caches() -> void:
 	_docache_strikeable_positions = false
 
 
+func mark_selected() -> void:
+	scale = Vector2(0.5, 0.5)
+
+
+func mark_unselected() -> void:
+	scale = Vector2(1.0, 1.0)
+
+
+func mark_movable() -> void:
+	modulate = Color.WHITE
+
+
+func mark_immovable() -> void:
+	modulate = Color("707070")
+
+
+func kill() -> void:
+	queue_free()
+
+
 static func can_team_strike_team(striker_team: Team, victim_team: Team) -> bool:
 	match striker_team:
 		Team.WHITE:

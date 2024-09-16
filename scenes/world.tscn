@@ -17,6 +17,7 @@ script = ExtResource("2_qor4q")
 
 [node name="Piece" parent="." node_paths=PackedStringArray("board") instance=ExtResource("1_k4efd")]
 position = Vector2(416, 288)
+direction = 0
 grid_position = Vector2i(5, 6)
 board = NodePath("../Board")
 
@@ -24,6 +25,7 @@ board = NodePath("../Board")
 position = Vector2(224, 192)
 team = 1
 type = 2
+direction = 0
 grid_position = Vector2i(2, 3)
 board = NodePath("../Board")
 

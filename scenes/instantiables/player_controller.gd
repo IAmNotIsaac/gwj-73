@@ -38,13 +38,15 @@ func _handle_click_root(button_index: MouseButton, grid_position: Vector2i, boar
 		return
 	if selected_piece.team != get_team():
 		return
+	if selected_piece in _handled_pieces:
+		return
 	
 	var movable_positions := selected_piece.get_movable_positions()
 	var strikeable_positions := selected_piece.get_strikeable_positions()
 	var icons: Array[Sprite2D] = []
 	_click_func = _handle_click_move.bind(selected_piece, movable_positions, strikeable_positions, icons)
 	
-	selected_piece.scale = Vector2(0.5, 0.5)
+	selected_piece.mark_selected()
 	
 	for p in movable_positions:
 		var icon := Sprite2D.new()
@@ -75,20 +77,24 @@ func _handle_click_move(
 	if grid_position in movable_positions:
 		for icon in icons:
 			icon.queue_free()
-		selected_piece.scale = Vector2(1.0, 1.0)
+		selected_piece.mark_unselected()
 		_click_func = _handle_click_root
 		selected_piece.grid_position = grid_position
+		_handled_pieces.push_back(selected_piece)
+		selected_piece.mark_immovable()
 	
 	elif grid_position in strikeable_positions:
 		for icon in icons:
 			icon.queue_free()
-		selected_piece.scale = Vector2(1.0, 1.0)
+		selected_piece.mark_unselected()
 		_click_func = _handle_click_root
-		board.get_piece(grid_position).queue_free()
+		board.get_piece(grid_position).kill()
 		selected_piece.grid_position = grid_position
+		_handled_pieces.push_back(selected_piece)
+		selected_piece.mark_immovable()
 	
 	else:
 		for icon in icons:
 			icon.queue_free()
-		selected_piece.scale = Vector2(1.0, 1.0)
+		selected_piece.mark_unselected()
 		_click_func = _handle_click_root
