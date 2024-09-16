@@ -33,7 +33,7 @@ func _on_tile_clicked(button_index: MouseButton, grid_position: Vector2i, board:
 
 
 func _handle_click_root(button_index: MouseButton, grid_position: Vector2i, board: Board) -> void:
-	var selected_piece := board.get_piece(grid_position)
+	var selected_piece: Piece = board.get_piece(grid_position)
 	if selected_piece == null:
 		return
 	if selected_piece.team != get_team():

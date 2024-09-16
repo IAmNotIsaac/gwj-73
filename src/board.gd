@@ -99,7 +99,7 @@ func get_piece_team(grid_position: Vector2i) -> Piece.Team:
 	return (s & _MASK_TEAM) as Piece.Team
 
 
-func get_piece(grid_position: Vector2i) -> Piece:
+func get_piece(grid_position: Vector2i) -> Node:
 	var pieces := get_tree().get_nodes_in_group(&"pieces")
 	for n in pieces:
 		if n.board == self and n.grid_position == grid_position:

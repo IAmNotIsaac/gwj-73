@@ -14,10 +14,6 @@ config/name="gwj-tower"
 run/main_scene="res://scenes/world.tscn"
 config/features=PackedStringArray("4.3", "GL Compatibility")
 
-[autoload]
-
-Attack="*res://singletons/attack.tscn"
-
 [display]
 
 window/stretch/mode="canvas_items"

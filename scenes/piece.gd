@@ -1,6 +1,6 @@
 @tool
 class_name Piece
-extends Entity
+extends Node2D
 
 
 enum Team {
