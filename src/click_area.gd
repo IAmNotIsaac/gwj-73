@@ -11,7 +11,7 @@ var filter_click_type := 7
 var _click_in := 0
 
 
-func _input_event(viewport: Viewport, event: InputEvent, shape_idx: int) -> void:
+func _input_event(viewport: Viewport, event: InputEvent, _shape_idx: int) -> void:
 	if event is InputEventMouseButton:
 		viewport.set_input_as_handled()
 		if not event.pressed and _click_in & 1 << int(event.button_index):
