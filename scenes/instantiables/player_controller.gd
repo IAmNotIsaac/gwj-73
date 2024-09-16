@@ -72,13 +72,7 @@ func _handle_click_move(
 		strikeable_positions: Array[Vector2i],
 		icons: Array[Sprite2D],
 ) -> void:
-	if grid_position == selected_piece.grid_position:
-		for icon in icons:
-			icon.queue_free()
-		selected_piece.scale = Vector2(1.0, 1.0)
-		_click_func = _handle_click_root
-	
-	elif grid_position in movable_positions:
+	if grid_position in movable_positions:
 		for icon in icons:
 			icon.queue_free()
 		selected_piece.scale = Vector2(1.0, 1.0)
@@ -92,3 +86,9 @@ func _handle_click_move(
 		_click_func = _handle_click_root
 		board.get_piece(grid_position).queue_free()
 		selected_piece.grid_position = grid_position
+	
+	else:
+		for icon in icons:
+			icon.queue_free()
+		selected_piece.scale = Vector2(1.0, 1.0)
+		_click_func = _handle_click_root
