@@ -79,7 +79,8 @@ func _handle_click_move(
 			icon.queue_free()
 		selected_piece.mark_unselected()
 		_click_func = _handle_click_root
-		selected_piece.grid_position = grid_position
+		selected_piece.move(grid_position)
+		#selected_piece.grid_position = grid_position
 		_handled_pieces.push_back(selected_piece)
 		selected_piece.mark_immovable()
 	
@@ -89,7 +90,7 @@ func _handle_click_move(
 		selected_piece.mark_unselected()
 		_click_func = _handle_click_root
 		board.get_piece(grid_position).kill()
-		selected_piece.grid_position = grid_position
+		selected_piece.move(grid_position)
 		_handled_pieces.push_back(selected_piece)
 		selected_piece.mark_immovable()
 	

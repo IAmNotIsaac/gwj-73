@@ -102,6 +102,8 @@ var _docache_strikeable_positions := false
 var _cache_strikeable_positions: Array[Vector2i] = []
 
 @onready var _sprite := $Sprite2D
+@onready var _particles_smoke_0 = $ParticlesSmoke0
+@onready var _particles_smoke_1 = $ParticlesSmoke1
 
 
 func _ready() -> void:
@@ -275,11 +277,17 @@ func mark_unselected() -> void:
 
 
 func mark_movable() -> void:
-	modulate = Color.WHITE
+	_sprite.modulate = Color.WHITE
 
 
 func mark_immovable() -> void:
-	modulate = Color("707070")
+	_sprite.modulate = Color("707070")
+
+
+func move(to: Vector2i) -> void:
+	grid_position = to
+	_particles_smoke_0.emitting = true
+	_particles_smoke_1.emitting = true
 
 
 func kill() -> void:
