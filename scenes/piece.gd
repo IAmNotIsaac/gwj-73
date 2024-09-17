@@ -238,6 +238,8 @@ func get_strikeable_positions() -> Array[Vector2i]:
 					if board.is_piece_strikeable(p, team):
 						_cache_strikeable_positions.push_back(p)
 						break
+					elif not board.is_open(p):
+						break
 		
 		Type.ROOK:
 			for d in _DELTAS_ROOK:
@@ -245,6 +247,8 @@ func get_strikeable_positions() -> Array[Vector2i]:
 					var p: Vector2i = grid_position + d * (i + 1)
 					if board.is_piece_strikeable(p, team):
 						_cache_strikeable_positions.push_back(p)
+						break
+					elif not board.is_open(p):
 						break
 		
 		Type.QUEEN:
@@ -254,6 +258,8 @@ func get_strikeable_positions() -> Array[Vector2i]:
 					if board.is_piece_strikeable(p, team):
 						_cache_strikeable_positions.push_back(p)
 						break
+					elif not board.is_open(p):
+						break
 		
 		Type.KING:
 			for d in _DELTAS_ROYALTY:
@@ -261,6 +267,8 @@ func get_strikeable_positions() -> Array[Vector2i]:
 					var p: Vector2i = grid_position + d * (i + 1)
 					if board.is_piece_strikeable(p, team):
 						_cache_strikeable_positions.push_back(p)
+						break
+					elif not board.is_open(p):
 						break
 	
 	return _cache_strikeable_positions
