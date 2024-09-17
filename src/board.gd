@@ -11,6 +11,8 @@ const _MASK_TYPE := 0b0000_1111
 const _MASK_TEAM := 0b1111_0000
 const _BOARD_TEXTURE := preload("res://assets/textures/board.png")
 const _BOARD_SHADER := preload("res://shaders/repeat.gdshader")
+const _GRADIENT_TEXTURE := preload("res://assets/textures/board_gradient.png")
+const _PINCH_SHADER := preload("res://shaders/pinch.gdshader")
 
 @export var size := Vector2i(8, 8):
 	set(value):
@@ -19,6 +21,7 @@ const _BOARD_SHADER := preload("res://shaders/repeat.gdshader")
 
 var _board_state := PackedByteArray()
 var _sprite := Sprite2D.new()
+var _gradient_sprite := Sprite2D.new()
 var _click_area := ClickArea.new()
 var _click_area_shape := CollisionShape2D.new()
 
@@ -29,6 +32,11 @@ func _init() -> void:
 	_sprite.texture_repeat = CanvasItem.TEXTURE_REPEAT_ENABLED
 	_sprite.material = ShaderMaterial.new()
 	_sprite.material.shader = _BOARD_SHADER
+	
+	_gradient_sprite.centered = false
+	_gradient_sprite.texture = _GRADIENT_TEXTURE
+	_gradient_sprite.material = ShaderMaterial.new()
+	_gradient_sprite.material.shader = _PINCH_SHADER
 	
 	_click_area.clicked.connect(_on_clicked)
 	
@@ -45,6 +53,9 @@ func _enter_tree() -> void:
 	if _sprite.get_parent() == null:
 		add_child(_sprite, false, Node.INTERNAL_MODE_BACK)
 	
+	if _gradient_sprite.get_parent() == null:
+		add_child(_gradient_sprite, false, Node.INTERNAL_MODE_BACK)
+	
 	if Engine.is_editor_hint():
 		return
 	
@@ -60,6 +71,8 @@ func _enter_tree() -> void:
 func _update_size() -> void:
 	_sprite.scale = Vector2(size) * 0.5
 	_sprite.material.set_shader_parameter(&"scale", _sprite.scale)
+	_gradient_sprite.position.y = size.y * TILE_HEIGHT
+	_gradient_sprite.scale.x = size.x
 
 
 func _on_clicked(button_index: MouseButton, click_position: Vector2) -> void:
