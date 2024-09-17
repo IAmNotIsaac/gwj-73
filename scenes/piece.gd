@@ -271,6 +271,7 @@ func get_strikeable_positions() -> Array[Vector2i]:
 					elif not board.is_open(p):
 						break
 	
+	_docache_strikeable_positions = true
 	return _cache_strikeable_positions
 
 

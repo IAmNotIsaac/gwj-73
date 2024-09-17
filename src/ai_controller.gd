@@ -1,0 +1,55 @@
+class_name AIController
+extends Controller
+
+
+var _world: World
+
+
+func _ready() -> void:
+	if get_parent() is World:
+		_world = get_parent()
+
+
+func _input(event):
+	if event.is_action_pressed("ui_accept"):
+		begin_turn()
+
+
+func _turn_begun() -> void:
+	for board in _world.get_boards():
+		var pieces = get_tree().get_nodes_in_group(&"pieces").filter(func(p): return p.board == board)
+		var my_pieces = pieces.filter(func(p): return p.team == get_team())
+		var enemy_pieces = pieces.filter(func(p): return Piece.can_team_strike_team(get_team(), p.team))
+		
+		for my_piece: Piece in my_pieces:
+			# If can strike, do so
+			if not my_piece.get_strikeable_positions().is_empty():
+				var strike_pos = my_piece.get_strikeable_positions().pick_random()
+				var enemy_piece = enemy_pieces.filter(func(p): return p.grid_position == strike_pos)[0]
+				my_piece.move(strike_pos)
+				enemy_piece.kill()
+				continue
+			
+			# If can move, do os
+			if not my_piece.get_movable_positions().is_empty():
+				var closest_enemy: Piece
+				var closest_dist := INF
+				for enemy_piece in enemy_pieces:
+					var comp_dist: float = enemy_piece.grid_position.distance_squared_to(my_piece.grid_position)
+					if comp_dist < closest_dist:
+						closest_enemy = enemy_piece
+						closest_dist = comp_dist
+				
+				var closest_achievable_position: Vector2i
+				closest_dist = INF
+				for pos in my_piece.get_movable_positions():
+					var comp_dist: float = closest_enemy.grid_position.distance_squared_to(pos)
+					if comp_dist < closest_dist:
+						closest_achievable_position = pos
+						closest_dist = comp_dist
+				
+				my_piece.move(closest_achievable_position)
+
+
+func _get_team() -> Piece.Team:
+	return Piece.Team.WHITE
