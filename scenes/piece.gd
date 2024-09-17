@@ -60,6 +60,8 @@ const _DISTANCE_BISHOP := 7
 const _DISTANCE_ROOK := 7
 const _DISTANCE_QUEEN := 7
 const _DISTANCE_KING := 1
+const _ANIM_TIME_PIECE_MOVE := 0.5
+const _ANIM_TIME_PIECE_KILL := 1.0
 
 @export var team := Team.WHITE:
 	set(v):
@@ -102,6 +104,7 @@ var _docache_strikeable_positions := false
 var _cache_strikeable_positions: Array[Vector2i] = []
 
 @onready var _sprite := $Sprite2D
+@onready var _shadow := $Shadow
 @onready var _particles_smoke_0 = $ParticlesSmoke0
 @onready var _particles_smoke_1 = $ParticlesSmoke1
 
@@ -111,17 +114,13 @@ func _ready() -> void:
 	_update_sprite()
 
 
-func _exit_tree() -> void:
-	if board != null:
-		board.clear_piece(grid_position)
-
-
 func _update_position() -> void:
 	if not is_node_ready():
 		await ready
 	
 	if board == null:
 		printerr("Piece (%s) is not associated with a board." % self)
+		return
 	
 	position = board.position + Vector2(grid_position) * Vector2(Board.TILE_WIDTH, Board.TILE_HEIGHT)
 	position += Vector2(float(Board.TILE_WIDTH) * 0.5, float(Board.TILE_HEIGHT))
@@ -285,13 +284,58 @@ func mark_immovable() -> void:
 
 
 func move(to: Vector2i) -> void:
+	var dx := float((to.x - grid_position.x) * Board.TILE_WIDTH)
+	var dy := float((to.y - grid_position.y) * Board.TILE_HEIGHT)
+	
 	grid_position = to
-	_particles_smoke_0.emitting = true
-	_particles_smoke_1.emitting = true
+	
+	_shadow.position = Vector2(-dx, -dy)
+	_sprite.position = Vector2(-dx, -dy)
+	var anim_time := _ANIM_TIME_PIECE_MOVE
+	var jump_y = min(_sprite.position.y - 16.0, -16.0)
+	
+	var tween := get_tree().create_tween().set_parallel(true)
+	tween.tween_property(_sprite, ^"position:x", 0.0, anim_time) \
+			.set_trans(Tween.TRANS_EXPO) \
+			.set_ease(Tween.EASE_OUT)
+	tween.tween_property(_shadow, ^"position:x", 0.0, anim_time) \
+			.set_trans(Tween.TRANS_EXPO) \
+			.set_ease(Tween.EASE_OUT)
+	tween.tween_property(_shadow, ^"position:y", 0.0, anim_time * 0.5) \
+			.set_trans(Tween.TRANS_EXPO) \
+			.set_ease(Tween.EASE_IN)
+	tween.tween_property(_sprite, ^"position:y", jump_y, anim_time * 0.5) \
+			.set_trans(Tween.TRANS_QUAD) \
+			.set_ease(Tween.EASE_IN)
+	tween.tween_property(_sprite, ^"position:y", 0.0, anim_time * 0.5) \
+			.set_delay(anim_time * 0.5) \
+			.set_trans(Tween.TRANS_QUAD) \
+			.set_ease(Tween.EASE_IN)
+	tween.tween_property(_particles_smoke_0, ^"emitting", true, 0.0) \
+			.set_delay(anim_time)
+	tween.tween_property(_particles_smoke_1, ^"emitting", true, 0.0) \
+			.set_delay(anim_time)
 
 
 func kill() -> void:
-	queue_free()
+	if board != null:
+		board.clear_piece(grid_position)
+	board = null
+	
+	var move_time := _ANIM_TIME_PIECE_MOVE
+	var kill_time := _ANIM_TIME_PIECE_KILL
+	
+	var tween := get_tree().create_tween().set_parallel(true)
+	tween.tween_callback(_shadow.hide) \
+			.set_delay(move_time)
+	tween.tween_property(_sprite, ^"modulate:a", 0.0, kill_time) \
+			.set_delay(move_time)
+	tween.tween_property(_sprite, ^"scale", Vector2(2.0, 2.0), kill_time) \
+			.set_delay(move_time)
+	tween.tween_property(_sprite, ^"rotation", randf_range(-PI, PI), kill_time) \
+			.set_delay(move_time)
+	tween.tween_callback(queue_free) \
+			.set_delay(move_time + kill_time)
 
 
 static func can_team_strike_team(striker_team: Team, victim_team: Team) -> bool:
