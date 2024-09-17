@@ -4,6 +4,7 @@ extends Node2D
 
 
 signal tile_clicked(button_index: MouseButton, grid_position: Vector2i)
+signal state_changed
 
 const TILE_WIDTH := 64.0
 const TILE_HEIGHT := 32.0
@@ -100,6 +101,7 @@ func _on_mouse_moved(mouse_position: Vector2) -> void:
 
 func reload_board_state() -> void:
 	_board_state.resize(size.x * size.y)
+	state_changed.emit()
 
 
 func is_in_board(grid_position: Vector2i) -> bool:
@@ -140,10 +142,12 @@ func set_piece(grid_position: Vector2i, type: Piece.Type, team: Piece.Team) -> v
 	var type_int := int(type) & _MASK_TYPE
 	var team_int := (int(team) << 4) & _MASK_TEAM
 	_board_state[grid_position.x + grid_position.y * size.x] = type_int + team_int
+	state_changed.emit()
 
 
 func clear_piece(grid_position: Vector2i) -> void:
 	_board_state[grid_position.x + grid_position.y * size.x] = 0
+	state_changed.emit()
 
 
 func is_piece_strikeable(grid_position: Vector2i, striker_team: Piece.Team) -> bool:
