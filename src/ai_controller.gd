@@ -2,6 +2,8 @@ class_name AIController
 extends Controller
 
 
+const _TIME_COMPREHENSION := 0.5
+
 var _world: World
 
 
@@ -30,6 +32,7 @@ func _turn_begun() -> void:
 				var enemy_piece = enemy_pieces.filter(func(p): return p.grid_position == strike_pos)[0]
 				my_piece.move(strike_pos)
 				enemy_piece.kill()
+				await get_tree().create_timer(_TIME_COMPREHENSION).timeout
 				continue
 			
 			# If can move, do os
@@ -51,6 +54,7 @@ func _turn_begun() -> void:
 						closest_dist = comp_dist
 				
 				my_piece.move(closest_achievable_position)
+				await get_tree().create_timer(_TIME_COMPREHENSION).timeout
 	
 	turn_passed.emit()
 
