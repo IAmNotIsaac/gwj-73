@@ -23,7 +23,7 @@ func _ready() -> void:
 	_camera_position = camera.position
 	
 	if get_parent() is World:
-		for board in get_parent().boards:
+		for board in get_parent().get_boards():
 			board.tile_clicked.connect(_on_tile_clicked.bind(board))
 
 
