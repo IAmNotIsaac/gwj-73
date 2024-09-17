@@ -10,16 +10,18 @@ func _ready() -> void:
 		_world = get_parent()
 
 
-func _input(event):
-	if event.is_action_pressed("ui_accept"):
-		begin_turn()
-
-
 func _turn_begun() -> void:
 	for board in _world.get_boards():
 		var pieces = get_tree().get_nodes_in_group(&"pieces").filter(func(p): return p.board == board)
+		
+		if pieces.is_empty():
+			continue
+		
 		var my_pieces = pieces.filter(func(p): return p.team == get_team())
 		var enemy_pieces = pieces.filter(func(p): return Piece.can_team_strike_team(get_team(), p.team))
+		
+		if enemy_pieces.is_empty():
+			continue
 		
 		for my_piece: Piece in my_pieces:
 			# If can strike, do so
@@ -49,6 +51,8 @@ func _turn_begun() -> void:
 						closest_dist = comp_dist
 				
 				my_piece.move(closest_achievable_position)
+	
+	turn_passed.emit()
 
 
 func _get_team() -> Piece.Team:

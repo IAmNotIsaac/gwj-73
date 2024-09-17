@@ -2,7 +2,12 @@ class_name Controller
 extends Node
 
 
-signal turn_complete
+signal turn_passed
+
+
+func _enter_tree() -> void:
+	if get_parent() is World:
+		get_parent().register_controller(self)
 
 
 func _get_team() -> Piece.Team:
@@ -13,9 +18,17 @@ func _turn_begun() -> void:
 	pass
 
 
+func _turn_ended() -> void:
+	pass
+
+
 func get_team() -> Piece.Team:
 	return _get_team()
 
 
 func begin_turn() -> void:
 	_turn_begun()
+
+
+func end_turn() -> void:
+	_turn_ended()

@@ -10,13 +10,15 @@ const _ICON_POSSESS := preload("res://assets/textures/icon_possess.svg")
 const _ZOOM_DEFAULT := 1.0
 const _ZOOM_SELECTED := 1.1
 
+@export var camera: Camera2D
+@export var moves_per_turn := 1
+
 var _handled_pieces: Array[Piece] = []
 var _click_func = _handle_click_root
 var _camera_position := Vector2.ZERO
 var _camera_zoom := _ZOOM_DEFAULT
 var _camera_free := true
-
-@export var camera: Camera2D
+var _remaining_moves := 0
 
 
 func _ready() -> void:
@@ -25,6 +27,14 @@ func _ready() -> void:
 	if get_parent() is World:
 		for board in get_parent().get_boards():
 			board.tile_clicked.connect(_on_tile_clicked.bind(board))
+
+
+func _turn_begun() -> void:
+	_remaining_moves = moves_per_turn
+
+
+func _turn_ended() -> void:
+	_remaining_moves = 0
 
 
 func _process(delta: float) -> void:
@@ -50,7 +60,8 @@ func _camera_settings(position: Vector2, zoom: float, free: bool) -> void:
 
 
 func _on_tile_clicked(button_index: MouseButton, grid_position: Vector2i, board: Board) -> void:
-	_click_func.call(button_index, grid_position, board)
+	if _remaining_moves > 0:
+		_click_func.call(button_index, grid_position, board)
 
 
 func _handle_click_root(button_index: MouseButton, grid_position: Vector2i, board: Board) -> void:
@@ -98,28 +109,23 @@ func _handle_click_move(
 		icons: Array[Sprite2D],
 ) -> void:
 	if grid_position in movable_positions:
-		for icon in icons:
-			icon.queue_free()
-		selected_piece.mark_unselected()
-		_click_func = _handle_click_root
+		_remaining_moves -= 1
 		selected_piece.move(grid_position)
 		_handled_pieces.push_back(selected_piece)
 		selected_piece.mark_immovable()
 	
 	elif grid_position in strikeable_positions:
-		for icon in icons:
-			icon.queue_free()
-		selected_piece.mark_unselected()
-		_click_func = _handle_click_root
+		_remaining_moves -= 1
 		board.get_piece(grid_position).kill()
 		selected_piece.move(grid_position)
 		_handled_pieces.push_back(selected_piece)
 		selected_piece.mark_immovable()
 	
-	else:
-		for icon in icons:
-			icon.queue_free()
-		selected_piece.mark_unselected()
-		_click_func = _handle_click_root
-	
+	for icon in icons:
+		icon.queue_free()
+	selected_piece.mark_unselected()
+	_click_func = _handle_click_root
 	_camera_settings(_camera_position, _ZOOM_DEFAULT, true)
+	
+	if _remaining_moves <= 0:
+		turn_passed.emit()
