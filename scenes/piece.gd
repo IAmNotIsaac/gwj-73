@@ -97,7 +97,8 @@ const _ANIM_TIME_PIECE_KILL := 1.0
 		if board != null:
 			board.state_changed.disconnect(clear_caches)
 		board = v
-		board.state_changed.connect(clear_caches)
+		if board != null:
+			board.state_changed.connect(clear_caches)
 		clear_caches()
 		_update_position()
 
