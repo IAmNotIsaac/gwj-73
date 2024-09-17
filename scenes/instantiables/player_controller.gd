@@ -2,12 +2,20 @@ class_name PlayerController
 extends Controller
 
 
+const _CAMERA_SPEED := 100.0
 const _ICON_MOVE := preload("res://assets/textures/icon_move.svg")
 const _ICON_STRIKE := preload("res://assets/textures/icon_strike.svg")
 const _ICON_POSSESS := preload("res://assets/textures/icon_possess.svg")
 
 var _handled_pieces: Array[Piece] = []
 var _click_func = _handle_click_root
+
+@export var camera: Camera2D
+
+
+func _process(delta: float) -> void:
+	var d := Input.get_vector(&"move_left", &"move_right", &"move_up", &"move_down")
+	camera.position += d * delta * _CAMERA_SPEED
 
 
 func _set_pieces(value: Array[Piece]) -> void:
@@ -18,7 +26,8 @@ func _set_pieces(value: Array[Piece]) -> void:
 	var removed_pieces := pieces.filter(func(p: Piece): return p not in value)
 	
 	for p in added_pieces:
-		p.board.tile_clicked.connect(_on_tile_clicked.bind(p.board))
+		if not p.board.tile_clicked.is_connected(_on_tile_clicked):
+			p.board.tile_clicked.connect(_on_tile_clicked.bind(p.board))
 	
 	for p in removed_pieces:
 		p.board.tile_clicked.disconnect(_on_tile_clicked)
