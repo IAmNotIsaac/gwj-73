@@ -13,6 +13,7 @@ const _BOARD_TEXTURE := preload("res://assets/textures/board.png")
 const _BOARD_SHADER := preload("res://shaders/repeat.gdshader")
 const _GRADIENT_TEXTURE := preload("res://assets/textures/board_gradient.png")
 const _PINCH_SHADER := preload("res://shaders/pinch.gdshader")
+const _SELECTION_HINT := preload("res://scenes/instantiables/selection_hint.tscn")
 
 @export var size := Vector2i(8, 8):
 	set(value):
@@ -24,6 +25,7 @@ var _sprite := Sprite2D.new()
 var _gradient_sprite := Sprite2D.new()
 var _click_area := ClickArea.new()
 var _click_area_shape := CollisionShape2D.new()
+var _selection_hint := _SELECTION_HINT.instantiate()
 
 
 func _init() -> void:
@@ -39,12 +41,17 @@ func _init() -> void:
 	_gradient_sprite.material.shader = _PINCH_SHADER
 	
 	_click_area.clicked.connect(_on_clicked)
+	_click_area.mouse_entered.connect(_selection_hint.show)
+	_click_area.mouse_exited.connect(_selection_hint.hide)
+	_click_area.mouse_moved.connect(_on_mouse_moved)
 	
 	_click_area_shape.shape = RectangleShape2D.new()
 	_click_area_shape.shape.size.x = size.x * TILE_WIDTH
 	_click_area_shape.shape.size.y = size.y * TILE_HEIGHT
 	_click_area_shape.position.x = float(size.x * TILE_WIDTH) * 0.5
 	_click_area_shape.position.y = float(size.y * TILE_HEIGHT) * 0.5
+	
+	_selection_hint.hide()
 	
 	_update_size()
 
@@ -65,6 +72,9 @@ func _enter_tree() -> void:
 	if _click_area_shape.get_parent() == null:
 		_click_area.add_child(_click_area_shape, false, Node.INTERNAL_MODE_BACK)
 	
+	if _selection_hint.get_parent() == null:
+		add_child(_selection_hint, false, Node.INTERNAL_MODE_BACK)
+	
 	reload_board_state()
 
 
@@ -80,6 +90,12 @@ func _on_clicked(button_index: MouseButton, click_position: Vector2) -> void:
 	var g := Vector2i(p / Vector2(TILE_WIDTH, TILE_HEIGHT))
 	print("Clicked %s %s %s" % [button_index, click_position, g])
 	tile_clicked.emit(button_index, g)
+
+
+func _on_mouse_moved(mouse_position: Vector2) -> void:
+	var p := mouse_position - position
+	var g := Vector2i(p / Vector2(TILE_WIDTH, TILE_HEIGHT))
+	_selection_hint.position = Vector2(g * Vector2i(TILE_WIDTH, TILE_HEIGHT))
 
 
 func reload_board_state() -> void:

@@ -1,0 +1,28 @@
+[gd_scene load_steps=2 format=3 uid="uid://dya1j6bhhjnj0"]
+
+[ext_resource type="Texture2D" uid="uid://cy4r1jb3ircnl" path="res://assets/textures/selection_hint_corner.png" id="1_yenb6"]
+
+[node name="SelectionHint" type="Node2D"]
+
+[node name="TopLeft" type="Sprite2D" parent="."]
+texture = ExtResource("1_yenb6")
+centered = false
+
+[node name="TopRight" type="Sprite2D" parent="."]
+texture = ExtResource("1_yenb6")
+centered = false
+offset = Vector2(56, 0)
+flip_h = true
+
+[node name="BottomLeft" type="Sprite2D" parent="."]
+texture = ExtResource("1_yenb6")
+centered = false
+offset = Vector2(0, 24)
+flip_v = true
+
+[node name="BottomRight" type="Sprite2D" parent="."]
+texture = ExtResource("1_yenb6")
+centered = false
+offset = Vector2(56, 24)
+flip_h = true
+flip_v = true

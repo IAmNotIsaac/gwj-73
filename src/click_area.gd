@@ -3,6 +3,7 @@ extends Area2D
 
 
 signal clicked(index: MouseButton, click_position: Vector2)
+signal mouse_moved(mouse_position: Vector2)
 
 @export_flags("Left", "Right", "Middle", "Wheel Up", "Wheel Down",
 		"Wheel Left", "Wheel Right", "X Button 1", "X Button 2")
@@ -18,3 +19,6 @@ func _input_event(viewport: Viewport, event: InputEvent, _shape_idx: int) -> voi
 			clicked.emit(event.button_index, event.position)
 		_click_in &= ~(1 << int(event.button_index))
 		_click_in |= int(event.is_pressed()) << int(event.button_index) & (filter_click_type << 1)
+	
+	elif event is InputEventMouseMotion:
+		mouse_moved.emit(event.position)
