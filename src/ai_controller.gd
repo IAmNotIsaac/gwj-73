@@ -46,6 +46,11 @@ func _turn_begun() -> void:
 						closest_enemy = enemy_piece
 						closest_dist = comp_dist
 				
+				if closest_enemy == null:
+					my_piece.move(my_piece.get_movable_positions().pick_random())
+					await get_tree().create_timer(_TIME_COMPREHENSION).timeout
+					continue
+				
 				var closest_achievable_position: Vector2i
 				closest_dist = INF
 				for pos in my_piece.get_movable_positions():
