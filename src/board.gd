@@ -129,7 +129,7 @@ func get_piece_team(grid_position: Vector2i) -> Piece.Team:
 	if not is_in_board(grid_position):
 		return Piece.Team.NEUTRAL
 	var s := _board_state[grid_position.x + grid_position.y * size.x]
-	return (s & _MASK_TEAM) as Piece.Team
+	return (s & _MASK_TEAM) >> 4 as Piece.Team
 
 
 func get_piece(grid_position: Vector2i) -> Node:
