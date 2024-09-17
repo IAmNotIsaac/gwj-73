@@ -82,7 +82,7 @@ func _enter_tree() -> void:
 func _update_size() -> void:
 	_sprite.scale = Vector2(size) * 0.5
 	_sprite.material.set_shader_parameter(&"scale", _sprite.scale)
-	_gradient_sprite.position.y = size.y * TILE_HEIGHT
+	_gradient_sprite.position.y = size.y * TILE_HEIGHT - 1
 	_gradient_sprite.scale.x = size.x
 
 
