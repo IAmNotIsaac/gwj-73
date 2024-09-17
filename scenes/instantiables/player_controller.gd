@@ -14,8 +14,9 @@ var _click_func = _handle_click_root
 
 
 func _process(delta: float) -> void:
-	var d := Input.get_vector(&"move_left", &"move_right", &"move_up", &"move_down")
-	camera.position += d * delta * _CAMERA_SPEED
+	if camera != null:
+		var d := Input.get_vector(&"move_left", &"move_right", &"move_up", &"move_down")
+		camera.position += d * delta * _CAMERA_SPEED
 
 
 func _set_pieces(value: Array[Piece]) -> void:
