@@ -18,11 +18,6 @@ var _camera_free := true
 
 @export var camera: Camera2D
 
-var a := []:
-	set(v):
-		print(v)
-		a = v
-
 
 func _ready() -> void:
 	_camera_position = camera.position
