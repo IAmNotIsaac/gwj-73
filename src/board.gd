@@ -39,8 +39,6 @@ func _init() -> void:
 	
 	_gradient_sprite.centered = false
 	_gradient_sprite.texture = _GRADIENT_TEXTURE
-	_gradient_sprite.material = ShaderMaterial.new()
-	_gradient_sprite.material.shader = _PINCH_SHADER
 	
 	_click_area.clicked.connect(_on_clicked)
 	_click_area.mouse_entered.connect(_selection_hint.show)
