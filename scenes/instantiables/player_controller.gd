@@ -8,7 +8,7 @@ const _ICON_MOVE := preload("res://assets/textures/icon_move.svg")
 const _ICON_STRIKE := preload("res://assets/textures/icon_strike.svg")
 const _ICON_POSSESS := preload("res://assets/textures/icon_possess.svg")
 const _ZOOM_DEFAULT := 1.0
-const _ZOOM_SELECTED := 1.5
+const _ZOOM_SELECTED := 1.1
 
 var _handled_pieces: Array[Piece] = []
 var _click_func = _handle_click_root
