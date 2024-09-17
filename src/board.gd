@@ -75,6 +75,9 @@ func _enter_tree() -> void:
 	if _selection_hint.get_parent() == null:
 		add_child(_selection_hint, false, Node.INTERNAL_MODE_BACK)
 	
+	if get_parent() is World:
+		get_parent().register_board(self)
+	
 	reload_board_state()
 
 

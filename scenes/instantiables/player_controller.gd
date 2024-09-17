@@ -18,9 +18,18 @@ var _camera_free := true
 
 @export var camera: Camera2D
 
+var a := []:
+	set(v):
+		print(v)
+		a = v
+
 
 func _ready() -> void:
 	_camera_position = camera.position
+	
+	if get_parent() is World:
+		for board in get_parent().boards:
+			board.tile_clicked.connect(_on_tile_clicked.bind(board))
 
 
 func _process(delta: float) -> void:
@@ -31,23 +40,8 @@ func _process(delta: float) -> void:
 		mp = mp.clamp(Vector2.ZERO, Vector2.ONE)
 		mp = (mp - Vector2(0.5, 0.5)) * 2.0;
 		var pan := mp * _PAN_FACTOR
-		camera.position = _camera_position #+ pan
+		camera.position = _camera_position + pan
 		camera.zoom = camera.zoom.lerp(Vector2.ONE * _camera_zoom, 0.25)
-
-
-func _set_pieces(value: Array[Piece]) -> void:
-	if not is_node_ready():
-		await ready
-	
-	var added_pieces := value.filter(func(p: Piece): return p not in pieces)
-	var removed_pieces := pieces.filter(func(p: Piece): return p not in value)
-	
-	for p in added_pieces:
-		if not p.board.tile_clicked.is_connected(_on_tile_clicked):
-			p.board.tile_clicked.connect(_on_tile_clicked.bind(p.board))
-	
-	for p in removed_pieces:
-		p.board.tile_clicked.disconnect(_on_tile_clicked)
 
 
 func _get_team() -> Piece.Team:
