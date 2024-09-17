@@ -35,6 +35,7 @@ func _init() -> void:
 	_sprite.texture_repeat = CanvasItem.TEXTURE_REPEAT_ENABLED
 	_sprite.material = ShaderMaterial.new()
 	_sprite.material.shader = _BOARD_SHADER
+	_sprite.texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
 	
 	_gradient_sprite.centered = false
 	_gradient_sprite.texture = _GRADIENT_TEXTURE
@@ -82,7 +83,7 @@ func _enter_tree() -> void:
 func _update_size() -> void:
 	_sprite.scale = Vector2(size) * 0.5
 	_sprite.material.set_shader_parameter(&"scale", _sprite.scale)
-	_gradient_sprite.position.y = size.y * TILE_HEIGHT - 1
+	_gradient_sprite.position.y = size.y * TILE_HEIGHT
 	_gradient_sprite.scale.x = size.x
 
 
