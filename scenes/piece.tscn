@@ -15,12 +15,6 @@ colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 0)
 
 [node name="Piece" type="Node2D" groups=["pieces"]]
 script = ExtResource("1_jfn20")
-direction = {
-"EAST": 1,
-"NORTH": 0,
-"SOUTH": 2,
-"WEST": 3
-}
 
 [node name="Shadow" type="Sprite2D" parent="."]
 texture = ExtResource("2_3o6u8")
