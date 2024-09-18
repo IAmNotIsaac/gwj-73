@@ -30,8 +30,8 @@ func _turn_begun() -> void:
 			if not my_piece.get_strikeable_positions().is_empty():
 				var strike_pos = my_piece.get_strikeable_positions().pick_random()
 				var enemy_piece = enemy_pieces.filter(func(p): return p.grid_position == strike_pos)[0]
-				my_piece.move(strike_pos)
 				enemy_piece.kill()
+				my_piece.move(strike_pos)
 				enemy_pieces.erase(enemy_piece)
 				await get_tree().create_timer(_TIME_COMPREHENSION).timeout
 				continue
