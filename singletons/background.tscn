@@ -1,0 +1,39 @@
+[gd_scene load_steps=5 format=3 uid="uid://cgut83635k6rj"]
+
+[ext_resource type="Script" path="res://singletons/background.gd" id="1_3chxd"]
+[ext_resource type="Texture2D" uid="uid://dt51bfep5unc6" path="res://assets/textures/backgrounds/background_shapes_0.png" id="1_i6wgu"]
+[ext_resource type="Texture2D" uid="uid://bpnf58sr04402" path="res://assets/textures/backgrounds/background_shapes_1.png" id="2_elsta"]
+[ext_resource type="Texture2D" uid="uid://6ptf0vn7cr0q" path="res://assets/textures/backgrounds/background_shapes_2.png" id="3_pbrwm"]
+
+[node name="Background" type="Node2D"]
+script = ExtResource("1_3chxd")
+
+[node name="Shapes" type="Node2D" parent="."]
+modulate = Color(0.577008, 0.577008, 0.577008, 1)
+
+[node name="2" type="Parallax2D" parent="Shapes"]
+repeat_size = Vector2(512, 512)
+repeat_times = 5
+
+[node name="Sprite2D" type="Sprite2D" parent="Shapes/2"]
+texture = ExtResource("3_pbrwm")
+centered = false
+
+[node name="1" type="Parallax2D" parent="Shapes"]
+repeat_size = Vector2(512, 512)
+autoscroll = Vector2(12, 12)
+repeat_times = 5
+
+[node name="Sprite2D" type="Sprite2D" parent="Shapes/1"]
+texture = ExtResource("2_elsta")
+centered = false
+
+[node name="0" type="Parallax2D" parent="Shapes"]
+scroll_scale = Vector2(1.2, 1.2)
+repeat_size = Vector2(512, 512)
+autoscroll = Vector2(25, 25)
+repeat_times = 5
+
+[node name="Sprite2D" type="Sprite2D" parent="Shapes/0"]
+texture = ExtResource("1_i6wgu")
+centered = false
