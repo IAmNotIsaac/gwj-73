@@ -16,7 +16,6 @@ config/features=PackedStringArray("4.3", "GL Compatibility")
 
 [autoload]
 
-Background="*res://singletons/background.tscn"
 Hud="*res://singletons/hud.tscn"
 
 [display]
