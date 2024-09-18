@@ -88,6 +88,8 @@ func _on_mouse_moved(grid_position: Vector2i, board: Board) -> void:
 
 
 func _on_tile_clicked(button_index: MouseButton, grid_position: Vector2i, board: Board) -> void:
+	if not _selection_hint.visible:
+		return
 	if _remaining_moves > 0:
 		_click_func.call(button_index, grid_position, board)
 
