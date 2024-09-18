@@ -23,6 +23,7 @@ var _unlocked := false
 @onready var _line_back := $LineBack
 @onready var _line_active := $LineActive
 @onready var _land := $InterfaceLand
+@onready var _stars := $Stars
 
 
 func _ready() -> void:
@@ -51,6 +52,7 @@ func _update_parabola() -> void:
 	_line_back.position = from
 	_line_active.position = from
 	_land.position = from + to
+	_stars.position = from
 
 
 func unlock() -> void:
@@ -58,10 +60,13 @@ func unlock() -> void:
 		return
 	_unlocked = true
 	
+	_stars.emitting = true
 	for p in _parabola._line.points:
 		_line_back.add_point(p)
 		_line_active.add_point(p)
-		await get_tree().create_timer(0.005).timeout
+		_stars.position = p + _parabola.position
+		await get_tree().create_timer(0.01).timeout
+	_stars.emitting = false
 
 
 func is_locked() -> bool:

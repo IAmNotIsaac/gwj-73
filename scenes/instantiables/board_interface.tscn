@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://drcui3tw3c1k"]
+[gd_scene load_steps=14 format=3 uid="uid://drcui3tw3c1k"]
 
 [ext_resource type="Script" path="res://scenes/instantiables/board_interface.gd" id="1_nn17t"]
 [ext_resource type="Shader" path="res://shaders/uv_cycler.gdshader" id="2_1ay55"]
@@ -6,6 +6,7 @@
 [ext_resource type="Shader" path="res://shaders/color_cycler.gdshader" id="2_ndiio"]
 [ext_resource type="Texture2D" uid="uid://biff00oindb7a" path="res://assets/textures/dash_1_1.png" id="3_um7py"]
 [ext_resource type="Texture2D" uid="uid://c2ydygtoe4j3s" path="res://assets/textures/interface_land.svg" id="5_doa8v"]
+[ext_resource type="Texture2D" uid="uid://dd26j70gkogud" path="res://assets/textures/particles/sparkle0.png" id="7_w0u7p"]
 
 [sub_resource type="Gradient" id="Gradient_yj2t3"]
 offsets = PackedFloat32Array(0, 0.5, 1)
@@ -23,6 +24,13 @@ shader_parameter/tex = SubResource("GradientTexture2D_7ykyr")
 shader = ExtResource("2_1ay55")
 shader_parameter/color = Color(1, 0.7, 0, 1)
 shader_parameter/direction = Vector2(1, 1)
+
+[sub_resource type="Gradient" id="Gradient_g44nr"]
+colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 0)
+
+[sub_resource type="Gradient" id="Gradient_rolil"]
+offsets = PackedFloat32Array(0, 0.484615, 0.896154, 1)
+colors = PackedColorArray(1, 0.705422, 0.260538, 1, 0.968209, 0.59038, 0.312806, 1, 0.805071, 3.22476e-05, 0.581025, 1, 1, 1, 1, 1)
 
 [node name="BoardInterface" type="Node"]
 script = ExtResource("1_nn17t")
@@ -54,3 +62,21 @@ end_cap_mode = 2
 
 [node name="InterfaceLand" type="Sprite2D" parent="."]
 texture = ExtResource("5_doa8v")
+
+[node name="Stars" type="CPUParticles2D" parent="."]
+texture_filter = 1
+emitting = false
+amount = 16
+lifetime = 0.5
+texture = ExtResource("7_w0u7p")
+emission_shape = 1
+emission_sphere_radius = 5.0
+direction = Vector2(0, -1)
+spread = 15.0
+gravity = Vector2(0, -200)
+initial_velocity_min = 5.0
+initial_velocity_max = 20.0
+angular_velocity_min = -30.0
+angular_velocity_max = 30.0
+color_ramp = SubResource("Gradient_g44nr")
+color_initial_ramp = SubResource("Gradient_rolil")
