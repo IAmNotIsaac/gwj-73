@@ -296,11 +296,13 @@ func clear_caches() -> void:
 
 
 func mark_selected() -> void:
-	scale = Vector2(0.5, 0.5)
+	_sprite.scale = Vector2(0.5, 0.5)
+	_shadow.scale = Vector2(0.5, 0.5)
 
 
 func mark_unselected() -> void:
-	scale = Vector2(1.0, 1.0)
+	_sprite.scale = Vector2(1.0, 1.0)
+	_shadow.scale = Vector2(1.0, 1.0)
 
 
 func mark_movable() -> void:
