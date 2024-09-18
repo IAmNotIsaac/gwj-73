@@ -300,6 +300,9 @@ func get_movable_interfaces() -> Array[BoardInterface]:
 	if interface == null:
 		return []
 	
+	if interface.is_locked():
+		return []
+	
 	if not interface.to_board.is_open(interface.to_grid_position):
 		return []
 	
@@ -312,6 +315,9 @@ func get_strikeable_interfaces() -> Array[BoardInterface]:
 	
 	var interface := board.get_interface(grid_position)
 	if interface == null:
+		return []
+	
+	if interface.is_locked():
 		return []
 	
 	if interface.to_board.is_open(interface.to_grid_position):
