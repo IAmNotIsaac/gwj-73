@@ -325,6 +325,8 @@ func move(to: Vector2i) -> void:
 	var jump_y = min(_sprite.position.y - 16.0, -16.0)
 	
 	_is_moving = true
+	move_count += 1
+	
 	var tween := get_tree().create_tween().set_parallel(true)
 	tween.tween_property(_sprite, ^"position:x", 0.0, anim_time) \
 			.set_trans(Tween.TRANS_EXPO) \
