@@ -4,10 +4,15 @@ extends Controller
 
 const _TIME_COMPREHENSION := 1.0
 
+@export var camera_controller: CameraController
+
 var _world: World
 
 
 func _ready() -> void:
+	if camera_controller == null:
+		printerr("(%s) was not assigned a camera controller!" % self)
+	
 	if get_parent() is World:
 		_world = get_parent()
 

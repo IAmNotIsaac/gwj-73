@@ -1,9 +1,10 @@
-[gd_scene load_steps=8 format=3 uid="uid://bkk3xrh2lihv7"]
+[gd_scene load_steps=9 format=3 uid="uid://bkk3xrh2lihv7"]
 
 [ext_resource type="Script" path="res://scenes/world.gd" id="1_brwlp"]
 [ext_resource type="PackedScene" uid="uid://nicdfdklwlrq" path="res://scenes/instantiables/player_controller.tscn" id="1_hprhp"]
 [ext_resource type="PackedScene" uid="uid://bhm65qdan0ll2" path="res://scenes/piece.tscn" id="1_k4efd"]
 [ext_resource type="Script" path="res://src/board.gd" id="2_qor4q"]
+[ext_resource type="Script" path="res://src/camera_controller.gd" id="4_hgjjn"]
 [ext_resource type="Script" path="res://src/ai_controller.gd" id="5_pufvl"]
 [ext_resource type="Script" path="res://src/turn_manager.gd" id="6_vm1tm"]
 [ext_resource type="PackedScene" uid="uid://drcui3tw3c1k" path="res://scenes/instantiables/board_interface.tscn" id="7_mg0yf"]
@@ -15,11 +16,16 @@ script = ExtResource("1_brwlp")
 [node name="TurnManager" type="Node" parent="."]
 script = ExtResource("6_vm1tm")
 
-[node name="PlayerController" parent="." node_paths=PackedStringArray("camera") instance=ExtResource("1_hprhp")]
+[node name="PlayerController" parent="." node_paths=PackedStringArray("camera_controller") instance=ExtResource("1_hprhp")]
+camera_controller = NodePath("../CameraController")
+
+[node name="CameraController" type="Node" parent="." node_paths=PackedStringArray("camera")]
+script = ExtResource("4_hgjjn")
 camera = NodePath("../Camera2D")
 
-[node name="AIController" type="Node" parent="."]
+[node name="AIController" type="Node" parent="." node_paths=PackedStringArray("camera_controller")]
 script = ExtResource("5_pufvl")
+camera_controller = NodePath("../CameraController")
 
 [node name="Camera2D" type="Camera2D" parent="."]
 position_smoothing_enabled = true

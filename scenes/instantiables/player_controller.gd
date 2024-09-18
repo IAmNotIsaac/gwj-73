@@ -1,9 +1,6 @@
 class_name PlayerController
 extends Controller
 
-
-const _CAMERA_SPEED := 500.0
-const _PAN_FACTOR := 25.0
 const _ICON_MOVE := preload("res://assets/textures/icon_move.svg")
 const _ICON_STRIKE := preload("res://assets/textures/icon_strike.svg")
 const _ICON_MOVE_INTERFACE := preload("res://assets/textures/icon_move_interface.svg")
@@ -13,19 +10,17 @@ const _ZOOM_DEFAULT := 1.0
 const _ZOOM_SELECTED := 1.1
 const _TIME_COMPREHENSION := 1.0
 
-@export var camera: Camera2D
+@export var camera_controller: CameraController
 @export var moves_per_turn := 1
 
 var _handled_pieces: Array[Piece] = []
 var _click_func = _handle_click_root
-var _camera_position := Vector2.ZERO
-var _camera_zoom := _ZOOM_DEFAULT
-var _camera_free := true
 var _remaining_moves := 0
 
 
 func _ready() -> void:
-	_camera_position = camera.position
+	if camera_controller == null:
+		printerr("(%s) was not assigned a camera controller!" % self)
 	
 	if get_parent() is World:
 		for board in get_parent().get_boards():
@@ -40,26 +35,8 @@ func _turn_ended() -> void:
 	_remaining_moves = 0
 
 
-func _process(delta: float) -> void:
-	if camera != null:
-		var d := Input.get_vector(&"move_left", &"move_right", &"move_up", &"move_down") * int(_camera_free)
-		_camera_position += d * delta * _CAMERA_SPEED
-		var mp := get_viewport().get_mouse_position() / get_viewport().get_visible_rect().size
-		mp = mp.clamp(Vector2.ZERO, Vector2.ONE)
-		mp = (mp - Vector2(0.5, 0.5)) * 2.0;
-		var pan := mp * _PAN_FACTOR
-		camera.position = _camera_position + pan
-		camera.zoom = camera.zoom.lerp(Vector2.ONE * _camera_zoom, 0.25)
-
-
 func _get_team() -> Piece.Team:
 	return Piece.Team.BLACK
-
-
-func _camera_settings(position: Vector2, zoom: float, free: bool) -> void:
-	_camera_position = position
-	_camera_zoom = zoom
-	_camera_free = free
 
 
 func _on_tile_clicked(button_index: MouseButton, grid_position: Vector2i, board: Board) -> void:
@@ -142,7 +119,7 @@ func _handle_click_root(button_index: MouseButton, grid_position: Vector2i, boar
 	var minimum_zoom_factor := minf(minimum_zoom.x, minimum_zoom.y)
 	
 	var center := (top_left + bot_right) * 0.5
-	_camera_settings(center, minf(minimum_zoom_factor, _ZOOM_SELECTED), false)
+	camera_controller.settings(center, minf(minimum_zoom_factor, _ZOOM_SELECTED), false)
 
 
 func _handle_click_move(
@@ -190,7 +167,8 @@ func _handle_click_move(
 		icon.queue_free()
 	selected_piece.mark_unselected()
 	_click_func = _handle_click_root
-	_camera_settings(_camera_position, _ZOOM_DEFAULT, true)
+	camera_controller.reset_zoom()
+	camera_controller.set_free(true)
 	
 	if _remaining_moves <= 0:
 		for piece in _handled_pieces:
