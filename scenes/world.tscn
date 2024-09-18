@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://bkk3xrh2lihv7"]
+[gd_scene load_steps=9 format=3 uid="uid://bkk3xrh2lihv7"]
 
 [ext_resource type="Script" path="res://scenes/world.gd" id="1_brwlp"]
 [ext_resource type="PackedScene" uid="uid://bhm65qdan0ll2" path="res://scenes/piece.tscn" id="1_k4efd"]
@@ -7,6 +7,7 @@
 [ext_resource type="Script" path="res://src/player_controller.gd" id="4_p526j"]
 [ext_resource type="Script" path="res://src/ai_controller.gd" id="5_pufvl"]
 [ext_resource type="Script" path="res://src/turn_manager.gd" id="6_vm1tm"]
+[ext_resource type="PackedScene" uid="uid://cgut83635k6rj" path="res://scenes/instantiables/background.tscn" id="8_a47m7"]
 
 [node name="World" type="Node2D"]
 y_sort_enabled = true
@@ -77,3 +78,5 @@ team = 1
 type = 6
 grid_position = Vector2i(6, 3)
 board = NodePath("../Board")
+
+[node name="Background" parent="." instance=ExtResource("8_a47m7")]
