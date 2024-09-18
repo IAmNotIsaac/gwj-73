@@ -29,6 +29,7 @@ texture = ExtResource("2_elsta")
 centered = false
 
 [node name="0" type="Parallax2D" parent="Shapes"]
+visible = false
 scroll_scale = Vector2(1.2, 1.2)
 repeat_size = Vector2(512, 512)
 autoscroll = Vector2(25, 25)
