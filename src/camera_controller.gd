@@ -45,12 +45,24 @@ func settings(position: Vector2, zoom: float, free: bool) -> void:
 	_camera_free = free
 
 
+func get_position() -> Vector2:
+	return _camera_position
+
+
 func set_position(position: Vector2) -> void:
 	_camera_position = position
 
 
+func get_zoom() -> float:
+	return _camera_zoom
+
+
 func set_zoom(zoom: float) -> void:
 	_camera_zoom = zoom
+
+
+func is_free() -> bool:
+	return _camera_free
 
 
 func set_free(free: bool) -> void:

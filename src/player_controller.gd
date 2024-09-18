@@ -11,10 +11,12 @@ const _ZOOM_DEFAULT := 1.0
 const _ZOOM_SELECTED := 1.1
 const _TIME_COMPREHENSION := 1.0
 const _REASON_HOVER_BOARD := 1
-const _REASON_MY_TURN := 1000
+const _REASON_MY_TURN := 100
+const _REASON_CUTSCENE := 101
 
 @export var moves_per_turn := 1
 
+var _world: World
 var _camera_controller: CameraController
 var _handled_pieces: Array[Piece] = []
 var _click_func = _handle_click_root
@@ -37,8 +39,11 @@ func _enter_tree() -> void:
 
 func _ready() -> void:
 	if get_parent() is World:
+		_world = get_parent()
+		_world.cutscene_begun.connect(_on_cutscene_begun)
+		_world.cutscene_ended.connect(_on_cutscene_ended)
 		_camera_controller = get_parent().get_camera_controller()
-		for board in get_parent().get_boards():
+		for board in _world.get_boards():
 			board.mouse_entered.connect(_on_mouse_entered.bind(board))
 			board.mouse_exited.connect(_on_mouse_exited.bind(board))
 			board.mouse_moved.connect(_on_mouse_moved.bind(board))
@@ -60,6 +65,14 @@ func _turn_ended() -> void:
 
 func _get_team() -> Piece.Team:
 	return Piece.Team.BLACK
+
+
+func _on_cutscene_begun() -> void:
+	_reason_show_selection_hint += _REASON_CUTSCENE
+
+
+func _on_cutscene_ended() -> void:
+	_reason_show_selection_hint -= _REASON_CUTSCENE
 
 
 func _on_mouse_entered(board: Board) -> void:

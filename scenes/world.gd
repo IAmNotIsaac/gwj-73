@@ -2,6 +2,9 @@ class_name World
 extends Node2D
 
 
+signal cutscene_begun
+signal cutscene_ended
+
 var _boards: Array[Board] = []
 var _controllers: Array[Controller] = []
 var _camera_controller: CameraController
@@ -37,3 +40,11 @@ func get_controllers() -> Array[Controller]:
 
 func get_camera_controller() -> CameraController:
 	return _camera_controller
+
+
+func begin_cutscene() -> void:
+	cutscene_begun.emit()
+
+
+func end_cutscene() -> void:
+	cutscene_ended.emit()

@@ -3,6 +3,8 @@ class_name BoardInterface
 extends Node
 
 
+const _TIME_COMPREHENSION := 1.0
+
 @export var grid_position: Vector2i:
 	set(v):
 		grid_position = v
@@ -18,6 +20,8 @@ extends Node
 		_update_parabola()
 
 var _unlocked := false
+var _world: World
+var _camera_controller: CameraController
 
 @onready var _parabola := $ParabolaLine2D
 @onready var _line_back := $LineBack
@@ -27,6 +31,14 @@ var _unlocked := false
 
 
 func _ready() -> void:
+	if get_parent() is not Board:
+		printerr("BoardInterface expects parent to be a Board")
+		return
+	
+	if get_tree().current_scene is World:
+		_world = get_tree().current_scene
+		_camera_controller = _world.get_camera_controller()
+	
 	_update_parabola()
 
 
@@ -61,11 +73,21 @@ func unlock() -> void:
 	_unlocked = true
 	
 	_stars.emitting = true
+	var initial_camera_pos = _camera_controller.get_position()
+	_camera_controller.set_position(_parabola.position)
+	_camera_controller.set_free(false)
+	_world.begin_cutscene()
+	await get_tree().create_timer(_TIME_COMPREHENSION).timeout
 	for p in _parabola._line.points:
+		_camera_controller.set_position(_parabola.position + p)
 		_line_back.add_point(p)
 		_line_active.add_point(p)
 		_stars.position = p + _parabola.position
 		await get_tree().create_timer(0.01).timeout
+	await get_tree().create_timer(_TIME_COMPREHENSION).timeout
+	_camera_controller.set_position(initial_camera_pos)
+	_camera_controller.set_free(true)
+	_world.end_cutscene()
 	_stars.emitting = false
 
 
