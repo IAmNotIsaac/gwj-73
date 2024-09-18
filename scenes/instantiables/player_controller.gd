@@ -11,7 +11,7 @@ const _ICON_STRIKE_INTERFACE := preload("res://assets/textures/icon_strike_inter
 const _ICON_POSSESS := preload("res://assets/textures/icon_possess.svg")
 const _ZOOM_DEFAULT := 1.0
 const _ZOOM_SELECTED := 1.1
-const _TIME_COMPREHENSION := 0.5
+const _TIME_COMPREHENSION := 1.0
 
 @export var camera: Camera2D
 @export var moves_per_turn := 1
@@ -143,7 +143,6 @@ func _handle_click_root(button_index: MouseButton, grid_position: Vector2i, boar
 	
 	var center := (top_left + bot_right) * 0.5
 	_camera_settings(center, minf(minimum_zoom_factor, _ZOOM_SELECTED), false)
-	print(_camera_zoom)
 
 
 func _handle_click_move(
@@ -157,7 +156,11 @@ func _handle_click_move(
 		strikeable_interfaces: Array[BoardInterface],
 		icons: Array[Sprite2D],
 ) -> void:
-	if not movable_interfaces.is_empty() and board == movable_interfaces[0].to_board and grid_position == movable_interfaces[0].to_grid_position:
+	var new_selected_piece := board.get_piece(grid_position)
+	if new_selected_piece != null and new_selected_piece != selected_piece and new_selected_piece.team == get_team() and new_selected_piece not in _handled_pieces:
+		_handle_click_root.call_deferred(button_index, grid_position, board)
+	
+	elif not movable_interfaces.is_empty() and board == movable_interfaces[0].to_board and grid_position == movable_interfaces[0].to_grid_position:
 		_remaining_moves -= 1
 		selected_piece.move(movable_interfaces[0].to_grid_position, movable_interfaces[0].to_board)
 		_handled_pieces.push_back(selected_piece)

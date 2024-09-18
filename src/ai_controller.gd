@@ -2,7 +2,7 @@ class_name AIController
 extends Controller
 
 
-const _TIME_COMPREHENSION := 0.5
+const _TIME_COMPREHENSION := 1.0
 
 var _world: World
 
