@@ -1,5 +1,6 @@
-[gd_scene load_steps=5 format=3 uid="uid://dya1j6bhhjnj0"]
+[gd_scene load_steps=6 format=3 uid="uid://dya1j6bhhjnj0"]
 
+[ext_resource type="Script" path="res://scenes/instantiables/selection_hint.gd" id="1_55sfr"]
 [ext_resource type="Texture2D" uid="uid://cy4r1jb3ircnl" path="res://assets/textures/selection_hint_corner.png" id="1_yenb6"]
 
 [sub_resource type="Animation" id="Animation_eejv1"]
@@ -79,7 +80,7 @@ tracks/1/keys = {
 "times": PackedFloat32Array(0, 0.5, 1),
 "transitions": PackedFloat32Array(1, 1, 1),
 "update": 0,
-"values": [Vector2(56, 0), Vector2(55, 1), Vector2(55, 1)]
+"values": [Vector2(0, 0), Vector2(-1, 1), Vector2(-1, 1)]
 }
 tracks/2/type = "value"
 tracks/2/imported = false
@@ -91,7 +92,7 @@ tracks/2/keys = {
 "times": PackedFloat32Array(0, 0.5, 1),
 "transitions": PackedFloat32Array(1, 1, 1),
 "update": 0,
-"values": [Vector2(0, 24), Vector2(1, 23), Vector2(1, 23)]
+"values": [Vector2(0, 0), Vector2(1, -1), Vector2(1, -1)]
 }
 tracks/3/type = "value"
 tracks/3/imported = false
@@ -103,7 +104,7 @@ tracks/3/keys = {
 "times": PackedFloat32Array(0, 0.5, 1),
 "transitions": PackedFloat32Array(1, 1, 1),
 "update": 0,
-"values": [Vector2(56, 24), Vector2(55, 23), Vector2(55, 23)]
+"values": [Vector2(0, 0), Vector2(-1, -1), Vector2(-1, -1)]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_t36ok"]
@@ -113,6 +114,7 @@ _data = {
 }
 
 [node name="SelectionHint" type="Node2D"]
+script = ExtResource("1_55sfr")
 
 [node name="TopLeft" type="Sprite2D" parent="."]
 texture = ExtResource("1_yenb6")

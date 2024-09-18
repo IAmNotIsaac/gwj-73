@@ -7,7 +7,7 @@ signal tile_clicked(button_index: MouseButton, grid_position: Vector2i)
 signal state_changed
 
 const TILE_WIDTH := 64.0
-const TILE_HEIGHT := 32.0
+const TILE_HEIGHT := 48.0
 const _MASK_TYPE := 0b0000_1111
 const _MASK_TEAM := 0b1111_0000
 const _BOARD_TEXTURE := preload("res://assets/textures/board.png")
