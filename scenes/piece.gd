@@ -344,14 +344,15 @@ func mark_immovable() -> void:
 	_sprite.modulate = Color("707070")
 
 
-func move(to: Vector2i) -> void:
-	var dx := float((to.x - grid_position.x) * Board.TILE_WIDTH)
-	var dy := float((to.y - grid_position.y) * Board.TILE_HEIGHT)
-	
+func move(to: Vector2i, to_board: Board = null) -> void:
+	var pi := position
+	if to_board != null:
+		board = to_board
 	grid_position = to
+	var pf := position
 	
-	_shadow.position = Vector2(-dx, -dy)
-	_sprite.position = Vector2(-dx, -dy)
+	_shadow.position = pi - pf
+	_sprite.position = pi - pf
 	var anim_time := _ANIM_TIME_PIECE_MOVE
 	var jump_y = min(_sprite.position.y - 16.0, -16.0)
 	

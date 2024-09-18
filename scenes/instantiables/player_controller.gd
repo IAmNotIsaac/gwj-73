@@ -140,16 +140,14 @@ func _handle_click_move(
 ) -> void:
 	if not movable_interfaces.is_empty() and board == movable_interfaces[0].to_board and grid_position == movable_interfaces[0].to_grid_position:
 		_remaining_moves -= 1
-		selected_piece.board = movable_interfaces[0].to_board
-		selected_piece.move(movable_interfaces[0].to_grid_position)
+		selected_piece.move(movable_interfaces[0].to_grid_position, movable_interfaces[0].to_board)
 		_handled_pieces.push_back(selected_piece)
 		selected_piece.mark_immovable()
 	
 	elif not strikeable_interfaces.is_empty() and board == strikeable_interfaces[0].to_board and grid_position == strikeable_interfaces[0].to_grid_position:
 		_remaining_moves -= 1
 		strikeable_interfaces[0].to_board.get_piece(strikeable_interfaces[0].to_grid_position).kill()
-		selected_piece.board = strikeable_interfaces[0].to_board
-		selected_piece.move(strikeable_interfaces[0].to_grid_position)
+		selected_piece.move(strikeable_interfaces[0].to_grid_position, strikeable_interfaces[0].to_board)
 		_handled_pieces.push_back(selected_piece)
 		selected_piece.mark_immovable()
 	
