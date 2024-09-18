@@ -1,14 +1,16 @@
-[gd_scene load_steps=5 format=3 uid="uid://cgut83635k6rj"]
+[gd_scene load_steps=6 format=3 uid="uid://cgut83635k6rj"]
 
 [ext_resource type="Script" path="res://singletons/background.gd" id="1_3chxd"]
 [ext_resource type="Texture2D" uid="uid://dt51bfep5unc6" path="res://assets/textures/backgrounds/background_shapes_0.png" id="1_i6wgu"]
 [ext_resource type="Texture2D" uid="uid://bpnf58sr04402" path="res://assets/textures/backgrounds/background_shapes_1.png" id="2_elsta"]
 [ext_resource type="Texture2D" uid="uid://6ptf0vn7cr0q" path="res://assets/textures/backgrounds/background_shapes_2.png" id="3_pbrwm"]
+[ext_resource type="Texture2D" uid="uid://d0pkyxnwtl3la" path="res://assets/textures/backgrounds/starry_space_pattern.png" id="5_nba2r"]
 
 [node name="Background" type="Node2D"]
 script = ExtResource("1_3chxd")
 
 [node name="Shapes" type="Node2D" parent="."]
+visible = false
 modulate = Color(0.577008, 0.577008, 0.577008, 1)
 
 [node name="2" type="Parallax2D" parent="Shapes"]
@@ -38,3 +40,36 @@ repeat_times = 5
 [node name="Sprite2D" type="Sprite2D" parent="Shapes/0"]
 texture = ExtResource("1_i6wgu")
 centered = false
+
+[node name="Space" type="Node2D" parent="."]
+
+[node name="Darkness" type="Parallax2D" parent="Space"]
+repeat_size = Vector2(512, 512)
+repeat_times = 5
+
+[node name="ColorRect" type="ColorRect" parent="Space/Darkness"]
+offset_right = 512.0
+offset_bottom = 512.0
+color = Color(0, 0, 0, 1)
+
+[node name="StarsDim" type="Parallax2D" parent="Space"]
+scroll_scale = Vector2(0.7, 0.7)
+scroll_offset = Vector2(500, 500)
+repeat_size = Vector2(378, 378)
+autoscroll = Vector2(5, 5)
+repeat_times = 10
+
+[node name="Sprite2D" type="Sprite2D" parent="Space/StarsDim"]
+modulate = Color(0.734854, 0.586391, 0.553312, 1)
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("5_nba2r")
+
+[node name="Stars" type="Parallax2D" parent="Space"]
+modulate = Color(1, 1, 1, 0.603922)
+scroll_scale = Vector2(1.1, 1.1)
+repeat_size = Vector2(756, 756)
+autoscroll = Vector2(5, 5)
+repeat_times = 5
+
+[node name="Sprite2D" type="Sprite2D" parent="Space/Stars"]
+texture = ExtResource("5_nba2r")
