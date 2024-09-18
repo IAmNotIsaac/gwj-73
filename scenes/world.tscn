@@ -13,6 +13,8 @@
 y_sort_enabled = true
 script = ExtResource("1_brwlp")
 
+[node name="Background" parent="." instance=ExtResource("8_a47m7")]
+
 [node name="TurnManager" type="Node" parent="."]
 script = ExtResource("6_vm1tm")
 
@@ -78,5 +80,3 @@ team = 1
 type = 6
 grid_position = Vector2i(6, 3)
 board = NodePath("../Board")
-
-[node name="Background" parent="." instance=ExtResource("8_a47m7")]

@@ -9,6 +9,7 @@
 [node name="Background" type="Node2D"]
 z_index = -1000
 script = ExtResource("1_3chxd")
+metadata/_edit_lock_ = true
 
 [node name="Shapes" type="Node2D" parent="."]
 modulate = Color(0.577008, 0.577008, 0.577008, 1)
