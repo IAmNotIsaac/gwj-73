@@ -22,7 +22,6 @@ shader_parameter/tex = SubResource("GradientTexture2D_7ykyr")
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_3omb4"]
 shader = ExtResource("2_1ay55")
-shader_parameter/color = Color(1, 0.7, 0, 1)
 shader_parameter/direction = Vector2(1, 1)
 
 [sub_resource type="Gradient" id="Gradient_g44nr"]

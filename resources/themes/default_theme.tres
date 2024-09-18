@@ -1,0 +1,17 @@
+[gd_resource type="Theme" load_steps=4 format=3 uid="uid://c3d5oegbtblqx"]
+
+[ext_resource type="Texture2D" uid="uid://drsrna7fsfmhg" path="res://assets/textures/backgrounds/diamond.png" id="1_vew6t"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_rc5wq"]
+texture = ExtResource("1_vew6t")
+axis_stretch_horizontal = 1
+axis_stretch_vertical = 1
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_xg4dq"]
+texture = ExtResource("1_vew6t")
+axis_stretch_horizontal = 1
+axis_stretch_vertical = 1
+
+[resource]
+Panel/styles/panel = SubResource("StyleBoxTexture_rc5wq")
+PanelContainer/styles/panel = SubResource("StyleBoxTexture_xg4dq")

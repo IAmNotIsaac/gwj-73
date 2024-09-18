@@ -36,8 +36,8 @@ func _ready() -> void:
 		printerr("BoardInterface expects parent to be a Board")
 		return
 	
-	if get_tree().current_scene is World:
-		_world = get_tree().current_scene
+	if get_parent().get_parent() is World:
+		_world = get_parent().get_parent()
 		_camera_controller = _world.get_camera_controller()
 	
 	_update_parabola()

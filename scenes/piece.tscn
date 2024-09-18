@@ -960,7 +960,7 @@ script = ExtResource("1_jfn20")
 texture_filter = 1
 position = Vector2(0, -24)
 sprite_frames = SubResource("SpriteFrames_riloh")
-animation = &"3_b"
+animation = &"0_w"
 
 [node name="Shadow" type="Sprite2D" parent="."]
 texture = ExtResource("2_3o6u8")
