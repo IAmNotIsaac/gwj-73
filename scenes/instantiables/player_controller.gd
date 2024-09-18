@@ -129,5 +129,8 @@ func _handle_click_move(
 	_camera_settings(_camera_position, _ZOOM_DEFAULT, true)
 	
 	if _remaining_moves <= 0:
+		for piece in _handled_pieces:
+			_handled_pieces.erase(piece)
+			piece.mark_movable()
 		await get_tree().create_timer(_TIME_COMPREHENSION).timeout
 		turn_passed.emit()
