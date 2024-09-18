@@ -10,7 +10,6 @@
 script = ExtResource("1_3chxd")
 
 [node name="Shapes" type="Node2D" parent="."]
-visible = false
 modulate = Color(0.577008, 0.577008, 0.577008, 1)
 
 [node name="2" type="Parallax2D" parent="Shapes"]
@@ -42,6 +41,7 @@ texture = ExtResource("1_i6wgu")
 centered = false
 
 [node name="Space" type="Node2D" parent="."]
+visible = false
 
 [node name="Darkness" type="Parallax2D" parent="Space"]
 repeat_size = Vector2(512, 512)
