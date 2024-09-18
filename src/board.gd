@@ -50,10 +50,6 @@ func _init() -> void:
 	_click_area.mouse_moved.connect(_on_mouse_moved)
 	
 	_click_area_shape.shape = RectangleShape2D.new()
-	_click_area_shape.shape.size.x = size.x * TILE_WIDTH
-	_click_area_shape.shape.size.y = size.y * TILE_HEIGHT
-	_click_area_shape.position.x = float(size.x * TILE_WIDTH) * 0.5
-	_click_area_shape.position.y = float(size.y * TILE_HEIGHT) * 0.5
 	
 	_selection_hint.hide()
 	
@@ -81,6 +77,11 @@ func _enter_tree() -> void:
 	
 	if get_parent() is World:
 		get_parent().register_board(self)
+	
+	_click_area_shape.shape.size.x = size.x * TILE_WIDTH
+	_click_area_shape.shape.size.y = size.y * TILE_HEIGHT
+	_click_area_shape.position.x = float(size.x * TILE_WIDTH) * 0.5
+	_click_area_shape.position.y = float(size.y * TILE_HEIGHT) * 0.5
 	
 	reload_board_state()
 
