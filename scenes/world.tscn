@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=3 uid="uid://bkk3xrh2lihv7"]
+[gd_scene load_steps=8 format=3 uid="uid://bkk3xrh2lihv7"]
 
 [ext_resource type="Script" path="res://scenes/world.gd" id="1_brwlp"]
 [ext_resource type="PackedScene" uid="uid://nicdfdklwlrq" path="res://scenes/instantiables/player_controller.tscn" id="1_hprhp"]
@@ -6,6 +6,7 @@
 [ext_resource type="Script" path="res://src/board.gd" id="2_qor4q"]
 [ext_resource type="Script" path="res://src/ai_controller.gd" id="5_pufvl"]
 [ext_resource type="Script" path="res://src/turn_manager.gd" id="6_vm1tm"]
+[ext_resource type="PackedScene" uid="uid://drcui3tw3c1k" path="res://scenes/instantiables/board_interface.tscn" id="7_mg0yf"]
 
 [node name="World" type="Node2D"]
 y_sort_enabled = true
@@ -26,6 +27,10 @@ position_smoothing_enabled = true
 [node name="Board" type="Node2D" parent="."]
 position = Vector2(64, 64)
 script = ExtResource("2_qor4q")
+
+[node name="BoardInterface" parent="Board" node_paths=PackedStringArray("to_board") instance=ExtResource("7_mg0yf")]
+to_board = NodePath("..")
+to_grid_position = Vector2i(2, 2)
 
 [node name="Piece" parent="." node_paths=PackedStringArray("board") instance=ExtResource("1_k4efd")]
 position = Vector2(288, 304)
@@ -73,3 +78,8 @@ team = 1
 type = 6
 grid_position = Vector2i(6, 3)
 board = NodePath("../Board")
+
+[node name="Board2" type="Node2D" parent="."]
+position = Vector2(778, 228)
+script = ExtResource("2_qor4q")
+size = Vector2i(4, 8)

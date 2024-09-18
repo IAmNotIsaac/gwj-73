@@ -1,0 +1,56 @@
+[gd_scene load_steps=11 format=3 uid="uid://drcui3tw3c1k"]
+
+[ext_resource type="Script" path="res://scenes/instantiables/board_interface.gd" id="1_nn17t"]
+[ext_resource type="Shader" path="res://shaders/uv_cycler.gdshader" id="2_1ay55"]
+[ext_resource type="Script" path="res://src/parabola_line.gd" id="2_ak216"]
+[ext_resource type="Shader" path="res://shaders/color_cycler.gdshader" id="2_ndiio"]
+[ext_resource type="Texture2D" uid="uid://biff00oindb7a" path="res://assets/textures/dash_1_1.png" id="3_um7py"]
+[ext_resource type="Texture2D" uid="uid://c2ydygtoe4j3s" path="res://assets/textures/interface_land.svg" id="5_doa8v"]
+
+[sub_resource type="Gradient" id="Gradient_yj2t3"]
+offsets = PackedFloat32Array(0, 0.5, 1)
+colors = PackedColorArray(0.77084, 0.770839, 0.770839, 1, 0.129558, 0.129559, 0.129558, 1, 0.772549, 0.772549, 0.772549, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_7ykyr"]
+gradient = SubResource("Gradient_yj2t3")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_3iudn"]
+shader = ExtResource("2_ndiio")
+shader_parameter/direction = Vector2(1, 1)
+shader_parameter/tex = SubResource("GradientTexture2D_7ykyr")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_3omb4"]
+shader = ExtResource("2_1ay55")
+shader_parameter/color = Color(1, 0.7, 0, 1)
+shader_parameter/direction = Vector2(1, 1)
+
+[node name="BoardInterface" type="Node"]
+script = ExtResource("1_nn17t")
+
+[node name="LineBack" type="Line2D" parent="."]
+material = SubResource("ShaderMaterial_3iudn")
+width = 9.0
+begin_cap_mode = 2
+end_cap_mode = 2
+
+[node name="LineActive" type="Line2D" parent="."]
+width = 4.0
+default_color = Color(0.716152, 0, 0.374822, 1)
+begin_cap_mode = 2
+end_cap_mode = 2
+
+[node name="ParabolaLine2D" type="Node2D" parent="."]
+texture_filter = 1
+texture_repeat = 2
+material = SubResource("ShaderMaterial_3omb4")
+script = ExtResource("2_ak216")
+target_position = Vector2(500, 0)
+amplitude = 100.0
+detail = 50
+width = 5.0
+texture = ExtResource("3_um7py")
+begin_cap_mode = 2
+end_cap_mode = 2
+
+[node name="InterfaceLand" type="Sprite2D" parent="."]
+texture = ExtResource("5_doa8v")
