@@ -48,3 +48,7 @@ func set_zoom(zoom: float) -> void:
 
 func set_free(free: bool) -> void:
 	_camera_free = free
+
+
+func reset_zoom() -> void:
+	_camera_zoom = 1.0
