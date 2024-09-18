@@ -34,6 +34,7 @@ position_smoothing_enabled = true
 [node name="Board" type="Node2D" parent="."]
 position = Vector2(64, 64)
 script = ExtResource("2_qor4q")
+interfaces_adverse_team = null
 
 [node name="BoardInterface" parent="Board" node_paths=PackedStringArray("to_board") instance=ExtResource("7_mg0yf")]
 to_board = NodePath("../../Board2")
@@ -89,6 +90,7 @@ board = NodePath("../Board")
 position = Vector2(1309, 144)
 script = ExtResource("2_qor4q")
 size = Vector2i(4, 8)
+interfaces_adverse_team = null
 
 [node name="Piece8" parent="." node_paths=PackedStringArray("board") instance=ExtResource("1_k4efd")]
 position = Vector2(1469, 240)

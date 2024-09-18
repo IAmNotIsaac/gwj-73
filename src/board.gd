@@ -20,6 +20,8 @@ const _SELECTION_HINT := preload("res://scenes/instantiables/selection_hint.tscn
 	set(value):
 		size = value
 		_update_size()
+## When this team reports having 0 pieces on the board, unlock all interfaces
+@export var interfaces_adverse_team := Piece.Team.WHITE
 
 var _board_state := PackedByteArray()
 var _sprite := Sprite2D.new()
@@ -28,6 +30,8 @@ var _click_area := ClickArea.new()
 var _click_area_shape := CollisionShape2D.new()
 var _selection_hint := _SELECTION_HINT.instantiate()
 var _interfaces: Array[Node]
+var _team_count := { Piece.Team.WHITE: 0, Piece.Team.BLACK: 0 }
+
 
 
 func _init() -> void:
@@ -180,3 +184,19 @@ func get_interface(grid_position: Vector2i) -> BoardInterface:
 func unlock_interfaces() -> void:
 	for interface in _interfaces:
 		interface.unlock()
+
+
+func report_increase(team: Piece.Team) -> void:
+	if team not in _team_count:
+		_team_count[team] = 0
+	_team_count[team] += 1
+
+
+func report_decrease(team: Piece.Team) -> void:
+	if team not in _team_count:
+		_team_count[team] = 0
+		printerr("Should not be reporting a decrease in team count that has not before reported an increase.")
+	_team_count[team] -= 1
+	
+	if _team_count[interfaces_adverse_team] == 0:
+		unlock_interfaces()

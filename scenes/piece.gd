@@ -98,9 +98,11 @@ const _ANIM_TIME_PIECE_KILL := 1.0
 @export var board: Board:
 	set(v):
 		if board != null:
+			board.report_decrease(team)
 			board.state_changed.disconnect(clear_caches)
 		board = v
 		if board != null:
+			board.report_increase(team)
 			board.state_changed.connect(clear_caches)
 		clear_caches()
 		_update_position()
