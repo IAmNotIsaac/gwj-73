@@ -92,7 +92,8 @@ func _handle_click_root(button_index: MouseButton, grid_position: Vector2i, boar
 	
 	selected_piece.mark_selected()
 	var pos := (Vector2(grid_position) + Vector2.ONE * 0.5) * Vector2(Board.TILE_WIDTH, Board.TILE_HEIGHT)
-	_camera_settings(board.position + pos, _ZOOM_SELECTED, false)
+	var top_left := Vector2.INF
+	var bot_right := -Vector2.INF
 	
 	for i in movable_interfaces:
 		var icon := Sprite2D.new()
@@ -101,6 +102,8 @@ func _handle_click_root(button_index: MouseButton, grid_position: Vector2i, boar
 		icon.position = i.to_board.position + Vector2(i.to_grid_position * Vector2i(Board.TILE_WIDTH, Board.TILE_HEIGHT))
 		icon.position += Vector2(float(Board.TILE_WIDTH), float(Board.TILE_HEIGHT)) * 0.5
 		icons.push_back(icon)
+		top_left = top_left.min(icon.position)
+		bot_right = bot_right.max(icon.position)
 	
 	for i in strikeable_interfaces:
 		var icon := Sprite2D.new()
@@ -109,6 +112,8 @@ func _handle_click_root(button_index: MouseButton, grid_position: Vector2i, boar
 		icon.position = i.to_board.position + Vector2(i.to_grid_position * Vector2i(Board.TILE_WIDTH, Board.TILE_HEIGHT))
 		icon.position += Vector2(float(Board.TILE_WIDTH), float(Board.TILE_HEIGHT)) * 0.5
 		icons.push_back(icon)
+		top_left = top_left.min(icon.position)
+		bot_right = bot_right.max(icon.position)
 	
 	for p in movable_positions:
 		var icon := Sprite2D.new()
@@ -117,6 +122,8 @@ func _handle_click_root(button_index: MouseButton, grid_position: Vector2i, boar
 		icon.position = board.position + Vector2(p * Vector2i(Board.TILE_WIDTH, Board.TILE_HEIGHT))
 		icon.position += Vector2(float(Board.TILE_WIDTH), float(Board.TILE_HEIGHT)) * 0.5
 		icons.push_back(icon)
+		top_left = top_left.min(icon.position)
+		bot_right = bot_right.max(icon.position)
 	
 	for p in strikeable_positions:
 		var icon := Sprite2D.new()
@@ -125,6 +132,18 @@ func _handle_click_root(button_index: MouseButton, grid_position: Vector2i, boar
 		icon.position = board.position + Vector2(p * Vector2i(Board.TILE_WIDTH, Board.TILE_HEIGHT))
 		icon.position += Vector2(float(Board.TILE_WIDTH), float(Board.TILE_HEIGHT)) * 0.5
 		icons.push_back(icon)
+		top_left = top_left.min(icon.position)
+		bot_right = bot_right.max(icon.position)
+	
+	top_left -= Vector2.ONE * 64.0
+	bot_right += Vector2.ONE * 64.0
+	var spread := bot_right - top_left
+	var minimum_zoom := get_viewport().get_visible_rect().size / spread
+	var minimum_zoom_factor := minf(minimum_zoom.x, minimum_zoom.y)
+	
+	var center := (top_left + bot_right) * 0.5
+	_camera_settings(center, minf(minimum_zoom_factor, _ZOOM_SELECTED), false)
+	print(_camera_zoom)
 
 
 func _handle_click_move(
