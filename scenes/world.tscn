@@ -34,8 +34,8 @@ position = Vector2(64, 64)
 script = ExtResource("2_qor4q")
 
 [node name="BoardInterface" parent="Board" node_paths=PackedStringArray("to_board") instance=ExtResource("7_mg0yf")]
+grid_position = Vector2i(7, 7)
 to_board = NodePath("../../Board2")
-to_grid_position = Vector2i(3, 7)
 
 [node name="Piece" parent="." node_paths=PackedStringArray("board") instance=ExtResource("1_k4efd")]
 position = Vector2(288, 304)

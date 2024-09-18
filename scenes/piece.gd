@@ -85,8 +85,8 @@ const _ANIM_TIME_PIECE_KILL := 1.0
 		_update_sprite()
 @export var grid_position := Vector2i.ZERO:
 	set(v):
-		if board and not Engine.is_editor_hint():
-			board.clear_piece(grid_position)
+		#if board and not Engine.is_editor_hint():
+			#board.clear_piece(grid_position)
 		grid_position = v
 		clear_caches()
 		_update_sprite()
@@ -354,9 +354,10 @@ func mark_immovable() -> void:
 
 
 func move(to: Vector2i, to_board: Board = null) -> void:
-	var pi := position
+	board.clear_piece(grid_position)
 	if to_board != null:
 		board = to_board
+	var pi := position
 	grid_position = to
 	var pf := position
 	
