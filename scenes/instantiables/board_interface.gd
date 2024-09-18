@@ -27,7 +27,8 @@ var _camera_controller: CameraController
 @onready var _line_back := $LineBack
 @onready var _line_active := $LineActive
 @onready var _land := $InterfaceLand
-@onready var _stars := $Stars
+@onready var _stars_begin := $StarsBegin
+@onready var _stars_end := $StarsEnd
 
 
 func _ready() -> void:
@@ -64,7 +65,8 @@ func _update_parabola() -> void:
 	_line_back.position = from
 	_line_active.position = from
 	_land.position = from + to
-	_stars.position = from
+	_stars_begin.position = from
+	_stars_end.position = from
 
 
 func unlock() -> void:
@@ -72,23 +74,23 @@ func unlock() -> void:
 		return
 	_unlocked = true
 	
-	_stars.emitting = true
+	_stars_begin.emitting = true
 	var initial_camera_pos = _camera_controller.get_position()
 	_camera_controller.set_position(_parabola.position)
 	_camera_controller.set_free(false)
 	_world.begin_cutscene()
 	await get_tree().create_timer(_TIME_COMPREHENSION).timeout
+	_stars_end.emitting = true
 	for p in _parabola._line.points:
 		_camera_controller.set_position(_parabola.position + p)
 		_line_back.add_point(p)
 		_line_active.add_point(p)
-		_stars.position = p + _parabola.position
+		_stars_end.position = p + _parabola.position
 		await get_tree().create_timer(0.01).timeout
 	await get_tree().create_timer(_TIME_COMPREHENSION).timeout
 	_camera_controller.set_position(initial_camera_pos)
 	_camera_controller.set_free(true)
 	_world.end_cutscene()
-	_stars.emitting = false
 
 
 func is_locked() -> bool:

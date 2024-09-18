@@ -63,7 +63,25 @@ end_cap_mode = 2
 [node name="InterfaceLand" type="Sprite2D" parent="."]
 texture = ExtResource("5_doa8v")
 
-[node name="Stars" type="CPUParticles2D" parent="."]
+[node name="StarsBegin" type="CPUParticles2D" parent="."]
+texture_filter = 1
+emitting = false
+amount = 16
+lifetime = 0.5
+texture = ExtResource("7_w0u7p")
+emission_shape = 1
+emission_sphere_radius = 5.0
+direction = Vector2(0, -1)
+spread = 15.0
+gravity = Vector2(0, -200)
+initial_velocity_min = 5.0
+initial_velocity_max = 20.0
+angular_velocity_min = -30.0
+angular_velocity_max = 30.0
+color_ramp = SubResource("Gradient_g44nr")
+color_initial_ramp = SubResource("Gradient_rolil")
+
+[node name="StarsEnd" type="CPUParticles2D" parent="."]
 texture_filter = 1
 emitting = false
 amount = 16
