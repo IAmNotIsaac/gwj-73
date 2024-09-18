@@ -1,10 +1,11 @@
-[gd_scene load_steps=8 format=3 uid="uid://bhm65qdan0ll2"]
+[gd_scene load_steps=9 format=3 uid="uid://bhm65qdan0ll2"]
 
 [ext_resource type="Script" path="res://scenes/piece.gd" id="1_jfn20"]
 [ext_resource type="Texture2D" uid="uid://bii5gpthli3mv" path="res://assets/textures/shadow.svg" id="2_3o6u8"]
 [ext_resource type="Texture2D" uid="uid://bx03aq0xv012f" path="res://assets/textures/placeholder_pieces.png" id="2_j74uc"]
 [ext_resource type="Texture2D" uid="uid://bcgnsxxh237ht" path="res://assets/textures/particles/smoke0.png" id="4_vbp2o"]
 [ext_resource type="Texture2D" uid="uid://cnyruyfwde54y" path="res://assets/textures/particles/smoke1.png" id="5_u6x3f"]
+[ext_resource type="Texture2D" uid="uid://bxruex01ip6ec" path="res://assets/textures/direction_hint.png" id="6_sflps"]
 
 [sub_resource type="Curve" id="Curve_aoy1r"]
 _data = [Vector2(0, 0.5), 0.0, 0.0, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
@@ -57,3 +58,9 @@ initial_velocity_min = 10.0
 initial_velocity_max = 50.0
 scale_amount_curve = SubResource("Curve_aoy1r")
 color_ramp = SubResource("Gradient_g012n")
+
+[node name="DirectionHint" type="Sprite2D" parent="."]
+texture_filter = 1
+position = Vector2(0, -16)
+texture = ExtResource("6_sflps")
+vframes = 2

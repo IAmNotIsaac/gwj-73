@@ -1,3 +1,4 @@
+@tool
 class_name Piece
 extends Node2D
 
@@ -72,6 +73,7 @@ const _ANIM_TIME_PIECE_KILL := 1.0
 @export var type := Type.PAWN:
 	set(v):
 		type = v
+		_is_pawn = type == Type.PAWN
 		clear_caches()
 		if board and not Engine.is_editor_hint():
 			board.set_piece(grid_position, type, team)
@@ -105,9 +107,18 @@ var _docache_movable_positions := false
 var _cache_movable_positions: Array[Vector2i] = []
 var _docache_strikeable_positions := false
 var _cache_strikeable_positions: Array[Vector2i] = []
+var _is_pawn := type == Type.PAWN:
+	set(v):
+		_is_pawn = v
+		_update_sprite()
+var _is_moving := false:
+	set(v):
+		_is_moving = v
+		_update_sprite()
 
 @onready var _sprite := $Sprite2D
 @onready var _shadow := $Shadow
+@onready var _direction_hint := $DirectionHint
 @onready var _particles_smoke_0 = $ParticlesSmoke0
 @onready var _particles_smoke_1 = $ParticlesSmoke1
 
@@ -141,6 +152,9 @@ func _update_sprite() -> void:
 	
 	_sprite.frame_coords.x = clampi(int(type) - 1, 0, 5)
 	_sprite.frame_coords.y = clampi(int(team), 0, 1)
+	_direction_hint.frame_coords.y = clampi(int(team), 0, 1)
+	_direction_hint.rotation = Vector2(Direction.vector(direction)).angle()
+	_direction_hint.visible = _is_pawn and not _is_moving
 
 
 func get_movable_positions() -> Array[Vector2i]:
@@ -306,6 +320,7 @@ func move(to: Vector2i) -> void:
 	var anim_time := _ANIM_TIME_PIECE_MOVE
 	var jump_y = min(_sprite.position.y - 16.0, -16.0)
 	
+	_is_moving = true
 	var tween := get_tree().create_tween().set_parallel(true)
 	tween.tween_property(_sprite, ^"position:x", 0.0, anim_time) \
 			.set_trans(Tween.TRANS_EXPO) \
@@ -326,6 +341,8 @@ func move(to: Vector2i) -> void:
 	tween.tween_property(_particles_smoke_0, ^"emitting", true, 0.0) \
 			.set_delay(anim_time)
 	tween.tween_property(_particles_smoke_1, ^"emitting", true, 0.0) \
+			.set_delay(anim_time)
+	tween.tween_property(self, ^"_is_moving", false, 0.0) \
 			.set_delay(anim_time)
 
 
