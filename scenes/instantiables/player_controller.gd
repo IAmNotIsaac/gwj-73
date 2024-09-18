@@ -9,6 +9,7 @@ const _ICON_STRIKE := preload("res://assets/textures/icon_strike.svg")
 const _ICON_POSSESS := preload("res://assets/textures/icon_possess.svg")
 const _ZOOM_DEFAULT := 1.0
 const _ZOOM_SELECTED := 1.1
+const _TIME_COMPREHENSION := 0.5
 
 @export var camera: Camera2D
 @export var moves_per_turn := 1
@@ -128,4 +129,5 @@ func _handle_click_move(
 	_camera_settings(_camera_position, _ZOOM_DEFAULT, true)
 	
 	if _remaining_moves <= 0:
+		await get_tree().create_timer(_TIME_COMPREHENSION).timeout
 		turn_passed.emit()
