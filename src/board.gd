@@ -15,6 +15,7 @@ const _BOARD_SHADER := preload("res://shaders/repeat.gdshader")
 const _GRADIENT_SHADER := preload("res://shaders/rect_edge_distance_alpha_gradient.gdshader")
 const _PINCH_SHADER := preload("res://shaders/pinch.gdshader")
 const _SELECTION_HINT := preload("res://scenes/instantiables/selection_hint.tscn")
+const _TIME_COMPREHENSION := 1.0
 
 @export var size := Vector2i(8, 8):
 	set(value):
@@ -199,4 +200,5 @@ func report_decrease(team: Piece.Team) -> void:
 	_team_count[team] -= 1
 	
 	if _team_count[interfaces_adverse_team] == 0:
+		await get_tree().create_timer(_TIME_COMPREHENSION).timeout
 		unlock_interfaces()
