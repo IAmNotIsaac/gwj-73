@@ -142,6 +142,7 @@ func _handle_click_move(
 		selected_piece.move(movable_interfaces[0].to_grid_position, movable_interfaces[0].to_board)
 		_handled_pieces.push_back(selected_piece)
 		selected_piece.mark_immovable()
+		camera_controller.set_position(selected_piece.position)
 	
 	elif not strikeable_interfaces.is_empty() and board == strikeable_interfaces[0].to_board and grid_position == strikeable_interfaces[0].to_grid_position:
 		_remaining_moves -= 1
@@ -149,12 +150,14 @@ func _handle_click_move(
 		selected_piece.move(strikeable_interfaces[0].to_grid_position, strikeable_interfaces[0].to_board)
 		_handled_pieces.push_back(selected_piece)
 		selected_piece.mark_immovable()
+		camera_controller.set_position(selected_piece.position)
 	
 	elif grid_position in movable_positions:
 		_remaining_moves -= 1
 		selected_piece.move(grid_position)
 		_handled_pieces.push_back(selected_piece)
 		selected_piece.mark_immovable()
+		camera_controller.set_position(selected_piece.position)
 	
 	elif grid_position in strikeable_positions:
 		_remaining_moves -= 1
@@ -162,6 +165,7 @@ func _handle_click_move(
 		selected_piece.move(grid_position)
 		_handled_pieces.push_back(selected_piece)
 		selected_piece.mark_immovable()
+		camera_controller.set_position(selected_piece.position)
 	
 	for icon in icons:
 		icon.queue_free()
