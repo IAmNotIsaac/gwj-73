@@ -147,7 +147,8 @@ func _update_position() -> void:
 		printerr("Piece (%s) is not inside board!" % self)
 		return
 	
-	board.set_piece(grid_position, type, team)
+	if not Engine.is_editor_hint():
+		board.set_piece(grid_position, type, team)
 
 
 func _update_sprite() -> void:
