@@ -26,14 +26,17 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 size_flags_vertical = 0
+mouse_filter = 2
 
 [node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer"]
 layout_mode = 2
+mouse_filter = 2
 theme_override_constants/separation = 0
 
 [node name="PanelContainer" type="PanelContainer" parent="PanelContainer/VBoxContainer"]
 custom_minimum_size = Vector2(0, 64)
 layout_mode = 2
+mouse_filter = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_qchxu")
 
 [node name="GoldFrame" type="NinePatchRect" parent="PanelContainer/VBoxContainer/PanelContainer"]
@@ -47,27 +50,30 @@ patch_margin_bottom = 16
 [node name="MarginContainer" type="MarginContainer" parent="PanelContainer/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 3
+mouse_filter = 2
 theme_override_constants/margin_left = 64
 theme_override_constants/margin_right = 64
 theme_override_constants/margin_bottom = 64
 
-[node name="PanelContainer2" type="PanelContainer" parent="PanelContainer/VBoxContainer/MarginContainer"]
+[node name="PanelContainer" type="PanelContainer" parent="PanelContainer/VBoxContainer/MarginContainer"]
 layout_mode = 2
 size_flags_vertical = 3
+mouse_filter = 2
 theme_override_styles/panel = SubResource("StyleBoxEmpty_vtu2k")
 
-[node name="SubViewportContainer" type="SubViewportContainer" parent="PanelContainer/VBoxContainer/MarginContainer/PanelContainer2"]
+[node name="SubViewportContainer" type="SubViewportContainer" parent="PanelContainer/VBoxContainer/MarginContainer/PanelContainer"]
 layout_mode = 2
 stretch = true
 
-[node name="SubViewport" type="SubViewport" parent="PanelContainer/VBoxContainer/MarginContainer/PanelContainer2/SubViewportContainer"]
+[node name="SubViewport" type="SubViewport" parent="PanelContainer/VBoxContainer/MarginContainer/PanelContainer/SubViewportContainer"]
 unique_name_in_owner = true
 disable_3d = true
 transparent_bg = true
+handle_input_locally = false
 size = Vector2i(1024, 520)
 render_target_update_mode = 4
 
-[node name="GoldFrame" type="NinePatchRect" parent="PanelContainer/VBoxContainer/MarginContainer/PanelContainer2"]
+[node name="GoldFrame" type="NinePatchRect" parent="PanelContainer/VBoxContainer/MarginContainer/PanelContainer"]
 layout_mode = 2
 texture = ExtResource("1_6vkef")
 patch_margin_left = 16

@@ -35,7 +35,6 @@ var _interfaces: Array[Node]
 var _team_count := { Piece.Team.WHITE: 0, Piece.Team.BLACK: 0 }
 
 
-
 func _init() -> void:
 	_sprite.centered = false
 	_sprite.texture = _BOARD_TEXTURE
@@ -51,8 +50,8 @@ func _init() -> void:
 	_gradient.show_behind_parent = true
 	
 	_click_area.clicked.connect(_on_clicked)
-	_click_area.mouse_entered.connect(mouse_entered.emit)
-	_click_area.mouse_exited.connect(mouse_exited.emit)
+	_click_area.hacky_mouse_entered.connect(mouse_entered.emit)
+	_click_area.hacky_mouse_exited.connect(mouse_exited.emit)
 	_click_area.mouse_moved.connect(_on_mouse_moved)
 	
 	_click_area_shape.shape = RectangleShape2D.new()
