@@ -82,12 +82,14 @@ const _ANIM_TIME_PIECE_KILL := 1.0
 	set(v):
 		direction = v
 		clear_caches()
+		_update_sprite()
 @export var grid_position := Vector2i.ZERO:
 	set(v):
 		if board and not Engine.is_editor_hint():
 			board.clear_piece(grid_position)
 		grid_position = v
 		clear_caches()
+		_update_sprite()
 		_update_position()
 @export var move_count := 0:
 	set(v):
@@ -152,8 +154,8 @@ func _update_sprite() -> void:
 	
 	_sprite.frame_coords.x = clampi(int(type) - 1, 0, 5)
 	_sprite.frame_coords.y = clampi(int(team), 0, 1)
-	_direction_hint.frame_coords.y = clampi(int(team), 0, 1)
-	_direction_hint.rotation = Vector2(Direction.vector(direction)).angle()
+	var c := "w" if (grid_position.x + grid_position.y) % 2 == 0 else "b"
+	_direction_hint.play(str(direction) + "_" + c)
 	_direction_hint.visible = _is_pawn and not _is_moving
 
 
