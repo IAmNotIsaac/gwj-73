@@ -98,7 +98,7 @@ func _on_clicked(button_index: MouseButton, click_position: Vector2) -> void:
 func _on_mouse_moved(mouse_position: Vector2) -> void:
 	var p := get_global_mouse_position() - position
 	var g := Vector2i(p / Vector2(TILE_WIDTH, TILE_HEIGHT))
-	_selection_hint.position = Vector2(g * Vector2i(TILE_WIDTH, TILE_HEIGHT))
+	_selection_hint.position = position + Vector2(g * Vector2i(TILE_WIDTH, TILE_HEIGHT))
 
 
 func reload_board_state() -> void:

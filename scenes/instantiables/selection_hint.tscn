@@ -114,6 +114,7 @@ _data = {
 }
 
 [node name="SelectionHint" type="Node2D"]
+top_level = true
 script = ExtResource("1_55sfr")
 
 [node name="TopLeft" type="Sprite2D" parent="."]
