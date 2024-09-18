@@ -10,6 +10,7 @@ const _PAN_FACTOR := 25.0
 var _camera_position := Vector2.ZERO
 var _camera_zoom := 1.0
 var _camera_free := true
+var _follow_node: Node
 
 
 func _ready() -> void:
@@ -28,6 +29,7 @@ func _process(delta: float) -> void:
 		mp = mp.clamp(Vector2.ZERO, Vector2.ONE)
 		mp = (mp - Vector2(0.5, 0.5)) * 2.0;
 		var pan := mp * _PAN_FACTOR
+		_camera_position = _follow_node.global_position if _follow_node != null else _camera_position
 		camera.position = _camera_position + pan
 		camera.zoom = camera.zoom.lerp(Vector2.ONE * _camera_zoom, 0.25)
 
@@ -52,3 +54,11 @@ func set_free(free: bool) -> void:
 
 func reset_zoom() -> void:
 	_camera_zoom = 1.0
+
+
+func follow(node: Node2D) -> void:
+	_follow_node = node
+
+
+func stop_follow() -> void:
+	_follow_node = null

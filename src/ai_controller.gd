@@ -3,6 +3,7 @@ extends Controller
 
 
 const _TIME_COMPREHENSION := 1.0
+const _ZOOM := 0.9
 
 @export var camera_controller: CameraController
 
@@ -31,6 +32,10 @@ func _turn_begun() -> void:
 			continue
 		
 		for my_piece: Piece in my_pieces:
+			camera_controller.follow(my_piece)
+			camera_controller.set_zoom(_ZOOM)
+			await get_tree().create_timer(_TIME_COMPREHENSION).timeout
+			
 			# If can strike, do so
 			if not my_piece.get_strikeable_positions().is_empty():
 				var strike_pos = my_piece.get_strikeable_positions().pick_random()
@@ -38,11 +43,9 @@ func _turn_begun() -> void:
 				enemy_piece.kill()
 				my_piece.move(strike_pos)
 				enemy_pieces.erase(enemy_piece)
-				await get_tree().create_timer(_TIME_COMPREHENSION).timeout
-				continue
 			
 			# If can move, do os
-			if not my_piece.get_movable_positions().is_empty():
+			elif not my_piece.get_movable_positions().is_empty():
 				var closest_enemy: Piece
 				var closest_dist := INF
 				for enemy_piece in enemy_pieces:
@@ -63,10 +66,12 @@ func _turn_begun() -> void:
 					if comp_dist < closest_dist:
 						closest_achievable_position = pos
 						closest_dist = comp_dist
-				
 				my_piece.move(closest_achievable_position)
-				await get_tree().create_timer(_TIME_COMPREHENSION).timeout
+			
+			await get_tree().create_timer(_TIME_COMPREHENSION).timeout
 	
+	camera_controller.reset_zoom()
+	camera_controller.stop_follow()
 	turn_passed.emit()
 
 
