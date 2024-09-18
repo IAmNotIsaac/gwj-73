@@ -6,6 +6,8 @@ const _CAMERA_SPEED := 500.0
 const _PAN_FACTOR := 25.0
 const _ICON_MOVE := preload("res://assets/textures/icon_move.svg")
 const _ICON_STRIKE := preload("res://assets/textures/icon_strike.svg")
+const _ICON_MOVE_INTERFACE := preload("res://assets/textures/icon_move_interface.svg")
+const _ICON_STRIKE_INTERFACE := preload("res://assets/textures/icon_strike_interface.svg")
 const _ICON_POSSESS := preload("res://assets/textures/icon_possess.svg")
 const _ZOOM_DEFAULT := 1.0
 const _ZOOM_SELECTED := 1.1
@@ -76,12 +78,37 @@ func _handle_click_root(button_index: MouseButton, grid_position: Vector2i, boar
 	
 	var movable_positions := selected_piece.get_movable_positions()
 	var strikeable_positions := selected_piece.get_strikeable_positions()
+	var movable_interfaces := selected_piece.get_movable_interfaces()
+	var strikeable_interfaces := selected_piece.get_strikeable_interfaces()
 	var icons: Array[Sprite2D] = []
-	_click_func = _handle_click_move.bind(selected_piece, movable_positions, strikeable_positions, icons)
+	_click_func = _handle_click_move.bind(
+		selected_piece,
+		movable_positions,
+		strikeable_positions,
+		movable_interfaces,
+		strikeable_interfaces,
+		icons,
+	)
 	
 	selected_piece.mark_selected()
 	var pos := (Vector2(grid_position) + Vector2.ONE * 0.5) * Vector2(Board.TILE_WIDTH, Board.TILE_HEIGHT)
 	_camera_settings(board.position + pos, _ZOOM_SELECTED, false)
+	
+	for i in movable_interfaces:
+		var icon := Sprite2D.new()
+		add_child(icon)
+		icon.texture = _ICON_MOVE_INTERFACE
+		icon.position = i.to_board.position + Vector2(i.to_grid_position * Vector2i(Board.TILE_WIDTH, Board.TILE_HEIGHT))
+		icon.position += Vector2(float(Board.TILE_WIDTH), float(Board.TILE_HEIGHT)) * 0.5
+		icons.push_back(icon)
+	
+	for i in strikeable_interfaces:
+		var icon := Sprite2D.new()
+		add_child(icon)
+		icon.texture = _ICON_STRIKE_INTERFACE
+		icon.position = i.to_board.position + Vector2(i.to_grid_position * Vector2i(Board.TILE_WIDTH, Board.TILE_HEIGHT))
+		icon.position += Vector2(float(Board.TILE_WIDTH), float(Board.TILE_HEIGHT)) * 0.5
+		icons.push_back(icon)
 	
 	for p in movable_positions:
 		var icon := Sprite2D.new()
@@ -107,9 +134,26 @@ func _handle_click_move(
 		selected_piece: Piece,
 		movable_positions: Array[Vector2i],
 		strikeable_positions: Array[Vector2i],
+		movable_interfaces: Array[BoardInterface],
+		strikeable_interfaces: Array[BoardInterface],
 		icons: Array[Sprite2D],
 ) -> void:
-	if grid_position in movable_positions:
+	if not movable_interfaces.is_empty() and board == movable_interfaces[0].to_board and grid_position == movable_interfaces[0].to_grid_position:
+		_remaining_moves -= 1
+		selected_piece.board = movable_interfaces[0].to_board
+		selected_piece.move(movable_interfaces[0].to_grid_position)
+		_handled_pieces.push_back(selected_piece)
+		selected_piece.mark_immovable()
+	
+	elif not strikeable_interfaces.is_empty() and board == strikeable_interfaces[0].to_board and grid_position == strikeable_interfaces[0].to_grid_position:
+		_remaining_moves -= 1
+		strikeable_interfaces[0].to_board.get_piece(strikeable_interfaces[0].to_grid_position).kill()
+		selected_piece.board = strikeable_interfaces[0].to_board
+		selected_piece.move(strikeable_interfaces[0].to_grid_position)
+		_handled_pieces.push_back(selected_piece)
+		selected_piece.mark_immovable()
+	
+	elif grid_position in movable_positions:
 		_remaining_moves -= 1
 		selected_piece.move(grid_position)
 		_handled_pieces.push_back(selected_piece)

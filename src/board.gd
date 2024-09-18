@@ -27,6 +27,7 @@ var _gradient_sprite := Sprite2D.new()
 var _click_area := ClickArea.new()
 var _click_area_shape := CollisionShape2D.new()
 var _selection_hint := _SELECTION_HINT.instantiate()
+var _interfaces: Array[Node]
 
 
 func _init() -> void:
@@ -79,6 +80,10 @@ func _enter_tree() -> void:
 		get_parent().register_board(self)
 	
 	reload_board_state()
+
+
+func _ready() -> void:
+	_interfaces = get_children().filter(func(c): return c is BoardInterface)
 
 
 func _update_size() -> void:
@@ -159,3 +164,15 @@ func is_piece_strikeable(grid_position: Vector2i, striker_team: Piece.Team) -> b
 		return false
 	var victim_team := get_piece_team(grid_position)
 	return Piece.can_team_strike_team(striker_team, victim_team)
+
+
+func get_interface(grid_position: Vector2i) -> BoardInterface:
+	for interface in _interfaces:
+		if interface.grid_position == grid_position:
+			return interface
+	return null
+
+
+func unlock_interfaces() -> void:
+	for interface in _interfaces:
+		interface.unlock()

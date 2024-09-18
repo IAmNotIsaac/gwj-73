@@ -290,6 +290,37 @@ func get_strikeable_positions() -> Array[Vector2i]:
 	return _cache_strikeable_positions
 
 
+func get_movable_interfaces() -> Array[BoardInterface]:
+	if board == null:
+		return []
+	
+	var interface := board.get_interface(grid_position)
+	if interface == null:
+		return []
+	
+	if not interface.to_board.is_open(interface.to_grid_position):
+		return []
+	
+	return [interface]
+
+
+func get_strikeable_interfaces() -> Array[BoardInterface]:
+	if board == null:
+		return []
+	
+	var interface := board.get_interface(grid_position)
+	if interface == null:
+		return []
+	
+	if interface.to_board.is_open(interface.to_grid_position):
+		return []
+	
+	if not interface.to_board.is_piece_strikeable(interface.to_grid_position, team):
+		return []
+	
+	return [interface]
+
+
 func clear_caches() -> void:
 	_docache_movable_positions = false
 	_docache_strikeable_positions = false

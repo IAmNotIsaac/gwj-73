@@ -1,4 +1,5 @@
 @tool
+class_name BoardInterface
 extends Node
 
 
@@ -61,3 +62,7 @@ func unlock() -> void:
 		_line_back.add_point(p)
 		_line_active.add_point(p)
 		await get_tree().create_timer(0.005).timeout
+
+
+func is_locked() -> bool:
+	return not _unlocked
