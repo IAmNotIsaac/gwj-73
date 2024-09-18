@@ -363,6 +363,8 @@ func kill() -> void:
 	var tween := get_tree().create_tween().set_parallel(true)
 	tween.tween_callback(_shadow.hide) \
 			.set_delay(move_time)
+	tween.tween_callback(_direction_hint.hide) \
+			.set_delay(move_time)
 	tween.tween_property(_sprite, ^"modulate:a", 0.0, kill_time) \
 			.set_delay(move_time)
 	tween.tween_property(_sprite, ^"scale", Vector2(2.0, 2.0), kill_time) \
