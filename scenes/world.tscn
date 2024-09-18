@@ -20,13 +20,11 @@ script = ExtResource("6_vm1tm")
 script = ExtResource("4_hgjjn")
 camera = NodePath("../Camera2D")
 
-[node name="PlayerController" type="Node" parent="." node_paths=PackedStringArray("camera_controller")]
+[node name="PlayerController" type="Node" parent="."]
 script = ExtResource("4_p526j")
-camera_controller = NodePath("../CameraController")
 
-[node name="AIController" type="Node" parent="." node_paths=PackedStringArray("camera_controller")]
+[node name="AIController" type="Node" parent="."]
 script = ExtResource("5_pufvl")
-camera_controller = NodePath("../CameraController")
 
 [node name="Camera2D" type="Camera2D" parent="."]
 position_smoothing_enabled = true

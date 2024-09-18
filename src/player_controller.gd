@@ -6,37 +6,72 @@ const _ICON_STRIKE := preload("res://assets/textures/icon_strike.svg")
 const _ICON_MOVE_INTERFACE := preload("res://assets/textures/icon_move_interface.svg")
 const _ICON_STRIKE_INTERFACE := preload("res://assets/textures/icon_strike_interface.svg")
 const _ICON_POSSESS := preload("res://assets/textures/icon_possess.svg")
+const _SELECTION_HINT := preload("res://scenes/instantiables/selection_hint.tscn")
 const _ZOOM_DEFAULT := 1.0
 const _ZOOM_SELECTED := 1.1
 const _TIME_COMPREHENSION := 1.0
+const _REASON_HOVER_BOARD := 1
+const _REASON_MY_TURN := 1000
 
-@export var camera_controller: CameraController
 @export var moves_per_turn := 1
 
+var _camera_controller: CameraController
 var _handled_pieces: Array[Piece] = []
 var _click_func = _handle_click_root
 var _remaining_moves := 0
+var _selection_hint := _SELECTION_HINT.instantiate()
+var _reason_show_selection_hint = -_REASON_MY_TURN:
+	set(v):
+		_reason_show_selection_hint = v
+		_selection_hint.visible = _reason_show_selection_hint > 0
+
+
+func _init() -> void:
+	_selection_hint.visible = _reason_show_selection_hint > 0
+
+
+func _enter_tree() -> void:
+	super()
+	add_child(_selection_hint, false, Node.INTERNAL_MODE_BACK)
 
 
 func _ready() -> void:
-	if camera_controller == null:
-		printerr("(%s) was not assigned a camera controller!" % self)
-	
 	if get_parent() is World:
+		_camera_controller = get_parent().get_camera_controller()
 		for board in get_parent().get_boards():
+			board.mouse_entered.connect(_on_mouse_entered.bind(board))
+			board.mouse_exited.connect(_on_mouse_exited.bind(board))
+			board.mouse_moved.connect(_on_mouse_moved.bind(board))
 			board.tile_clicked.connect(_on_tile_clicked.bind(board))
+	
+	if _camera_controller == null:
+		printerr("(%s) was not assigned a camera controller!" % self)
 
 
 func _turn_begun() -> void:
 	_remaining_moves = moves_per_turn
+	_reason_show_selection_hint += _REASON_MY_TURN
 
 
 func _turn_ended() -> void:
 	_remaining_moves = 0
+	_reason_show_selection_hint -= _REASON_MY_TURN
 
 
 func _get_team() -> Piece.Team:
 	return Piece.Team.BLACK
+
+
+func _on_mouse_entered(board: Board) -> void:
+	_reason_show_selection_hint += _REASON_HOVER_BOARD
+
+
+func _on_mouse_exited(board: Board) -> void:
+	_reason_show_selection_hint -= _REASON_HOVER_BOARD
+
+
+func _on_mouse_moved(grid_position: Vector2i, board: Board) -> void:
+	_selection_hint.position = board.position + Vector2(grid_position * Vector2i(Board.TILE_WIDTH, Board.TILE_HEIGHT))
 
 
 func _on_tile_clicked(button_index: MouseButton, grid_position: Vector2i, board: Board) -> void:
@@ -119,7 +154,7 @@ func _handle_click_root(button_index: MouseButton, grid_position: Vector2i, boar
 	var minimum_zoom_factor := minf(minimum_zoom.x, minimum_zoom.y)
 	
 	var center := (top_left + bot_right) * 0.5
-	camera_controller.settings(center, minf(minimum_zoom_factor, _ZOOM_SELECTED), false)
+	_camera_controller.settings(center, minf(minimum_zoom_factor, _ZOOM_SELECTED), false)
 
 
 func _handle_click_move(
@@ -142,7 +177,7 @@ func _handle_click_move(
 		selected_piece.move(movable_interfaces[0].to_grid_position, movable_interfaces[0].to_board)
 		_handled_pieces.push_back(selected_piece)
 		selected_piece.mark_immovable()
-		camera_controller.set_position(selected_piece.position)
+		_camera_controller.set_position(selected_piece.position)
 	
 	elif not strikeable_interfaces.is_empty() and board == strikeable_interfaces[0].to_board and grid_position == strikeable_interfaces[0].to_grid_position:
 		_remaining_moves -= 1
@@ -150,14 +185,14 @@ func _handle_click_move(
 		selected_piece.move(strikeable_interfaces[0].to_grid_position, strikeable_interfaces[0].to_board)
 		_handled_pieces.push_back(selected_piece)
 		selected_piece.mark_immovable()
-		camera_controller.set_position(selected_piece.position)
+		_camera_controller.set_position(selected_piece.position)
 	
 	elif grid_position in movable_positions:
 		_remaining_moves -= 1
 		selected_piece.move(grid_position)
 		_handled_pieces.push_back(selected_piece)
 		selected_piece.mark_immovable()
-		camera_controller.set_position(selected_piece.position)
+		_camera_controller.set_position(selected_piece.position)
 	
 	elif grid_position in strikeable_positions:
 		_remaining_moves -= 1
@@ -165,14 +200,14 @@ func _handle_click_move(
 		selected_piece.move(grid_position)
 		_handled_pieces.push_back(selected_piece)
 		selected_piece.mark_immovable()
-		camera_controller.set_position(selected_piece.position)
+		_camera_controller.set_position(selected_piece.position)
 	
 	for icon in icons:
 		icon.queue_free()
 	selected_piece.mark_unselected()
 	_click_func = _handle_click_root
-	camera_controller.reset_zoom()
-	camera_controller.set_free(true)
+	_camera_controller.reset_zoom()
+	_camera_controller.set_free(true)
 	
 	if _remaining_moves <= 0:
 		for piece in _handled_pieces:

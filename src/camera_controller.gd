@@ -13,6 +13,11 @@ var _camera_free := true
 var _follow_node: Node
 
 
+func _enter_tree() -> void:
+	if get_parent() is World:
+		get_parent().register_camera_controller(self)
+
+
 func _ready() -> void:
 	if camera == null:
 		printerr("(%s) was not assigned a camera!" % self)

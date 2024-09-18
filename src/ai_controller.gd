@@ -5,18 +5,18 @@ extends Controller
 const _TIME_COMPREHENSION := 1.0
 const _ZOOM := 0.9
 
-@export var camera_controller: CameraController
-
 var _world: World
+var _camera_controller: CameraController
 
 
 func _ready() -> void:
-	if camera_controller == null:
-		printerr("(%s) was not assigned a camera controller!" % self)
 	
 	if get_parent() is World:
 		_world = get_parent()
-
+		_camera_controller = get_parent().get_camera_controller()
+	
+	if _camera_controller == null:
+		printerr("(%s) was not assigned a camera controller!" % self)
 
 func _turn_begun() -> void:
 	for board in _world.get_boards():
@@ -32,8 +32,8 @@ func _turn_begun() -> void:
 			continue
 		
 		for my_piece: Piece in my_pieces:
-			camera_controller.follow(my_piece)
-			camera_controller.set_zoom(_ZOOM)
+			_camera_controller.follow(my_piece)
+			_camera_controller.set_zoom(_ZOOM)
 			await get_tree().create_timer(_TIME_COMPREHENSION).timeout
 			
 			# If can strike, do so
@@ -70,8 +70,8 @@ func _turn_begun() -> void:
 			
 			await get_tree().create_timer(_TIME_COMPREHENSION).timeout
 	
-	camera_controller.reset_zoom()
-	camera_controller.stop_follow()
+	_camera_controller.reset_zoom()
+	_camera_controller.stop_follow()
 	turn_passed.emit()
 
 

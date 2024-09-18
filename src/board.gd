@@ -3,6 +3,9 @@ class_name Board
 extends Node2D
 
 
+signal mouse_entered
+signal mouse_exited
+signal mouse_moved(grid_position: Vector2i)
 signal tile_clicked(button_index: MouseButton, grid_position: Vector2i)
 signal state_changed
 
@@ -14,7 +17,6 @@ const _BOARD_TEXTURE := preload("res://assets/textures/board.png")
 const _BOARD_SHADER := preload("res://shaders/repeat.gdshader")
 const _GRADIENT_SHADER := preload("res://shaders/rect_edge_distance_alpha_gradient.gdshader")
 const _PINCH_SHADER := preload("res://shaders/pinch.gdshader")
-const _SELECTION_HINT := preload("res://scenes/instantiables/selection_hint.tscn")
 const _TIME_COMPREHENSION := 1.0
 
 @export var size := Vector2i(8, 8):
@@ -29,7 +31,6 @@ var _sprite := Sprite2D.new()
 var _gradient := ColorRect.new()
 var _click_area := ClickArea.new()
 var _click_area_shape := CollisionShape2D.new()
-var _selection_hint := _SELECTION_HINT.instantiate()
 var _interfaces: Array[Node]
 var _team_count := { Piece.Team.WHITE: 0, Piece.Team.BLACK: 0 }
 
@@ -50,13 +51,11 @@ func _init() -> void:
 	_gradient.show_behind_parent = true
 	
 	_click_area.clicked.connect(_on_clicked)
-	_click_area.mouse_entered.connect(_selection_hint.show)
-	_click_area.mouse_exited.connect(_selection_hint.hide)
+	_click_area.mouse_entered.connect(mouse_entered.emit)
+	_click_area.mouse_exited.connect(mouse_exited.emit)
 	_click_area.mouse_moved.connect(_on_mouse_moved)
 	
 	_click_area_shape.shape = RectangleShape2D.new()
-	
-	_selection_hint.hide()
 	
 	_update_size()
 
@@ -76,9 +75,6 @@ func _enter_tree() -> void:
 	
 	if _click_area_shape.get_parent() == null:
 		_click_area.add_child(_click_area_shape, false, Node.INTERNAL_MODE_BACK)
-	
-	if _selection_hint.get_parent() == null:
-		add_child(_selection_hint, false, Node.INTERNAL_MODE_BACK)
 	
 	if get_parent() is World:
 		get_parent().register_board(self)
@@ -112,7 +108,7 @@ func _on_clicked(button_index: MouseButton, click_position: Vector2) -> void:
 func _on_mouse_moved(mouse_position: Vector2) -> void:
 	var p := get_global_mouse_position() - position
 	var g := Vector2i(p / Vector2(TILE_WIDTH, TILE_HEIGHT))
-	_selection_hint.position = position + Vector2(g * Vector2i(TILE_WIDTH, TILE_HEIGHT))
+	mouse_moved.emit(g)
 
 
 func reload_board_state() -> void:
