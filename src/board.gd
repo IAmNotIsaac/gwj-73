@@ -38,6 +38,7 @@ func _init() -> void:
 	_sprite.material.shader = _BOARD_SHADER
 	_sprite.texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
 	
+	_gradient.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	_gradient.color = Color.BLACK
 	_gradient.material = ShaderMaterial.new()
 	_gradient.material.shader = _GRADIENT_SHADER
