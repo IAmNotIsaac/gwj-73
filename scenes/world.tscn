@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://bkk3xrh2lihv7"]
+[gd_scene load_steps=11 format=3 uid="uid://bkk3xrh2lihv7"]
 
 [ext_resource type="Script" path="res://scenes/world.gd" id="1_brwlp"]
 [ext_resource type="PackedScene" uid="uid://bhm65qdan0ll2" path="res://scenes/piece.tscn" id="1_k4efd"]
@@ -8,10 +8,13 @@
 [ext_resource type="Script" path="res://src/ai_controller.gd" id="5_pufvl"]
 [ext_resource type="Script" path="res://src/turn_manager.gd" id="6_vm1tm"]
 [ext_resource type="PackedScene" uid="uid://cgut83635k6rj" path="res://scenes/instantiables/background.tscn" id="8_a47m7"]
+[ext_resource type="PackedScene" uid="uid://bn77po1rhcnjk" path="res://scenes/instantiables/speaker.tscn" id="9_1lsn5"]
+[ext_resource type="AudioStream" uid="uid://bg7w2qfqwh4k1" path="res://assets/soundtrack/monday_16th.mp3" id="9_qafge"]
 
 [node name="World" type="Node2D"]
 y_sort_enabled = true
 script = ExtResource("1_brwlp")
+track = ExtResource("9_qafge")
 
 [node name="Background" parent="." instance=ExtResource("8_a47m7")]
 
@@ -80,3 +83,11 @@ team = 1
 type = 6
 grid_position = Vector2i(6, 3)
 board = NodePath("../Board")
+
+[node name="Speaker" parent="." instance=ExtResource("9_1lsn5")]
+position = Vector2(-32, 416)
+scale = Vector2(2, 2)
+
+[node name="Speaker2" parent="." instance=ExtResource("9_1lsn5")]
+position = Vector2(672, 112)
+scale = Vector2(2, 2)
