@@ -21,6 +21,7 @@ func _ready() -> void:
 
 func _turn_begun() -> void:
 	_move_count = 0
+	var regarded_pieces := 0
 	
 	for board in _world.get_boards():
 		var pieces = get_tree().get_nodes_in_group(&"pieces").filter(func(p): return p.board == board)
@@ -35,9 +36,10 @@ func _turn_begun() -> void:
 			continue
 		
 		for my_piece: Piece in my_pieces:
+			regarded_pieces += 1
 			_camera_controller.follow(my_piece)
 			_camera_controller.set_zoom(_ZOOM)
-			await get_tree().create_timer(_TIME_COMPREHENSION).timeout
+			await get_tree().create_timer(_TIME_COMPREHENSION * 0.5).timeout
 			
 			# If can strike, do so
 			if not my_piece.get_strikeable_positions().is_empty():
@@ -75,9 +77,9 @@ func _turn_begun() -> void:
 				my_piece.move(closest_achievable_position)
 				_move_count += 1
 			
-			await get_tree().create_timer(_TIME_COMPREHENSION).timeout
+			await get_tree().create_timer(_TIME_COMPREHENSION * 0.5).timeout
 	
-	if _move_count == 0:
+	if _move_count == 0 and regarded_pieces == 0:
 		await get_tree().create_timer(_TIME_COMPREHENSION).timeout
 	
 	_camera_controller.reset_zoom()

@@ -969,17 +969,15 @@ colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 0)
 
 [node name="Piece" type="Node2D" groups=["pieces"]]
 script = ExtResource("1_jfn20")
-powers = null
 
 [node name="DirectionHint" type="AnimatedSprite2D" parent="."]
 texture_filter = 1
 position = Vector2(0, -24)
 sprite_frames = SubResource("SpriteFrames_riloh")
 animation = &"0_w"
-frame_progress = 0.770005
+frame_progress = 0.275222
 
 [node name="PowerHint" type="Sprite2D" parent="."]
-visible = false
 material = SubResource("ShaderMaterial_jqf62")
 position = Vector2(-1.13687e-13, -80)
 rotation = 1.5708

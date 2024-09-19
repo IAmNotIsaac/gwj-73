@@ -116,6 +116,8 @@ var _docache_movable_positions := false
 var _cache_movable_positions: Array[Vector2i] = []
 var _docache_strikeable_positions := false
 var _cache_strikeable_positions: Array[Vector2i] = []
+var _docache_possessable_positions := false
+var _cache_possessable_positions: Array[Vector2i] = []
 var _is_pawn := type == Type.PAWN:
 	set(v):
 		_is_pawn = v
@@ -241,6 +243,9 @@ func get_strikeable_positions() -> Array[Vector2i]:
 	if board == null:
 		return []
 	
+	if has_power(Power.POSSESS):
+		return []
+	
 	if _docache_strikeable_positions:
 		return _cache_strikeable_positions
 	
@@ -308,6 +313,80 @@ func get_strikeable_positions() -> Array[Vector2i]:
 	return _cache_strikeable_positions
 
 
+func get_possessable_positions() -> Array[Vector2i]:
+	if board == null:
+		return []
+	
+	if not has_power(Power.POSSESS):
+		return []
+	
+	if _docache_possessable_positions:
+		return _cache_possessable_positions
+	
+	_cache_possessable_positions = []
+	
+	match type:
+		Type.PAWN:
+			var f := grid_position + Direction.vector(direction)
+			var p0 := Direction.move(f, direction, Direction.Relative.LEFT)
+			var p1 := Direction.move(f, direction, Direction.Relative.RIGHT)
+			
+			if board.is_piece_strikeable(p0, team):
+				_cache_possessable_positions.push_back(p0)
+			
+			if board.is_piece_strikeable(p1, team):
+				_cache_possessable_positions.push_back(p1)
+		
+		Type.KNIGHT:
+			for d in _DELTAS_KNIGHT:
+				var p := grid_position + d
+				if board.is_piece_strikeable(p, team):
+					_cache_possessable_positions.push_back(p)
+		
+		Type.BISHOP:
+			for d in _DELTAS_BISHOP:
+				for i in _DISTANCE_BISHOP:
+					var p: Vector2i = grid_position + d * (i + 1)
+					if board.is_piece_strikeable(p, team):
+						_cache_possessable_positions.push_back(p)
+						break
+					elif not board.is_open(p):
+						break
+		
+		Type.ROOK:
+			for d in _DELTAS_ROOK:
+				for i in _DISTANCE_ROOK:
+					var p: Vector2i = grid_position + d * (i + 1)
+					if board.is_piece_strikeable(p, team):
+						_cache_possessable_positions.push_back(p)
+						break
+					elif not board.is_open(p):
+						break
+		
+		Type.QUEEN:
+			for d in _DELTAS_ROYALTY:
+				for i in _DISTANCE_QUEEN:
+					var p: Vector2i = grid_position + d * (i + 1)
+					if board.is_piece_strikeable(p, team):
+						_cache_possessable_positions.push_back(p)
+						break
+					elif not board.is_open(p):
+						break
+		
+		Type.KING:
+			for d in _DELTAS_ROYALTY:
+				for i in _DISTANCE_KING:
+					var p: Vector2i = grid_position + d * (i + 1)
+					if board.is_piece_strikeable(p, team):
+						_cache_possessable_positions.push_back(p)
+						break
+					elif not board.is_open(p):
+						break
+	
+	_docache_possessable_positions = true
+	return _cache_possessable_positions
+
+
 func get_movable_interfaces() -> Array[BoardInterface]:
 	if board == null:
 		return []
@@ -329,6 +408,32 @@ func get_strikeable_interfaces() -> Array[BoardInterface]:
 	if board == null:
 		return []
 	
+	if has_power(Power.POSSESS):
+		return []
+	
+	var interface := board.get_interface(grid_position)
+	if interface == null:
+		return []
+	
+	if interface.is_locked():
+		return []
+	
+	if interface.to_board.is_open(interface.to_grid_position):
+		return []
+	
+	if not interface.to_board.is_piece_strikeable(interface.to_grid_position, team):
+		return []
+	
+	return [interface]
+
+
+func get_possessable_interfaces() -> Array[BoardInterface]:
+	if board == null:
+		return []
+	
+	if not has_power(Power.POSSESS):
+		return []
+	
 	var interface := board.get_interface(grid_position)
 	if interface == null:
 		return []
@@ -348,6 +453,7 @@ func get_strikeable_interfaces() -> Array[BoardInterface]:
 func clear_caches() -> void:
 	_docache_movable_positions = false
 	_docache_strikeable_positions = false
+	_docache_possessable_positions = false
 
 
 func mark_selected() -> void:
@@ -411,6 +517,29 @@ func move(to: Vector2i, to_board: Board = null) -> void:
 			.set_delay(anim_time)
 
 
+func convert_piece(to: Vector2i, to_board: Board = null) -> void:
+	if to_board == null:
+		to_board = board
+	
+	var piece := to_board.get_piece(to)
+	to_board.report_conversion(piece.team, team)
+	
+	var delta: Vector2 = piece.position - position
+	
+	var anim_time := _ANIM_TIME_PIECE_MOVE
+	var spm: Callable = func(x: float): _power_hint.material.set_shader_parameter(&"ball_size", x)
+	
+	var tween := get_tree().create_tween()
+	tween.tween_property(_power_hint, ^"position", _power_hint.position + delta, anim_time * 0.5) \
+		.set_trans(Tween.TRANS_EXPO) \
+		.set_ease(Tween.EASE_OUT)
+	tween.tween_method(spm, 1.0, 0.0, anim_time * 0.5)
+	tween.tween_property(piece, ^"team", team, 0.0)
+	tween.set_parallel(true)
+	tween.tween_property(piece._particles_smoke_0, ^"emitting", true, 0.0)
+	tween.tween_property(piece._particles_smoke_1, ^"emitting", true, 0.0)
+
+
 func kill() -> void:
 	if board != null:
 		board.clear_piece(grid_position)
@@ -424,6 +553,10 @@ func kill() -> void:
 			.set_delay(move_time)
 	tween.tween_callback(_direction_hint.hide) \
 			.set_delay(move_time)
+	tween.tween_property(_particles_smoke_0, ^"emitting", true, 0.0) \
+			.set_delay(move_time)
+	tween.tween_property(_particles_smoke_1, ^"emitting", true, 0.0) \
+			.set_delay(move_time)
 	tween.tween_property(_sprite, ^"modulate:a", 0.0, kill_time) \
 			.set_delay(move_time)
 	tween.tween_property(_sprite, ^"scale", Vector2(2.0, 2.0), kill_time) \
@@ -436,6 +569,10 @@ func kill() -> void:
 
 func add_power(power: Power) -> void:
 	powers.push_back(power)
+
+
+func has_power(power: Power) -> bool:
+	return power in powers
 
 
 static func can_team_strike_team(striker_team: Team, victim_team: Team) -> bool:

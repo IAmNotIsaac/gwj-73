@@ -129,15 +129,19 @@ func _handle_click_root(button_index: MouseButton, grid_position: Vector2i, boar
 	
 	var movable_positions := selected_piece.get_movable_positions()
 	var strikeable_positions := selected_piece.get_strikeable_positions()
+	var possessable_positions := selected_piece.get_possessable_positions()
 	var movable_interfaces := selected_piece.get_movable_interfaces()
 	var strikeable_interfaces := selected_piece.get_strikeable_interfaces()
+	var possessable_interfaces := selected_piece.get_possessable_interfaces()
 	var icons: Array[Sprite2D] = []
 	_click_func = _handle_click_move.bind(
 		selected_piece,
 		movable_positions,
 		strikeable_positions,
+		possessable_positions,
 		movable_interfaces,
 		strikeable_interfaces,
+		possessable_interfaces,
 		icons,
 	)
 	
@@ -166,6 +170,16 @@ func _handle_click_root(button_index: MouseButton, grid_position: Vector2i, boar
 		top_left = top_left.min(icon.position)
 		bot_right = bot_right.max(icon.position)
 	
+	for i in possessable_interfaces:
+		var icon := Sprite2D.new()
+		add_child(icon)
+		icon.texture = _ICON_POSSESS
+		icon.position = i.to_board.position + Vector2(i.to_grid_position * Vector2i(Board.TILE_WIDTH, Board.TILE_HEIGHT))
+		icon.position += Vector2(float(Board.TILE_WIDTH), float(Board.TILE_HEIGHT)) * 0.5
+		icons.push_back(icon)
+		top_left = top_left.min(icon.position)
+		bot_right = bot_right.max(icon.position)
+	
 	for p in movable_positions:
 		var icon := Sprite2D.new()
 		add_child(icon)
@@ -180,6 +194,16 @@ func _handle_click_root(button_index: MouseButton, grid_position: Vector2i, boar
 		var icon := Sprite2D.new()
 		add_child(icon)
 		icon.texture = _ICON_STRIKE
+		icon.position = board.position + Vector2(p * Vector2i(Board.TILE_WIDTH, Board.TILE_HEIGHT))
+		icon.position += Vector2(float(Board.TILE_WIDTH), float(Board.TILE_HEIGHT)) * 0.5
+		icons.push_back(icon)
+		top_left = top_left.min(icon.position)
+		bot_right = bot_right.max(icon.position)
+	
+	for p in possessable_positions:
+		var icon := Sprite2D.new()
+		add_child(icon)
+		icon.texture = _ICON_POSSESS
 		icon.position = board.position + Vector2(p * Vector2i(Board.TILE_WIDTH, Board.TILE_HEIGHT))
 		icon.position += Vector2(float(Board.TILE_WIDTH), float(Board.TILE_HEIGHT)) * 0.5
 		icons.push_back(icon)
@@ -203,8 +227,10 @@ func _handle_click_move(
 		selected_piece: Piece,
 		movable_positions: Array[Vector2i],
 		strikeable_positions: Array[Vector2i],
+		possessable_positions: Array[Vector2i],
 		movable_interfaces: Array[BoardInterface],
 		strikeable_interfaces: Array[BoardInterface],
+		possessable_interfaces: Array[BoardInterface],
 		icons: Array[Sprite2D],
 ) -> void:
 	var new_selected_piece := board.get_piece(grid_position)
@@ -227,13 +253,17 @@ func _handle_click_move(
 		selected_piece.mark_immovable()
 		_camera_controller.set_position(selected_piece.position)
 	
+	elif not possessable_interfaces.is_empty() and board == possessable_interfaces[0].to_board and grid_position == possessable_interfaces[0].to_grid_position:
+		_move_count += 1
+		selected_piece.convert(possessable_interfaces[0].to_grid_position, possessable_interfaces[0].to_board)
+		_camera_controller.set_position(selected_piece.position)
+	
 	elif grid_position in movable_positions:
 		_move_count += 1
 		selected_piece.move(grid_position)
 		_handled_pieces.push_back(selected_piece)
 		selected_piece.mark_immovable()
 		_camera_controller.set_position(selected_piece.position)
-		
 	
 	elif grid_position in strikeable_positions:
 		_move_count += 1
@@ -242,6 +272,12 @@ func _handle_click_move(
 		_handled_pieces.push_back(selected_piece)
 		selected_piece.mark_immovable()
 		_camera_controller.set_position(selected_piece.position)
+	
+	elif grid_position in possessable_positions:
+		_move_count += 1
+		selected_piece.convert_piece(grid_position)
+		_camera_controller.set_position(selected_piece.position)
+		selected_piece.kill()
 	
 	for icon in icons:
 		icon.queue_free()

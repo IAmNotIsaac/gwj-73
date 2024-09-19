@@ -209,6 +209,22 @@ func report_decrease(team: Piece.Team) -> void:
 		unlock_interfaces()
 
 
+func report_conversion(from: Piece.Team, to: Piece.Team) -> void:
+	if from not in _team_count:
+		_team_count[from] = 0
+		printerr("Should not be reporting a decrease in team count that has not before reported an increase.")
+	
+	if to not in _team_count:
+		_team_count[to] = 0
+	
+	_team_count[from] -= 1
+	_team_count[to] += 1
+	
+	if _team_count[interfaces_adverse_team] == 0:
+		await get_tree().create_timer(_TIME_COMPREHENSION).timeout
+		unlock_interfaces()
+
+
 func get_team_count(team: Piece.Team) -> int:
 	if team not in _team_count:
 		return 0
