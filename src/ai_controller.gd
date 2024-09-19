@@ -77,6 +77,9 @@ func _turn_begun() -> void:
 			
 			await get_tree().create_timer(_TIME_COMPREHENSION).timeout
 	
+	if _move_count == 0:
+		await get_tree().create_timer(_TIME_COMPREHENSION).timeout
+	
 	_camera_controller.reset_zoom()
 	_camera_controller.stop_follow()
 	turn_passed.emit()

@@ -62,10 +62,10 @@ grid_position = Vector2i(5, 5)
 board = NodePath("../Board")
 
 [node name="Piece4" parent="." node_paths=PackedStringArray("board") instance=ExtResource("1_k4efd")]
-position = Vector2(352, 256)
+position = Vector2(416, 304)
 team = 1
 type = 4
-grid_position = Vector2i(4, 3)
+grid_position = Vector2i(5, 4)
 board = NodePath("../Board")
 
 [node name="Piece5" parent="." node_paths=PackedStringArray("board") instance=ExtResource("1_k4efd")]

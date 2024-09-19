@@ -100,7 +100,6 @@ func _update_size() -> void:
 func _on_clicked(button_index: MouseButton, click_position: Vector2) -> void:
 	var p := get_global_mouse_position() - position
 	var g := Vector2i(p / Vector2(TILE_WIDTH, TILE_HEIGHT))
-	print("Clicked %s %s %s" % [button_index, click_position, g])
 	tile_clicked.emit(button_index, g)
 
 
