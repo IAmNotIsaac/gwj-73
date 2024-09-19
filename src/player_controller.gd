@@ -257,6 +257,8 @@ func _handle_click_move(
 		_move_count += 1
 		selected_piece.convert(possessable_interfaces[0].to_grid_position, possessable_interfaces[0].to_board)
 		_camera_controller.set_position(new_selected_piece.position)
+		_camera_controller.set_zoom(_ZOOM_SELECTED)
+		selected_piece.kill()
 	
 	elif grid_position in movable_positions:
 		_move_count += 1
@@ -277,12 +279,15 @@ func _handle_click_move(
 		_move_count += 1
 		selected_piece.convert_piece(grid_position)
 		_camera_controller.set_position(new_selected_piece.position)
+		_camera_controller.set_zoom(_ZOOM_SELECTED)
 		selected_piece.kill()
 	
 	for icon in icons:
 		icon.queue_free()
 	selected_piece.mark_unselected()
 	_click_func = _handle_click_root
+	
+	await get_tree().create_timer(_TIME_COMPREHENSION).timeout
 	_camera_controller.reset_zoom()
 	_camera_controller.set_free(true)
 	
