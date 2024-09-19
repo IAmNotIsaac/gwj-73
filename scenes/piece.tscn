@@ -1,11 +1,13 @@
-[gd_scene load_steps=138 format=3 uid="uid://bhm65qdan0ll2"]
+[gd_scene load_steps=141 format=3 uid="uid://bhm65qdan0ll2"]
 
 [ext_resource type="Script" path="res://scenes/piece.gd" id="1_jfn20"]
 [ext_resource type="Texture2D" uid="uid://bii5gpthli3mv" path="res://assets/textures/shadow.svg" id="2_3o6u8"]
 [ext_resource type="Texture2D" uid="uid://bx03aq0xv012f" path="res://assets/textures/placeholder_pieces.png" id="2_j74uc"]
+[ext_resource type="Texture2D" uid="uid://4dmvajgfypsg" path="res://assets/textures/icon_possess.svg" id="4_mrg1g"]
 [ext_resource type="Texture2D" uid="uid://bcgnsxxh237ht" path="res://assets/textures/particles/smoke0.png" id="4_vbp2o"]
 [ext_resource type="Texture2D" uid="uid://cnyruyfwde54y" path="res://assets/textures/particles/smoke1.png" id="5_u6x3f"]
 [ext_resource type="Texture2D" uid="uid://bxruex01ip6ec" path="res://assets/textures/direction_hint.png" id="6_sflps"]
+[ext_resource type="Shader" path="res://shaders/fire.gdshader" id="7_t6vxi"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_x1slp"]
 atlas = ExtResource("6_sflps")
@@ -946,6 +948,18 @@ animations = [{
 "speed": 5.0
 }]
 
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_jqf62"]
+shader = ExtResource("7_t6vxi")
+shader_parameter/fire_color = Color(0.227879, 0.64215, 0.804505, 1)
+shader_parameter/fire_power_factor = 4.58
+shader_parameter/fire_intensity = 1.625
+shader_parameter/fire_start = 2.13
+shader_parameter/ball_size = 1.0
+shader_parameter/roughness = 0.675
+shader_parameter/detail = 2
+shader_parameter/scale = 10.0
+shader_parameter/lacunarity = 2.0
+
 [sub_resource type="Curve" id="Curve_aoy1r"]
 _data = [Vector2(0, 0.5), 0.0, 0.0, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
 point_count = 2
@@ -955,12 +969,22 @@ colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 0)
 
 [node name="Piece" type="Node2D" groups=["pieces"]]
 script = ExtResource("1_jfn20")
+powers = null
 
 [node name="DirectionHint" type="AnimatedSprite2D" parent="."]
 texture_filter = 1
 position = Vector2(0, -24)
 sprite_frames = SubResource("SpriteFrames_riloh")
 animation = &"0_w"
+frame_progress = 0.770005
+
+[node name="PowerHint" type="Sprite2D" parent="."]
+visible = false
+material = SubResource("ShaderMaterial_jqf62")
+position = Vector2(-1.13687e-13, -80)
+rotation = 1.5708
+scale = Vector2(5, 5)
+texture = ExtResource("4_mrg1g")
 
 [node name="Shadow" type="Sprite2D" parent="."]
 texture = ExtResource("2_3o6u8")

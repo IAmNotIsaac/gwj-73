@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://bkk3xrh2lihv7"]
+[gd_scene load_steps=12 format=3 uid="uid://bkk3xrh2lihv7"]
 
 [ext_resource type="Script" path="res://scenes/world.gd" id="1_brwlp"]
 [ext_resource type="PackedScene" uid="uid://bhm65qdan0ll2" path="res://scenes/piece.tscn" id="1_k4efd"]
@@ -8,6 +8,7 @@
 [ext_resource type="Script" path="res://src/ai_controller.gd" id="5_pufvl"]
 [ext_resource type="Script" path="res://src/turn_manager.gd" id="6_vm1tm"]
 [ext_resource type="PackedScene" uid="uid://cgut83635k6rj" path="res://scenes/instantiables/background.tscn" id="8_a47m7"]
+[ext_resource type="PackedScene" uid="uid://bck0o028i4kg1" path="res://scenes/instantiables/power_plate.tscn" id="9_1hm18"]
 [ext_resource type="PackedScene" uid="uid://bn77po1rhcnjk" path="res://scenes/instantiables/speaker.tscn" id="9_1lsn5"]
 [ext_resource type="AudioStream" uid="uid://bg7w2qfqwh4k1" path="res://assets/soundtrack/monday_16th.mp3" id="9_qafge"]
 
@@ -39,17 +40,24 @@ position_smoothing_enabled = true
 position = Vector2(64, 64)
 script = ExtResource("2_qor4q")
 
+[node name="PowerPlate" parent="Board" instance=ExtResource("9_1hm18")]
+position = Vector2(128, 96)
+power = null
+grid_position = Vector2i(2, 2)
+
 [node name="Piece" parent="." node_paths=PackedStringArray("board") instance=ExtResource("1_k4efd")]
 position = Vector2(544, 304)
 direction = 1
 grid_position = Vector2i(7, 4)
 board = NodePath("../Board")
+powers = Array[int]([])
 
 [node name="Piece6" parent="." node_paths=PackedStringArray("board") instance=ExtResource("1_k4efd")]
-position = Vector2(160, 112)
+position = Vector2(224, 256)
 team = 1
-grid_position = Vector2i(1, 0)
+grid_position = Vector2i(2, 3)
 board = NodePath("../Board")
+powers = Array[int]([])
 
 [node name="Speaker" parent="." instance=ExtResource("9_1lsn5")]
 position = Vector2(-32, 416)

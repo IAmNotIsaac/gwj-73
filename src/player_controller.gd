@@ -208,6 +208,7 @@ func _handle_click_move(
 		icons: Array[Sprite2D],
 ) -> void:
 	var new_selected_piece := board.get_piece(grid_position)
+	
 	if new_selected_piece != null and new_selected_piece != selected_piece and new_selected_piece.team == get_team() and new_selected_piece not in _handled_pieces:
 		_handle_click_root.call_deferred(button_index, grid_position, board)
 	
@@ -232,6 +233,7 @@ func _handle_click_move(
 		_handled_pieces.push_back(selected_piece)
 		selected_piece.mark_immovable()
 		_camera_controller.set_position(selected_piece.position)
+		
 	
 	elif grid_position in strikeable_positions:
 		_move_count += 1

@@ -20,6 +20,10 @@ enum Type {
 	WALL,
 }
 
+enum Power {
+	POSSESS,
+}
+
 const _DELTAS_KNIGHT: Array[Vector2i] = [
 	Vector2i(-1, -2),
 	Vector2i(1, -2),
@@ -106,6 +110,7 @@ const _ANIM_TIME_PIECE_KILL := 1.0
 			board.state_changed.connect(clear_caches)
 		clear_caches()
 		_update_position()
+@export var powers: Array[Power] = []
 
 var _docache_movable_positions := false
 var _cache_movable_positions: Array[Vector2i] = []
@@ -125,6 +130,7 @@ var _is_moving := false:
 @onready var _direction_hint := $DirectionHint
 @onready var _particles_smoke_0 = $ParticlesSmoke0
 @onready var _particles_smoke_1 = $ParticlesSmoke1
+@onready var _power_hint := $PowerHint
 
 
 func _ready() -> void:
@@ -160,6 +166,15 @@ func _update_sprite() -> void:
 	var c := "w" if (grid_position.x + grid_position.y) % 2 == 0 else "b"
 	_direction_hint.play(str(direction) + "_" + c)
 	_direction_hint.visible = _is_pawn and not _is_moving
+	_power_hint.visible = not powers.is_empty()
+
+
+func _on_land() -> void:
+	var p := board.get_power_plate(grid_position)
+	if p != null:
+		add_power(p.power)
+		p.queue_free()
+	_update_sprite()
 
 
 func get_movable_positions() -> Array[Vector2i]:
@@ -392,6 +407,8 @@ func move(to: Vector2i, to_board: Board = null) -> void:
 			.set_delay(anim_time)
 	tween.tween_property(self, ^"_is_moving", false, 0.0) \
 			.set_delay(anim_time)
+	tween.tween_callback(_on_land) \
+			.set_delay(anim_time)
 
 
 func kill() -> void:
@@ -415,6 +432,10 @@ func kill() -> void:
 			.set_delay(move_time)
 	tween.tween_callback(queue_free) \
 			.set_delay(move_time + kill_time)
+
+
+func add_power(power: Power) -> void:
+	powers.push_back(power)
 
 
 static func can_team_strike_team(striker_team: Team, victim_team: Team) -> bool:

@@ -32,10 +32,13 @@ var _gradient := ColorRect.new()
 var _click_area := ClickArea.new()
 var _click_area_shape := CollisionShape2D.new()
 var _interfaces: Array[Node]
+var _power_plates: Array[Node]
 var _team_count := { Piece.Team.WHITE: 0, Piece.Team.BLACK: 0 }
 
 
 func _init() -> void:
+	z_index = -1
+	
 	_sprite.centered = false
 	_sprite.texture = _BOARD_TEXTURE
 	_sprite.texture_repeat = CanvasItem.TEXTURE_REPEAT_ENABLED
@@ -88,6 +91,7 @@ func _enter_tree() -> void:
 
 func _ready() -> void:
 	_interfaces = get_children().filter(func(c): return c is BoardInterface)
+	_power_plates = get_children().filter(func(c): return c is PowerPlate)
 
 
 func _update_size() -> void:
@@ -176,6 +180,13 @@ func get_interface(grid_position: Vector2i) -> BoardInterface:
 	return null
 
 
+func get_power_plate(grid_position: Vector2i) -> PowerPlate:
+	for plate in _power_plates:
+		if plate.grid_position == grid_position:
+			return plate
+	return null
+
+
 func unlock_interfaces() -> void:
 	for interface in _interfaces:
 		interface.unlock()
@@ -202,3 +213,7 @@ func get_team_count(team: Piece.Team) -> int:
 	if team not in _team_count:
 		return 0
 	return _team_count[team]
+
+
+func unregister_power_plate(plate: PowerPlate) -> void:
+	_power_plates.erase(plate)
