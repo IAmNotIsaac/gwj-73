@@ -17,6 +17,7 @@ script = ExtResource("1_brwlp")
 track = ExtResource("9_qafge")
 
 [node name="Background" parent="." instance=ExtResource("8_a47m7")]
+background = 1
 
 [node name="TurnManager" type="Node" parent="."]
 script = ExtResource("6_vm1tm")
