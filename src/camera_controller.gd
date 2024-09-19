@@ -11,6 +11,8 @@ var _camera_position := Vector2.ZERO
 var _camera_zoom := 1.0
 var _camera_free := true
 var _follow_node: Node
+var _bound_tl := -Vector2.INF
+var _bound_br := Vector2.INF
 
 
 func _enter_tree() -> void:
@@ -30,6 +32,7 @@ func _process(delta: float) -> void:
 	if camera != null:
 		var d := Input.get_vector(&"move_left", &"move_right", &"move_up", &"move_down") * int(_camera_free)
 		_camera_position += d * delta * _CAMERA_SPEED
+		_camera_position = _camera_position.clamp(_bound_tl, _bound_br)
 		var mp := get_viewport().get_mouse_position() / get_viewport().get_visible_rect().size
 		mp = mp.clamp(Vector2.ZERO, Vector2.ONE)
 		mp = (mp - Vector2(0.5, 0.5)) * 2.0;
@@ -79,3 +82,8 @@ func follow(node: Node2D) -> void:
 
 func stop_follow() -> void:
 	_follow_node = null
+
+
+func declare_bounds(top_left: Vector2, bottom_right: Vector2) -> void:
+	_bound_tl = top_left
+	_bound_br = bottom_right

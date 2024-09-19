@@ -14,6 +14,17 @@ var _camera_controller: CameraController
 var _capture_effect: AudioEffectCapture
 
 
+func _ready() -> void:
+	var tl := Vector2.INF
+	var br := -Vector2.INF
+	for b in _boards:
+		var tl_cmp := b.position
+		var br_cmp := b.position + Vector2(b.size) * Vector2(Board.TILE_WIDTH, Board.TILE_HEIGHT)
+		tl = tl.min(tl_cmp)
+		br = br.max(br_cmp)
+	_camera_controller.declare_bounds(tl, br)
+
+
 func register_board(board: Board) -> void:
 	if board in _boards:
 		printerr("Tried to double-register board (%s)" % board)
