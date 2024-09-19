@@ -39,6 +39,10 @@ func _ready() -> void:
 	_player.attenuation = attenuation
 	_player.stream = _world.track
 	_player.play()
+	
+	_player.volume_db = -40.0
+	var tween := get_tree().create_tween()
+	tween.tween_property(_player, ^"volume_db", 0.0, 1.0)
 
 
 func _process(delta: float) -> void:
@@ -67,5 +71,5 @@ func _get_amplitude() -> float:
 
 func stop_music() -> void:
 	var tween := get_tree().create_tween()
-	tween.tween_property(_player, ^"max_distance", 1, 1.0)
+	tween.tween_property(_player, ^"volume_db", -40.0, 1.0)
 	tween.tween_callback(_player.stop)
