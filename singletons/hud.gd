@@ -39,6 +39,31 @@ func _init() -> void:
 	c.free()
 
 
+func _on_quit_button_pressed() -> void:
+	_warn(_go_to_menu)
+
+
+func _on_restart_button_pressed() -> void:
+	_warn(_restart_level)
+
+
+func _on_settings_button_pressed() -> void:
+	printerr("TODO: Add settings")
+
+
+func _on_game_over_retry_button_pressed() -> void:
+	_restart_level()
+
+
+func _on_game_over_quit_button_pressed() -> void:
+	var tween := get_tree().create_tween()
+	tween.tween_property(_game_over_music, ^"volume_db", -40.0, 1.0)
+	tween.tween_callback(_game_over_music.stop)
+	tween.tween_property(_game_over_music, ^"volume_db", 0.0, 0.0)
+	_game_over_screen.hide()
+	_warn(_go_to_menu)
+
+
 func _on_game_over_music_finished() -> void:
 	var p: Vector2 = _game_over_retry_button.global_position
 	
@@ -54,19 +79,6 @@ func _on_game_over_music_finished() -> void:
 	
 	Input.parse_input_event(press)
 	Input.parse_input_event(release)
-
-
-func _on_game_over_retry_button_pressed() -> void:
-	var tween := get_tree().create_tween()
-	tween.tween_property(_game_over_music, ^"volume_db", -40.0, 1.0)
-	tween.tween_callback(_game_over_music.stop)
-	tween.tween_property(_game_over_music, ^"volume_db", 0.0, 0.0)
-	_game_over_screen.hide()
-	load_level(last_level_data)
-
-
-func _on_game_over_quit_button_pressed() -> void:
-	_warn(_go_to_menu)
 
 
 func _on_warning_cancel_button_pressed() -> void:
@@ -85,6 +97,10 @@ func _warn(unsafe_action: Callable) -> void:
 
 func _go_to_menu() -> void:
 	printerr("TODO: Hud::_go_to_menu")
+
+
+func _restart_level() -> void:
+	load_level(last_level_data)
 
 
 func load_level(level_data: Dictionary) -> void:

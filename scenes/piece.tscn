@@ -954,7 +954,7 @@ shader_parameter/fire_color = Color(0.227879, 0.64215, 0.804505, 1)
 shader_parameter/fire_power_factor = 4.58
 shader_parameter/fire_intensity = 1.625
 shader_parameter/fire_start = 2.13
-shader_parameter/ball_size = 1.0
+shader_parameter/ball_size = 0.0
 shader_parameter/roughness = 0.675
 shader_parameter/detail = 2
 shader_parameter/scale = 10.0
@@ -990,6 +990,7 @@ hframes = 6
 vframes = 2
 
 [node name="PowerHint" type="Sprite2D" parent="Sprite2D"]
+visible = false
 material = SubResource("ShaderMaterial_jqf62")
 position = Vector2(-1.13687e-13, -80)
 rotation = 1.5708

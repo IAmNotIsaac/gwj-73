@@ -50,14 +50,12 @@ position = Vector2(480, 112)
 direction = 3
 grid_position = Vector2i(6, 0)
 board = NodePath("../Board")
-powers = Array[int]([])
 
 [node name="Piece6" parent="." node_paths=PackedStringArray("board") instance=ExtResource("1_k4efd")]
 position = Vector2(224, 208)
 team = 1
 grid_position = Vector2i(2, 2)
 board = NodePath("../Board")
-powers = Array[int]([])
 
 [node name="Speaker" parent="." instance=ExtResource("9_1lsn5")]
 position = Vector2(-32, 416)
