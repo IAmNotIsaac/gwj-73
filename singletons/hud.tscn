@@ -1,11 +1,14 @@
-[gd_scene load_steps=19 format=3 uid="uid://buhlc6vmq4kta"]
+[gd_scene load_steps=27 format=3 uid="uid://buhlc6vmq4kta"]
 
 [ext_resource type="Texture2D" uid="uid://bpqrmpeodnpum" path="res://assets/textures/frame.png" id="1_6vkef"]
 [ext_resource type="Script" path="res://singletons/hud.gd" id="1_amupb"]
 [ext_resource type="Shader" path="res://shaders/uv_cycler.gdshader" id="1_gwte5"]
 [ext_resource type="FontFile" uid="uid://52efc1he7eqa" path="res://assets/fonts/bonk/Bonk.ttf" id="4_x4ovu"]
 [ext_resource type="Texture2D" uid="uid://dd26j70gkogud" path="res://assets/textures/particles/sparkle0.png" id="5_7pp6u"]
+[ext_resource type="FontFile" uid="uid://mxmx06144eto" path="res://assets/fonts/bonk/Bonkund.ttf" id="6_g4tmi"]
 [ext_resource type="FontFile" uid="uid://bmwb85xyahi2f" path="res://assets/fonts/bonk/Bonkit.ttf" id="6_p4j86"]
+[ext_resource type="AudioStream" uid="uid://cl3y074h2cc8i" path="res://assets/soundtrack/lullaby.mp3" id="7_6y2b8"]
+[ext_resource type="Theme" uid="uid://c3d5oegbtblqx" path="res://resources/themes/default_theme.tres" id="9_aenb0"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_son0n"]
 shader = ExtResource("1_gwte5")
@@ -39,6 +42,14 @@ colors = PackedColorArray(1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 0)
 offsets = PackedFloat32Array(0, 0.484615, 0.896154, 1)
 colors = PackedColorArray(1, 0.705422, 0.260538, 1, 0.968209, 0.59038, 0.312806, 1, 0.805071, 3.22476e-05, 0.581025, 1, 1, 1, 1, 1)
 
+[sub_resource type="LabelSettings" id="LabelSettings_w3rqy"]
+font = ExtResource("6_g4tmi")
+font_size = 128
+
+[sub_resource type="LabelSettings" id="LabelSettings_bkyty"]
+font = ExtResource("4_x4ovu")
+font_size = 64
+
 [sub_resource type="LabelSettings" id="LabelSettings_jgkso"]
 font = ExtResource("6_p4j86")
 font_size = 128
@@ -68,6 +79,58 @@ tracks/1/keys = {
 "transitions": PackedFloat32Array(1),
 "update": 0,
 "values": [Vector2(-752, 292)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("PanelContainer/VBoxContainer/MarginContainer/PanelContainer/GameOverScreen:modulate:a")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0.0]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("PanelContainer/VBoxContainer/MarginContainer/PanelContainer/GameOverScreen:visible")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+
+[sub_resource type="Animation" id="Animation_muxta"]
+resource_name = "game_over_show"
+step = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("PanelContainer/VBoxContainer/MarginContainer/PanelContainer/GameOverScreen:modulate:a")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.0, 1.0]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("PanelContainer/VBoxContainer/MarginContainer/PanelContainer/GameOverScreen:visible")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
 }
 
 [sub_resource type="Animation" id="Animation_spby0"]
@@ -102,8 +165,16 @@ tracks/1/keys = {
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_fwv5b"]
 _data = {
 "RESET": SubResource("Animation_w7iv6"),
+"game_over_show": SubResource("Animation_muxta"),
 "player_turn_wipe": SubResource("Animation_spby0")
 }
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_t04gf"]
+bg_color = Color(0.799753, 0, 0.0798712, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_634aq"]
+font = ExtResource("4_x4ovu")
+font_size = 64
 
 [node name="Hud" type="CanvasLayer"]
 script = ExtResource("1_amupb")
@@ -300,6 +371,66 @@ scale_amount_max = 2.0
 color_ramp = SubResource("Gradient_amd0p")
 color_initial_ramp = SubResource("Gradient_2bras")
 
+[node name="GameOverScreen" type="Control" parent="PanelContainer/VBoxContainer/MarginContainer/PanelContainer"]
+unique_name_in_owner = true
+visible = false
+modulate = Color(1, 1, 1, 0)
+layout_mode = 2
+
+[node name="Back" type="ColorRect" parent="PanelContainer/VBoxContainer/MarginContainer/PanelContainer/GameOverScreen"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.114897, 0.114897, 0.114897, 0.87451)
+
+[node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer/VBoxContainer/MarginContainer/PanelContainer/GameOverScreen"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Labels" type="CenterContainer" parent="PanelContainer/VBoxContainer/MarginContainer/PanelContainer/GameOverScreen/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer/VBoxContainer/MarginContainer/PanelContainer/GameOverScreen/VBoxContainer/Labels"]
+layout_mode = 2
+theme_override_constants/separation = 0
+
+[node name="Label" type="Label" parent="PanelContainer/VBoxContainer/MarginContainer/PanelContainer/GameOverScreen/VBoxContainer/Labels/VBoxContainer"]
+layout_mode = 2
+text = "GAME OVER"
+label_settings = SubResource("LabelSettings_w3rqy")
+
+[node name="GameOverReasonLabel" type="Label" parent="PanelContainer/VBoxContainer/MarginContainer/PanelContainer/GameOverScreen/VBoxContainer/Labels/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Reason"
+label_settings = SubResource("LabelSettings_bkyty")
+horizontal_alignment = 1
+
+[node name="Buttons" type="CenterContainer" parent="PanelContainer/VBoxContainer/MarginContainer/PanelContainer/GameOverScreen/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer/VBoxContainer/MarginContainer/PanelContainer/GameOverScreen/VBoxContainer/Buttons"]
+layout_mode = 2
+
+[node name="GameOverRetryButton" type="Button" parent="PanelContainer/VBoxContainer/MarginContainer/PanelContainer/GameOverScreen/VBoxContainer/Buttons/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Try Again"
+
+[node name="GameOverQuitButton" type="Button" parent="PanelContainer/VBoxContainer/MarginContainer/PanelContainer/GameOverScreen/VBoxContainer/Buttons/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Go To Menu"
+
 [node name="GoldFrame" type="NinePatchRect" parent="PanelContainer/VBoxContainer/MarginContainer/PanelContainer"]
 layout_mode = 2
 texture = ExtResource("1_6vkef")
@@ -332,3 +463,96 @@ label_settings = SubResource("LabelSettings_jgkso")
 libraries = {
 "": SubResource("AnimationLibrary_fwv5b")
 }
+
+[node name="GameOverMusic" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("7_6y2b8")
+bus = &"BGM"
+
+[node name="ProgressLossWarningConfirmPopup" type="PopupPanel" parent="."]
+initial_position = 1
+size = Vector2i(832, 304)
+visible = true
+theme = ExtResource("9_aenb0")
+
+[node name="MarginContainer" type="MarginContainer" parent="ProgressLossWarningConfirmPopup"]
+offset_left = 4.0
+offset_top = 4.0
+offset_right = 828.0
+offset_bottom = 300.0
+theme_override_constants/margin_left = 16
+theme_override_constants/margin_top = 16
+theme_override_constants/margin_right = 16
+theme_override_constants/margin_bottom = 16
+
+[node name="VBoxContainer" type="VBoxContainer" parent="ProgressLossWarningConfirmPopup/MarginContainer"]
+layout_mode = 2
+
+[node name="PanelContainer" type="PanelContainer" parent="ProgressLossWarningConfirmPopup/MarginContainer/VBoxContainer"]
+custom_minimum_size = Vector2(248, 80)
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_styles/panel = SubResource("StyleBoxFlat_t04gf")
+
+[node name="Label" type="Label" parent="ProgressLossWarningConfirmPopup/MarginContainer/VBoxContainer/PanelContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_constants/line_spacing = 16
+theme_override_constants/shadow_offset_x = 16
+theme_override_constants/shadow_offset_y = 16
+theme_override_constants/outline_size = 16
+text = "WARNING"
+label_settings = SubResource("LabelSettings_634aq")
+horizontal_alignment = 1
+
+[node name="GoldFrame" type="NinePatchRect" parent="ProgressLossWarningConfirmPopup/MarginContainer/VBoxContainer/PanelContainer"]
+layout_mode = 2
+texture = ExtResource("1_6vkef")
+patch_margin_left = 16
+patch_margin_top = 16
+patch_margin_right = 16
+patch_margin_bottom = 16
+
+[node name="RichTextLabel" type="RichTextLabel" parent="ProgressLossWarningConfirmPopup/MarginContainer/VBoxContainer"]
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+size_flags_vertical = 3
+theme_override_fonts/normal_font = ExtResource("4_x4ovu")
+theme_override_font_sizes/normal_font_size = 40
+bbcode_enabled = true
+text = "[center]Continuing will [u][color=red]erase [wave]all[/wave] progress[/color][/u] you made during this level!"
+scroll_active = false
+
+[node name="HBoxContainer" type="HBoxContainer" parent="ProgressLossWarningConfirmPopup/MarginContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="WarningCancelButton" type="Button" parent="ProgressLossWarningConfirmPopup/MarginContainer/VBoxContainer/HBoxContainer"]
+custom_minimum_size = Vector2(300, 0)
+layout_mode = 2
+size_flags_horizontal = 2
+theme_override_font_sizes/font_size = 24
+text = "I didn't mean to! Cancel!"
+
+[node name="WarningConfirmButton" type="Button" parent="ProgressLossWarningConfirmPopup/MarginContainer/VBoxContainer/HBoxContainer"]
+custom_minimum_size = Vector2(300, 0)
+layout_mode = 2
+size_flags_horizontal = 8
+theme_override_font_sizes/font_size = 24
+text = "I understand; Continue."
+
+[node name="GoldFrame" type="NinePatchRect" parent="ProgressLossWarningConfirmPopup"]
+offset_left = 4.0
+offset_top = 4.0
+offset_right = 828.0
+offset_bottom = 300.0
+texture = ExtResource("1_6vkef")
+patch_margin_left = 16
+patch_margin_top = 16
+patch_margin_right = 16
+patch_margin_bottom = 16
+
+[connection signal="pressed" from="PanelContainer/VBoxContainer/MarginContainer/PanelContainer/GameOverScreen/VBoxContainer/Buttons/VBoxContainer/GameOverRetryButton" to="." method="_on_game_over_retry_button_pressed"]
+[connection signal="pressed" from="PanelContainer/VBoxContainer/MarginContainer/PanelContainer/GameOverScreen/VBoxContainer/Buttons/VBoxContainer/GameOverQuitButton" to="." method="_on_game_over_quit_button_pressed"]
+[connection signal="finished" from="GameOverMusic" to="." method="_on_game_over_music_finished"]
+[connection signal="pressed" from="ProgressLossWarningConfirmPopup/MarginContainer/VBoxContainer/HBoxContainer/WarningCancelButton" to="." method="_on_warning_cancel_button_pressed"]
+[connection signal="pressed" from="ProgressLossWarningConfirmPopup/MarginContainer/VBoxContainer/HBoxContainer/WarningConfirmButton" to="." method="_on_warning_confirm_button_pressed"]

@@ -47,7 +47,7 @@ func _process(delta: float) -> void:
 		
 	
 	var a := _get_amplitude()
-	var s := clampf(a + 1.0, 1.0, 1.2)
+	var s := clampf(a + 1.0, 1.0, 1.2 + randf() * 0.1)
 	_dish.scale = Vector2.ONE * s
 
 
@@ -63,3 +63,9 @@ func _get_amplitude() -> float:
 	var db_r := AudioServer.get_bus_peak_volume_right_db(1, 0)
 	var db := (db_l + db_r) * 0.5
 	return db_to_linear(db)
+
+
+func stop_music() -> void:
+	var tween := get_tree().create_tween()
+	tween.tween_property(_player, ^"max_distance", 1, 1.0)
+	tween.tween_callback(_player.stop)

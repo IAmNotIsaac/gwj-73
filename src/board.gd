@@ -196,3 +196,9 @@ func report_decrease(team: Piece.Team) -> void:
 	if _team_count[interfaces_adverse_team] == 0:
 		await get_tree().create_timer(_TIME_COMPREHENSION).timeout
 		unlock_interfaces()
+
+
+func get_team_count(team: Piece.Team) -> int:
+	if team not in _team_count:
+		return 0
+	return _team_count[team]

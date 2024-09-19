@@ -74,3 +74,8 @@ func begin_cutscene() -> void:
 
 func end_cutscene() -> void:
 	cutscene_ended.emit()
+
+
+func stop_music() -> void:
+	for speaker in _speakers:
+		speaker.stop_music()

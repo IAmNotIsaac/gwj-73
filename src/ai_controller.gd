@@ -91,3 +91,19 @@ func _get_team() -> Piece.Team:
 
 func _get_move_count() -> int:
 	return _move_count
+
+
+func _get_available_move_count() -> int:
+	var moves := 0
+	
+	var pieces = get_tree().get_nodes_in_group(&"pieces")
+	var my_pieces = pieces.filter(func(p): return p.team == get_team())
+	var my_pieces_for_use := my_pieces.filter(func(p): return p.board.get_team_count(Piece.Team.BLACK) > 0)
+	
+	for p: Piece in my_pieces:
+		moves += len(p.get_movable_interfaces())
+		moves += len(p.get_strikeable_interfaces())
+		moves += len(p.get_movable_positions())
+		moves += len(p.get_strikeable_positions())
+	
+	return moves

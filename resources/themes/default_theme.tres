@@ -1,6 +1,7 @@
-[gd_resource type="Theme" load_steps=4 format=3 uid="uid://c3d5oegbtblqx"]
+[gd_resource type="Theme" load_steps=5 format=3 uid="uid://c3d5oegbtblqx"]
 
 [ext_resource type="Texture2D" uid="uid://drsrna7fsfmhg" path="res://assets/textures/backgrounds/diamond.png" id="1_vew6t"]
+[ext_resource type="FontFile" uid="uid://dmy3xtkgmmgg2" path="res://assets/fonts/roboto_slab/RobotoSlab-VariableFont_wght.ttf" id="2_3rcfq"]
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_rc5wq"]
 texture = ExtResource("1_vew6t")
@@ -13,5 +14,6 @@ axis_stretch_horizontal = 1
 axis_stretch_vertical = 1
 
 [resource]
+default_font = ExtResource("2_3rcfq")
 Panel/styles/panel = SubResource("StyleBoxTexture_rc5wq")
 PanelContainer/styles/panel = SubResource("StyleBoxTexture_xg4dq")

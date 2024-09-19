@@ -40,49 +40,15 @@ position = Vector2(64, 64)
 script = ExtResource("2_qor4q")
 
 [node name="Piece" parent="." node_paths=PackedStringArray("board") instance=ExtResource("1_k4efd")]
-position = Vector2(288, 304)
+position = Vector2(544, 304)
 direction = 1
-grid_position = Vector2i(3, 4)
-board = NodePath("../Board")
-
-[node name="Piece2" parent="." node_paths=PackedStringArray("board") instance=ExtResource("1_k4efd")]
-position = Vector2(224, 256)
-team = 1
-type = 2
-grid_position = Vector2i(2, 3)
+grid_position = Vector2i(7, 4)
 board = NodePath("../Board")
 
 [node name="Piece6" parent="." node_paths=PackedStringArray("board") instance=ExtResource("1_k4efd")]
-position = Vector2(160, 400)
+position = Vector2(160, 112)
 team = 1
-grid_position = Vector2i(1, 6)
-board = NodePath("../Board")
-
-[node name="Piece3" parent="." node_paths=PackedStringArray("board") instance=ExtResource("1_k4efd")]
-position = Vector2(416, 352)
-team = 1
-type = 3
-grid_position = Vector2i(5, 5)
-board = NodePath("../Board")
-
-[node name="Piece4" parent="." node_paths=PackedStringArray("board") instance=ExtResource("1_k4efd")]
-position = Vector2(416, 304)
-team = 1
-type = 4
-grid_position = Vector2i(5, 4)
-board = NodePath("../Board")
-
-[node name="Piece5" parent="." node_paths=PackedStringArray("board") instance=ExtResource("1_k4efd")]
-position = Vector2(96, 112)
-team = 1
-type = 5
-board = NodePath("../Board")
-
-[node name="Piece7" parent="." node_paths=PackedStringArray("board") instance=ExtResource("1_k4efd")]
-position = Vector2(480, 256)
-team = 1
-type = 6
-grid_position = Vector2i(6, 3)
+grid_position = Vector2i(1, 0)
 board = NodePath("../Board")
 
 [node name="Speaker" parent="." instance=ExtResource("9_1lsn5")]

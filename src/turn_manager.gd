@@ -28,6 +28,14 @@ func next_turn() -> void:
 	if _controllers.is_empty():
 		return
 	
+	var all_controller_available_move_counts := 0
+	for controller in _controllers:
+		all_controller_available_move_counts += controller.get_available_move_count()
+	
+	if all_controller_available_move_counts == 0:
+		Hud.game_over(Hud.GameOver.DRAW)
+		return
+	
 	var prev: Controller
 	if _turn_idx >= 0:
 		prev = _controllers[_turn_idx]
@@ -38,6 +46,6 @@ func next_turn() -> void:
 	var next := _controllers[_turn_idx]
 	next.begin_turn()
 	
+	var available_move_count := next.get_available_move_count()
 	var prev_move_count := prev.get_move_count() if prev != null else 0
-	Hud.report_turn(next.get_team(), prev_move_count > 0)
-	#print("TURN: %s" % next)
+	Hud.report_turn(next.get_team(), prev_move_count > 0 and available_move_count > 0)

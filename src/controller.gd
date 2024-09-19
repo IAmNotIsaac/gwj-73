@@ -18,6 +18,10 @@ func _get_move_count() -> int:
 	return 0
 
 
+func _get_available_move_count() -> int:
+	return 0
+
+
 func _turn_begun() -> void:
 	pass
 
@@ -32,6 +36,10 @@ func get_team() -> Piece.Team:
 
 func get_move_count() -> int:
 	return _get_move_count()
+
+
+func get_available_move_count() -> int:
+	return _get_available_move_count()
 
 
 func begin_turn() -> void:

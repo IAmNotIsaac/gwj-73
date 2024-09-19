@@ -54,6 +54,11 @@ func _ready() -> void:
 
 
 func _turn_begun() -> void:
+	if get_available_move_count() == 0:
+		await get_tree().create_timer(_TIME_COMPREHENSION).timeout
+		turn_passed.emit()
+		return
+	
 	_move_count = 0
 	_reason_show_selection_hint += _REASON_MY_TURN
 
@@ -69,6 +74,21 @@ func _get_team() -> Piece.Team:
 
 func _get_move_count() -> int:
 	return _move_count
+
+
+func _get_available_move_count() -> int:
+	var moves := 0
+	
+	var pieces = get_tree().get_nodes_in_group(&"pieces")
+	var my_pieces = pieces.filter(func(p): return p.team == get_team())
+	
+	for p: Piece in my_pieces:
+		moves += len(p.get_movable_interfaces())
+		moves += len(p.get_strikeable_interfaces())
+		moves += len(p.get_movable_positions())
+		moves += len(p.get_strikeable_positions())
+	
+	return moves
 
 
 func _on_cutscene_begun() -> void:
@@ -228,7 +248,12 @@ func _handle_click_move(
 	_camera_controller.reset_zoom()
 	_camera_controller.set_free(true)
 	
-	if _move_count >= moves_per_turn:
+	if get_available_move_count() == 0:
+		await get_tree().create_timer(_TIME_COMPREHENSION).timeout
+		turn_passed.emit()
+		return
+	
+	elif _move_count >= moves_per_turn:
 		for piece in _handled_pieces:
 			_handled_pieces.erase(piece)
 			piece.mark_movable()

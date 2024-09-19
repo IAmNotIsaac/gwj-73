@@ -1,6 +1,10 @@
 extends CanvasLayer
 
 
+enum GameOver {
+	DRAW,
+}
+
 const LEVELS := {
 	&"test": {
 		&"packed": preload("res://scenes/world.tscn"),
@@ -17,9 +21,16 @@ const LEVELS := {
 	%PlayerTurnParticles3,
 ]
 @onready var _anim := $AnimationPlayer
+@onready var _game_over_music := $GameOverMusic
+@onready var _game_over_screen := %GameOverScreen
+@onready var _game_over_reason_label := %GameOverReasonLabel
+@onready var _game_over_retry_button := %GameOverRetryButton
+@onready var _progress_loss_warning_confirm_popup = $ProgressLossWarningConfirmPopup
 
 var current_scene: Node
 var player_team: Piece.Team
+var last_level_data: Dictionary
+var _warned_action: Callable
 
 
 func _init() -> void:
@@ -28,12 +39,57 @@ func _init() -> void:
 	c.free()
 
 
+func _on_game_over_music_finished() -> void:
+	var p: Vector2 = _game_over_retry_button.global_position
+	
+	var press := InputEventMouseButton.new()
+	press.set_button_index(MOUSE_BUTTON_LEFT)
+	press.set_position(p)
+	press.set_pressed(true)
+	
+	var release := InputEventMouseButton.new()
+	release.set_button_index(MOUSE_BUTTON_LEFT)
+	release.set_position(p)
+	release.set_pressed(false)
+	
+	Input.parse_input_event(press)
+	Input.parse_input_event(release)
+
+
+func _on_game_over_retry_button_pressed() -> void:
+	_game_over_screen.hide()
+	load_level(last_level_data)
+
+
+func _on_game_over_quit_button_pressed() -> void:
+	_warn(_go_to_menu)
+
+
+func _on_warning_cancel_button_pressed() -> void:
+	_progress_loss_warning_confirm_popup.hide()
+
+
+func _on_warning_confirm_button_pressed() -> void:
+	_progress_loss_warning_confirm_popup.hide()
+	_warned_action.call()
+
+
+func _warn(unsafe_action: Callable) -> void:
+	_warned_action = unsafe_action
+	_progress_loss_warning_confirm_popup.popup()
+
+
+func _go_to_menu() -> void:
+	printerr("TODO: Hud::_go_to_menu")
+
+
 func load_level(level_data: Dictionary) -> void:
 	if current_scene != null:
 		current_scene.queue_free()
 	
 	current_scene = level_data.packed.instantiate()
 	viewport.add_child(current_scene)
+	last_level_data = level_data
 
 
 func disable() -> void:
@@ -69,3 +125,16 @@ func report_turn(team: Piece.Team, do_wipe: bool) -> void:
 			p.emitting = true
 		if do_wipe:
 			_anim.play(&"player_turn_wipe", -1.0, 3.0)
+
+
+func game_over(reason: GameOver) -> void:
+	current_scene.stop_music()
+	current_scene.get_camera_controller().set_free(false)
+	
+	match reason:
+		GameOver.DRAW:
+			_game_over_reason_label.text = "DRAW"
+			_game_over_reason_label.label_settings.font_color = Color("b0b0b0")
+	
+	_game_over_music.play(0.0)
+	_anim.play(&"game_over_show")
