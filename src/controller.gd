@@ -14,6 +14,10 @@ func _get_team() -> Piece.Team:
 	return Piece.Team.NEUTRAL
 
 
+func _get_move_count() -> int:
+	return 0
+
+
 func _turn_begun() -> void:
 	pass
 
@@ -24,6 +28,10 @@ func _turn_ended() -> void:
 
 func get_team() -> Piece.Team:
 	return _get_team()
+
+
+func get_move_count() -> int:
+	return _get_move_count()
 
 
 func begin_turn() -> void:

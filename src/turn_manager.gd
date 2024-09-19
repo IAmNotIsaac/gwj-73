@@ -28,8 +28,9 @@ func next_turn() -> void:
 	if _controllers.is_empty():
 		return
 	
-	if _turn_idx > 0:
-		var prev := _controllers[_turn_idx]
+	var prev: Controller
+	if _turn_idx >= 0:
+		prev = _controllers[_turn_idx]
 		prev.end_turn()
 	
 	_turn_idx = wrapi(_turn_idx + 1, 0, len(_controllers))
@@ -37,4 +38,6 @@ func next_turn() -> void:
 	var next := _controllers[_turn_idx]
 	next.begin_turn()
 	
-	print("TURN: %s" % next)
+	var prev_move_count := prev.get_move_count() if prev != null else 0
+	Hud.report_turn(next.get_team(), prev_move_count > 0)
+	#print("TURN: %s" % next)

@@ -7,10 +7,10 @@ const _ZOOM := 0.9
 
 var _world: World
 var _camera_controller: CameraController
+var _move_count := 0
 
 
 func _ready() -> void:
-	
 	if get_parent() is World:
 		_world = get_parent()
 		_camera_controller = get_parent().get_camera_controller()
@@ -18,7 +18,10 @@ func _ready() -> void:
 	if _camera_controller == null:
 		printerr("(%s) was not assigned a camera controller!" % self)
 
+
 func _turn_begun() -> void:
+	_move_count = 0
+	
 	for board in _world.get_boards():
 		var pieces = get_tree().get_nodes_in_group(&"pieces").filter(func(p): return p.board == board)
 		
@@ -43,6 +46,7 @@ func _turn_begun() -> void:
 				enemy_piece.kill()
 				my_piece.move(strike_pos)
 				enemy_pieces.erase(enemy_piece)
+				_move_count += 1
 			
 			# If can move, do os
 			elif not my_piece.get_movable_positions().is_empty():
@@ -54,8 +58,10 @@ func _turn_begun() -> void:
 						closest_enemy = enemy_piece
 						closest_dist = comp_dist
 				
+				# No closest enemy, just make a random move
 				if closest_enemy == null:
 					my_piece.move(my_piece.get_movable_positions().pick_random())
+					_move_count += 1
 					await get_tree().create_timer(_TIME_COMPREHENSION).timeout
 					continue
 				
@@ -67,6 +73,7 @@ func _turn_begun() -> void:
 						closest_achievable_position = pos
 						closest_dist = comp_dist
 				my_piece.move(closest_achievable_position)
+				_move_count += 1
 			
 			await get_tree().create_timer(_TIME_COMPREHENSION).timeout
 	
@@ -77,3 +84,7 @@ func _turn_begun() -> void:
 
 func _get_team() -> Piece.Team:
 	return Piece.Team.WHITE
+
+
+func _get_move_count() -> int:
+	return _move_count

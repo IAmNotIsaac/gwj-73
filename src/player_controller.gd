@@ -20,7 +20,7 @@ var _world: World
 var _camera_controller: CameraController
 var _handled_pieces: Array[Piece] = []
 var _click_func = _handle_click_root
-var _remaining_moves := 0
+var _move_count := 0
 var _selection_hint := _SELECTION_HINT.instantiate()
 var _reason_show_selection_hint = -_REASON_MY_TURN:
 	set(v):
@@ -54,17 +54,21 @@ func _ready() -> void:
 
 
 func _turn_begun() -> void:
-	_remaining_moves = moves_per_turn
+	_move_count = 0
 	_reason_show_selection_hint += _REASON_MY_TURN
 
 
 func _turn_ended() -> void:
-	_remaining_moves = 0
+	_move_count = moves_per_turn
 	_reason_show_selection_hint -= _REASON_MY_TURN
 
 
 func _get_team() -> Piece.Team:
 	return Piece.Team.BLACK
+
+
+func _get_move_count() -> int:
+	return _move_count
 
 
 func _on_cutscene_begun() -> void:
@@ -90,7 +94,7 @@ func _on_mouse_moved(grid_position: Vector2i, board: Board) -> void:
 func _on_tile_clicked(button_index: MouseButton, grid_position: Vector2i, board: Board) -> void:
 	if not _selection_hint.visible:
 		return
-	if _remaining_moves > 0:
+	if _move_count < moves_per_turn:
 		_click_func.call(button_index, grid_position, board)
 
 
@@ -188,14 +192,14 @@ func _handle_click_move(
 		_handle_click_root.call_deferred(button_index, grid_position, board)
 	
 	elif not movable_interfaces.is_empty() and board == movable_interfaces[0].to_board and grid_position == movable_interfaces[0].to_grid_position:
-		_remaining_moves -= 1
+		_move_count += 1
 		selected_piece.move(movable_interfaces[0].to_grid_position, movable_interfaces[0].to_board)
 		_handled_pieces.push_back(selected_piece)
 		selected_piece.mark_immovable()
 		_camera_controller.set_position(selected_piece.position)
 	
 	elif not strikeable_interfaces.is_empty() and board == strikeable_interfaces[0].to_board and grid_position == strikeable_interfaces[0].to_grid_position:
-		_remaining_moves -= 1
+		_move_count += 1
 		strikeable_interfaces[0].to_board.get_piece(strikeable_interfaces[0].to_grid_position).kill()
 		selected_piece.move(strikeable_interfaces[0].to_grid_position, strikeable_interfaces[0].to_board)
 		_handled_pieces.push_back(selected_piece)
@@ -203,14 +207,14 @@ func _handle_click_move(
 		_camera_controller.set_position(selected_piece.position)
 	
 	elif grid_position in movable_positions:
-		_remaining_moves -= 1
+		_move_count += 1
 		selected_piece.move(grid_position)
 		_handled_pieces.push_back(selected_piece)
 		selected_piece.mark_immovable()
 		_camera_controller.set_position(selected_piece.position)
 	
 	elif grid_position in strikeable_positions:
-		_remaining_moves -= 1
+		_move_count += 1
 		board.get_piece(grid_position).kill()
 		selected_piece.move(grid_position)
 		_handled_pieces.push_back(selected_piece)
@@ -224,7 +228,7 @@ func _handle_click_move(
 	_camera_controller.reset_zoom()
 	_camera_controller.set_free(true)
 	
-	if _remaining_moves <= 0:
+	if _move_count >= moves_per_turn:
 		for piece in _handled_pieces:
 			_handled_pieces.erase(piece)
 			piece.mark_movable()
