@@ -52,15 +52,15 @@ func _on_settings_button_pressed() -> void:
 
 
 func _on_game_over_retry_button_pressed() -> void:
-	_restart_level()
-
-
-func _on_game_over_quit_button_pressed() -> void:
 	var tween := get_tree().create_tween()
 	tween.tween_property(_game_over_music, ^"volume_db", -40.0, 1.0)
 	tween.tween_callback(_game_over_music.stop)
 	tween.tween_property(_game_over_music, ^"volume_db", 0.0, 0.0)
 	_game_over_screen.hide()
+	_restart_level()
+
+
+func _on_game_over_quit_button_pressed() -> void:
 	_warn(_go_to_menu)
 
 
