@@ -256,7 +256,7 @@ func _handle_click_move(
 	elif not possessable_interfaces.is_empty() and board == possessable_interfaces[0].to_board and grid_position == possessable_interfaces[0].to_grid_position:
 		_move_count += 1
 		selected_piece.convert(possessable_interfaces[0].to_grid_position, possessable_interfaces[0].to_board)
-		_camera_controller.set_position(selected_piece.position)
+		_camera_controller.set_position(new_selected_piece.position)
 	
 	elif grid_position in movable_positions:
 		_move_count += 1
@@ -276,7 +276,7 @@ func _handle_click_move(
 	elif grid_position in possessable_positions:
 		_move_count += 1
 		selected_piece.convert_piece(grid_position)
-		_camera_controller.set_position(selected_piece.position)
+		_camera_controller.set_position(new_selected_piece.position)
 		selected_piece.kill()
 	
 	for icon in icons:

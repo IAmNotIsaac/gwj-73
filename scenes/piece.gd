@@ -132,7 +132,7 @@ var _is_moving := false:
 @onready var _direction_hint := $DirectionHint
 @onready var _particles_smoke_0 = $ParticlesSmoke0
 @onready var _particles_smoke_1 = $ParticlesSmoke1
-@onready var _power_hint := $PowerHint
+@onready var _power_hint := $Sprite2D/PowerHint
 
 
 func _ready() -> void:
@@ -168,7 +168,21 @@ func _update_sprite() -> void:
 	var c := "w" if (grid_position.x + grid_position.y) % 2 == 0 else "b"
 	_direction_hint.play(str(direction) + "_" + c)
 	_direction_hint.visible = _is_pawn and not _is_moving
+	
+	var was_power_hint_visible = _power_hint.visible
 	_power_hint.visible = not powers.is_empty()
+	
+	if _power_hint.visible != was_power_hint_visible:
+		var spm: Callable = func(x: float): _power_hint.material.set_shader_parameter(&"ball_size", x)
+		var tween := get_tree().create_tween()
+		if _power_hint.visible:
+			tween.tween_method(spm, 0.0, 1.0, 1.0) \
+				.set_trans(Tween.TRANS_CIRC) \
+				.set_ease(Tween.EASE_OUT_IN)
+		else:
+			tween.tween_method(spm, 1.0, 0.0, 1.0) \
+				.set_trans(Tween.TRANS_CIRC) \
+				.set_ease(Tween.EASE_OUT)
 
 
 func _on_land() -> void:

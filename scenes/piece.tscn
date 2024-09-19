@@ -975,14 +975,7 @@ texture_filter = 1
 position = Vector2(0, -24)
 sprite_frames = SubResource("SpriteFrames_riloh")
 animation = &"0_w"
-frame_progress = 0.275222
-
-[node name="PowerHint" type="Sprite2D" parent="."]
-material = SubResource("ShaderMaterial_jqf62")
-position = Vector2(-1.13687e-13, -80)
-rotation = 1.5708
-scale = Vector2(5, 5)
-texture = ExtResource("4_mrg1g")
+frame_progress = 0.703243
 
 [node name="Shadow" type="Sprite2D" parent="."]
 texture = ExtResource("2_3o6u8")
@@ -995,6 +988,13 @@ texture = ExtResource("2_j74uc")
 offset = Vector2(0, -40)
 hframes = 6
 vframes = 2
+
+[node name="PowerHint" type="Sprite2D" parent="Sprite2D"]
+material = SubResource("ShaderMaterial_jqf62")
+position = Vector2(-1.13687e-13, -80)
+rotation = 1.5708
+scale = Vector2(5, 5)
+texture = ExtResource("4_mrg1g")
 
 [node name="ParticlesSmoke0" type="CPUParticles2D" parent="."]
 emitting = false
