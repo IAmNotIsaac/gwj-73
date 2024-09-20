@@ -31,6 +31,9 @@ const LEVELS := [
 @onready var _progress_loss_warning_confirm_popup = $ProgressLossWarningConfirmPopup
 @onready var _settings_panel := %SettingsPanel
 @onready var _middle_panel := %MiddlePanel
+@onready var _forfeit_button := %ForfeitButton
+@onready var _settings_button := %SettingsButton
+@onready var _title_label := %TitleLabel
 
 var current_scene: Node
 var player_team: Piece.Team
@@ -109,12 +112,28 @@ func _restart_level() -> void:
 
 
 func load_level(level_data: Dictionary) -> void:
+	_forfeit_button.disabled = true
+	_settings_button.disabled = true
+	_settings_panel.visible = false
+	
+	if current_scene != null and current_scene is World:
+		current_scene.stop_music()
+	
+	_anim.play(&"crossfade_in")
+	await _anim.animation_finished
+	
 	if current_scene != null:
 		current_scene.queue_free()
 	
 	current_scene = level_data.packed.instantiate()
 	viewport.add_child(current_scene)
 	last_level_data = level_data
+	
+	_anim.play(&"crossfade_out")
+	await _anim.animation_finished
+	_title_label.text = level_data.name
+	_anim.play(&"flash_title")
+	await _anim.animation_finished
 	
 	current_scene.get_turn_manager().next_turn()
 

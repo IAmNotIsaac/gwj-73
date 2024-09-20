@@ -1,4 +1,4 @@
-[gd_scene load_steps=28 format=3 uid="uid://buhlc6vmq4kta"]
+[gd_scene load_steps=36 format=3 uid="uid://buhlc6vmq4kta"]
 
 [ext_resource type="Texture2D" uid="uid://bpqrmpeodnpum" path="res://assets/textures/frame.png" id="1_6vkef"]
 [ext_resource type="Script" path="res://singletons/hud.gd" id="1_amupb"]
@@ -9,7 +9,10 @@
 [ext_resource type="FontFile" uid="uid://bmwb85xyahi2f" path="res://assets/fonts/bonk/Bonkit.ttf" id="6_p4j86"]
 [ext_resource type="AudioStream" uid="uid://cl3y074h2cc8i" path="res://assets/soundtrack/lullaby.mp3" id="7_6y2b8"]
 [ext_resource type="PackedScene" uid="uid://bhi0cnsm5tmbq" path="res://scenes/instantiables/settings_panel.tscn" id="7_e8c1b"]
+[ext_resource type="Texture2D" uid="uid://bdf0cww3lbthg" path="res://assets/textures/crossfade.png" id="8_o0c71"]
 [ext_resource type="Theme" uid="uid://c3d5oegbtblqx" path="res://resources/themes/default_theme.tres" id="9_aenb0"]
+[ext_resource type="Texture2D" uid="uid://csdqi4ek0gt3c" path="res://assets/textures/crossfade_gradient.png" id="10_i1ohp"]
+[ext_resource type="FontFile" uid="uid://dqy4rq61hcrua" path="res://assets/fonts/bonk/Bonkout.ttf" id="11_fryv3"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_son0n"]
 shader = ExtResource("1_gwte5")
@@ -53,6 +56,15 @@ font_size = 64
 
 [sub_resource type="LabelSettings" id="LabelSettings_jgkso"]
 font = ExtResource("6_p4j86")
+font_size = 128
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_l0jo8"]
+texture = ExtResource("10_i1ohp")
+texture_margin_left = 64.0
+texture_margin_right = 64.0
+
+[sub_resource type="LabelSettings" id="LabelSettings_3edbb"]
+font = ExtResource("11_fryv3")
 font_size = 128
 
 [sub_resource type="Animation" id="Animation_w7iv6"]
@@ -128,6 +140,54 @@ tracks/5/keys = {
 "transitions": PackedFloat32Array(1),
 "update": 1,
 "values": [0]
+}
+tracks/6/type = "value"
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/path = NodePath("Crossfade:anchor_right")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [2.0]
+}
+tracks/7/type = "value"
+tracks/7/imported = false
+tracks/7/enabled = true
+tracks/7/path = NodePath("Crossfade:anchor_left")
+tracks/7/interp = 1
+tracks/7/loop_wrap = true
+tracks/7/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [1.0]
+}
+tracks/8/type = "value"
+tracks/8/imported = false
+tracks/8/enabled = true
+tracks/8/path = NodePath("Title:anchor_top")
+tracks/8/interp = 1
+tracks/8/loop_wrap = true
+tracks/8/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [-0.5]
+}
+tracks/9/type = "value"
+tracks/9/imported = false
+tracks/9/enabled = true
+tracks/9/path = NodePath("Title:anchor_bottom")
+tracks/9/interp = 1
+tracks/9/loop_wrap = true
+tracks/9/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [-0.5]
 }
 
 [sub_resource type="Animation" id="Animation_muxta"]
@@ -211,9 +271,95 @@ tracks/3/keys = {
 "values": [0.0, 1.0, 1.0, 0.0]
 }
 
+[sub_resource type="Animation" id="Animation_do68s"]
+resource_name = "crossfade_in"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Crossfade:anchor_left")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [1.0, -1.0]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Crossfade:anchor_right")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [2.0]
+}
+
+[sub_resource type="Animation" id="Animation_42sfu"]
+resource_name = "crossfade_out"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Crossfade:anchor_left")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [-1.0]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Crossfade:anchor_right")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [2.0, 0.0]
+}
+
+[sub_resource type="Animation" id="Animation_amqg3"]
+resource_name = "flash_title"
+length = 2.0
+step = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Title:anchor_top")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5, 1.5, 2),
+"transitions": PackedFloat32Array(0.2, 1, 0.2, 1),
+"update": 0,
+"values": [-0.5, 0.45, 0.55, 1.5]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Title:anchor_bottom")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.5, 1.5, 2),
+"transitions": PackedFloat32Array(0.2, 1, 0.2, 1),
+"update": 0,
+"values": [-0.5, 0.45, 0.55, 1.5]
+}
+
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_fwv5b"]
 _data = {
 "RESET": SubResource("Animation_w7iv6"),
+"crossfade_in": SubResource("Animation_do68s"),
+"crossfade_out": SubResource("Animation_42sfu"),
+"flash_title": SubResource("Animation_amqg3"),
 "game_over_show": SubResource("Animation_muxta"),
 "player_turn_wipe": SubResource("Animation_spby0")
 }
@@ -496,15 +642,30 @@ layout_mode = 2
 size_flags_vertical = 8
 
 [node name="ForfeitButton" type="Button" parent="PanelContainer/VBoxContainer/HBoxContainer"]
+unique_name_in_owner = true
 layout_mode = 2
 text = "Forfeit"
 
 [node name="SettingsButton" type="Button" parent="PanelContainer/VBoxContainer/HBoxContainer"]
+unique_name_in_owner = true
 layout_mode = 2
 text = "Settings"
 
-[node name="PlayerTurnBack" type="ColorRect" parent="."]
+[node name="Crossfade" type="NinePatchRect" parent="."]
+texture_filter = 1
 anchors_preset = -1
+anchor_left = 1.0
+anchor_right = 2.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("8_o0c71")
+patch_margin_left = 64
+patch_margin_right = 64
+axis_stretch_vertical = 1
+
+[node name="PlayerTurnBack" type="ColorRect" parent="."]
+anchors_preset = 4
 anchor_top = 0.5
 anchor_bottom = 0.5
 offset_top = -64.0
@@ -528,6 +689,31 @@ text = "YOUR TURN"
 label_settings = SubResource("LabelSettings_jgkso")
 visible_characters = 0
 visible_ratio = 0.0
+
+[node name="Title" type="PanelContainer" parent="."]
+anchors_preset = -1
+anchor_left = 0.5
+anchor_top = -0.5
+anchor_right = 0.5
+anchor_bottom = -0.5
+offset_left = -383.0
+offset_top = -63.5
+offset_right = 383.0
+offset_bottom = 63.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxTexture_l0jo8")
+
+[node name="MarginContainer" type="MarginContainer" parent="Title"]
+layout_mode = 2
+theme_override_constants/margin_left = 32
+theme_override_constants/margin_right = 32
+
+[node name="TitleLabel" type="Label" parent="Title/MarginContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Hello World"
+label_settings = SubResource("LabelSettings_3edbb")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
