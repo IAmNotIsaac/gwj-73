@@ -84,7 +84,7 @@ tracks/1/keys = {
 tracks/2/type = "value"
 tracks/2/imported = false
 tracks/2/enabled = true
-tracks/2/path = NodePath("PanelContainer/VBoxContainer/MarginContainer/PanelContainer/GameOverScreen:modulate:a")
+tracks/2/path = NodePath("PanelContainer/VBoxContainer/AspectRatioContainer/MarginContainer/PanelContainer/GameOverScreen:modulate:a")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
@@ -96,7 +96,7 @@ tracks/2/keys = {
 tracks/3/type = "value"
 tracks/3/imported = false
 tracks/3/enabled = true
-tracks/3/path = NodePath("PanelContainer/VBoxContainer/MarginContainer/PanelContainer/GameOverScreen:visible")
+tracks/3/path = NodePath("PanelContainer/VBoxContainer/AspectRatioContainer/MarginContainer/PanelContainer/GameOverScreen:visible")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/keys = {
@@ -112,7 +112,7 @@ step = 0.1
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("PanelContainer/VBoxContainer/MarginContainer/PanelContainer/GameOverScreen:modulate:a")
+tracks/0/path = NodePath("PanelContainer/VBoxContainer/AspectRatioContainer/MarginContainer/PanelContainer/GameOverScreen:modulate:a")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -124,7 +124,7 @@ tracks/0/keys = {
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("PanelContainer/VBoxContainer/MarginContainer/PanelContainer/GameOverScreen:visible")
+tracks/1/path = NodePath("PanelContainer/VBoxContainer/AspectRatioContainer/MarginContainer/PanelContainer/GameOverScreen:visible")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
@@ -195,6 +195,7 @@ mouse_filter = 2
 [node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer"]
 layout_mode = 2
 mouse_filter = 2
+alignment = 1
 
 [node name="PanelContainer" type="PanelContainer" parent="PanelContainer/VBoxContainer"]
 custom_minimum_size = Vector2(0, 64)
@@ -252,33 +253,35 @@ layout_mode = 2
 text = "WHITE"
 label_settings = SubResource("LabelSettings_g0531")
 
-[node name="MarginContainer" type="MarginContainer" parent="PanelContainer/VBoxContainer"]
+[node name="AspectRatioContainer" type="AspectRatioContainer" parent="PanelContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="PanelContainer/VBoxContainer/AspectRatioContainer"]
 layout_mode = 2
 size_flags_vertical = 3
 mouse_filter = 2
 theme_override_constants/margin_left = 64
 theme_override_constants/margin_right = 64
 
-[node name="PanelContainer" type="PanelContainer" parent="PanelContainer/VBoxContainer/MarginContainer"]
+[node name="PanelContainer" type="PanelContainer" parent="PanelContainer/VBoxContainer/AspectRatioContainer/MarginContainer"]
 layout_mode = 2
 size_flags_vertical = 3
 mouse_filter = 2
 theme_override_styles/panel = SubResource("StyleBoxEmpty_vtu2k")
 
-[node name="SubViewportContainer" type="SubViewportContainer" parent="PanelContainer/VBoxContainer/MarginContainer/PanelContainer"]
+[node name="SubViewportContainer" type="SubViewportContainer" parent="PanelContainer/VBoxContainer/AspectRatioContainer/MarginContainer/PanelContainer"]
 layout_mode = 2
-stretch = true
 
-[node name="SubViewport" type="SubViewport" parent="PanelContainer/VBoxContainer/MarginContainer/PanelContainer/SubViewportContainer"]
+[node name="SubViewport" type="SubViewport" parent="PanelContainer/VBoxContainer/AspectRatioContainer/MarginContainer/PanelContainer/SubViewportContainer"]
 unique_name_in_owner = true
 disable_3d = true
 transparent_bg = true
 handle_input_locally = false
 audio_listener_enable_2d = true
-size = Vector2i(1024, 521)
+size = Vector2i(1152, 593)
 render_target_update_mode = 4
 
-[node name="PlayerTurnParticles0" type="CPUParticles2D" parent="PanelContainer/VBoxContainer/MarginContainer/PanelContainer"]
+[node name="PlayerTurnParticles0" type="CPUParticles2D" parent="PanelContainer/VBoxContainer/AspectRatioContainer/MarginContainer/PanelContainer"]
 unique_name_in_owner = true
 texture_filter = 1
 position = Vector2(16, 15)
@@ -301,7 +304,7 @@ scale_amount_max = 2.0
 color_ramp = SubResource("Gradient_amd0p")
 color_initial_ramp = SubResource("Gradient_2bras")
 
-[node name="PlayerTurnParticles1" type="CPUParticles2D" parent="PanelContainer/VBoxContainer/MarginContainer/PanelContainer"]
+[node name="PlayerTurnParticles1" type="CPUParticles2D" parent="PanelContainer/VBoxContainer/AspectRatioContainer/MarginContainer/PanelContainer"]
 unique_name_in_owner = true
 texture_filter = 1
 position = Vector2(1008, 15)
@@ -324,7 +327,7 @@ scale_amount_max = 2.0
 color_ramp = SubResource("Gradient_amd0p")
 color_initial_ramp = SubResource("Gradient_2bras")
 
-[node name="PlayerTurnParticles2" type="CPUParticles2D" parent="PanelContainer/VBoxContainer/MarginContainer/PanelContainer"]
+[node name="PlayerTurnParticles2" type="CPUParticles2D" parent="PanelContainer/VBoxContainer/AspectRatioContainer/MarginContainer/PanelContainer"]
 unique_name_in_owner = true
 texture_filter = 1
 position = Vector2(16, 503)
@@ -347,7 +350,7 @@ scale_amount_max = 2.0
 color_ramp = SubResource("Gradient_amd0p")
 color_initial_ramp = SubResource("Gradient_2bras")
 
-[node name="PlayerTurnParticles3" type="CPUParticles2D" parent="PanelContainer/VBoxContainer/MarginContainer/PanelContainer"]
+[node name="PlayerTurnParticles3" type="CPUParticles2D" parent="PanelContainer/VBoxContainer/AspectRatioContainer/MarginContainer/PanelContainer"]
 unique_name_in_owner = true
 texture_filter = 1
 position = Vector2(1008, 503)
@@ -370,13 +373,13 @@ scale_amount_max = 2.0
 color_ramp = SubResource("Gradient_amd0p")
 color_initial_ramp = SubResource("Gradient_2bras")
 
-[node name="GameOverScreen" type="Control" parent="PanelContainer/VBoxContainer/MarginContainer/PanelContainer"]
+[node name="GameOverScreen" type="Control" parent="PanelContainer/VBoxContainer/AspectRatioContainer/MarginContainer/PanelContainer"]
 unique_name_in_owner = true
 visible = false
 modulate = Color(1, 1, 1, 0)
 layout_mode = 2
 
-[node name="Back" type="ColorRect" parent="PanelContainer/VBoxContainer/MarginContainer/PanelContainer/GameOverScreen"]
+[node name="Back" type="ColorRect" parent="PanelContainer/VBoxContainer/AspectRatioContainer/MarginContainer/PanelContainer/GameOverScreen"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -385,7 +388,7 @@ grow_horizontal = 2
 grow_vertical = 2
 color = Color(0.114897, 0.114897, 0.114897, 0.87451)
 
-[node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer/VBoxContainer/MarginContainer/PanelContainer/GameOverScreen"]
+[node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer/VBoxContainer/AspectRatioContainer/MarginContainer/PanelContainer/GameOverScreen"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -393,49 +396,49 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="Labels" type="CenterContainer" parent="PanelContainer/VBoxContainer/MarginContainer/PanelContainer/GameOverScreen/VBoxContainer"]
+[node name="Labels" type="CenterContainer" parent="PanelContainer/VBoxContainer/AspectRatioContainer/MarginContainer/PanelContainer/GameOverScreen/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer/VBoxContainer/MarginContainer/PanelContainer/GameOverScreen/VBoxContainer/Labels"]
+[node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer/VBoxContainer/AspectRatioContainer/MarginContainer/PanelContainer/GameOverScreen/VBoxContainer/Labels"]
 layout_mode = 2
 theme_override_constants/separation = 0
 
-[node name="Label" type="Label" parent="PanelContainer/VBoxContainer/MarginContainer/PanelContainer/GameOverScreen/VBoxContainer/Labels/VBoxContainer"]
+[node name="Label" type="Label" parent="PanelContainer/VBoxContainer/AspectRatioContainer/MarginContainer/PanelContainer/GameOverScreen/VBoxContainer/Labels/VBoxContainer"]
 layout_mode = 2
 text = "GAME OVER"
 label_settings = SubResource("LabelSettings_w3rqy")
 
-[node name="GameOverReasonLabel" type="Label" parent="PanelContainer/VBoxContainer/MarginContainer/PanelContainer/GameOverScreen/VBoxContainer/Labels/VBoxContainer"]
+[node name="GameOverReasonLabel" type="Label" parent="PanelContainer/VBoxContainer/AspectRatioContainer/MarginContainer/PanelContainer/GameOverScreen/VBoxContainer/Labels/VBoxContainer"]
 unique_name_in_owner = true
 layout_mode = 2
 text = "Reason"
 label_settings = SubResource("LabelSettings_bkyty")
 horizontal_alignment = 1
 
-[node name="Buttons" type="CenterContainer" parent="PanelContainer/VBoxContainer/MarginContainer/PanelContainer/GameOverScreen/VBoxContainer"]
+[node name="Buttons" type="CenterContainer" parent="PanelContainer/VBoxContainer/AspectRatioContainer/MarginContainer/PanelContainer/GameOverScreen/VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer/VBoxContainer/MarginContainer/PanelContainer/GameOverScreen/VBoxContainer/Buttons"]
+[node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer/VBoxContainer/AspectRatioContainer/MarginContainer/PanelContainer/GameOverScreen/VBoxContainer/Buttons"]
 layout_mode = 2
 
-[node name="GameOverRetryButton" type="Button" parent="PanelContainer/VBoxContainer/MarginContainer/PanelContainer/GameOverScreen/VBoxContainer/Buttons/VBoxContainer"]
+[node name="GameOverRetryButton" type="Button" parent="PanelContainer/VBoxContainer/AspectRatioContainer/MarginContainer/PanelContainer/GameOverScreen/VBoxContainer/Buttons/VBoxContainer"]
 unique_name_in_owner = true
 layout_mode = 2
 text = "Try Again"
 
-[node name="GameOverQuitButton" type="Button" parent="PanelContainer/VBoxContainer/MarginContainer/PanelContainer/GameOverScreen/VBoxContainer/Buttons/VBoxContainer"]
+[node name="GameOverQuitButton" type="Button" parent="PanelContainer/VBoxContainer/AspectRatioContainer/MarginContainer/PanelContainer/GameOverScreen/VBoxContainer/Buttons/VBoxContainer"]
 unique_name_in_owner = true
 layout_mode = 2
 text = "Go To Menu"
 
-[node name="SettingsPanel" parent="PanelContainer/VBoxContainer/MarginContainer/PanelContainer" instance=ExtResource("7_e8c1b")]
+[node name="SettingsPanel" parent="PanelContainer/VBoxContainer/AspectRatioContainer/MarginContainer/PanelContainer" instance=ExtResource("7_e8c1b")]
 unique_name_in_owner = true
 visible = false
 layout_mode = 2
 
-[node name="GoldFrame" type="NinePatchRect" parent="PanelContainer/VBoxContainer/MarginContainer/PanelContainer"]
+[node name="GoldFrame" type="NinePatchRect" parent="PanelContainer/VBoxContainer/AspectRatioContainer/MarginContainer/PanelContainer"]
 layout_mode = 2
 texture = ExtResource("1_6vkef")
 patch_margin_left = 16
@@ -445,6 +448,7 @@ patch_margin_bottom = 16
 
 [node name="HBoxContainer" type="HBoxContainer" parent="PanelContainer/VBoxContainer"]
 layout_mode = 2
+size_flags_vertical = 8
 
 [node name="QuitButton" type="Button" parent="PanelContainer/VBoxContainer/HBoxContainer"]
 layout_mode = 2
@@ -569,8 +573,8 @@ patch_margin_top = 16
 patch_margin_right = 16
 patch_margin_bottom = 16
 
-[connection signal="pressed" from="PanelContainer/VBoxContainer/MarginContainer/PanelContainer/GameOverScreen/VBoxContainer/Buttons/VBoxContainer/GameOverRetryButton" to="." method="_on_game_over_retry_button_pressed"]
-[connection signal="pressed" from="PanelContainer/VBoxContainer/MarginContainer/PanelContainer/GameOverScreen/VBoxContainer/Buttons/VBoxContainer/GameOverQuitButton" to="." method="_on_game_over_quit_button_pressed"]
+[connection signal="pressed" from="PanelContainer/VBoxContainer/AspectRatioContainer/MarginContainer/PanelContainer/GameOverScreen/VBoxContainer/Buttons/VBoxContainer/GameOverRetryButton" to="." method="_on_game_over_retry_button_pressed"]
+[connection signal="pressed" from="PanelContainer/VBoxContainer/AspectRatioContainer/MarginContainer/PanelContainer/GameOverScreen/VBoxContainer/Buttons/VBoxContainer/GameOverQuitButton" to="." method="_on_game_over_quit_button_pressed"]
 [connection signal="pressed" from="PanelContainer/VBoxContainer/HBoxContainer/QuitButton" to="." method="_on_quit_button_pressed"]
 [connection signal="pressed" from="PanelContainer/VBoxContainer/HBoxContainer/RestartButton" to="." method="_on_restart_button_pressed"]
 [connection signal="pressed" from="PanelContainer/VBoxContainer/HBoxContainer/SettingsButton" to="." method="_on_settings_button_pressed"]
