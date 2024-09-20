@@ -1,13 +1,79 @@
-[gd_scene load_steps=3 format=3 uid="uid://bck0o028i4kg1"]
+[gd_scene load_steps=12 format=3 uid="uid://bck0o028i4kg1"]
 
 [ext_resource type="Texture2D" uid="uid://dp4ixdhn3wf1b" path="res://assets/textures/power_plate.png" id="1_gyqj2"]
 [ext_resource type="Script" path="res://scenes/instantiables/power_plate.gd" id="1_nft55"]
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_edv5o"]
+atlas = ExtResource("1_gyqj2")
+region = Rect2(0, 0, 64, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_krvi0"]
+atlas = ExtResource("1_gyqj2")
+region = Rect2(64, 0, 64, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_83cy2"]
+atlas = ExtResource("1_gyqj2")
+region = Rect2(128, 0, 64, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7bwvu"]
+atlas = ExtResource("1_gyqj2")
+region = Rect2(192, 0, 64, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_akj03"]
+atlas = ExtResource("1_gyqj2")
+region = Rect2(256, 0, 64, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_uqcr3"]
+atlas = ExtResource("1_gyqj2")
+region = Rect2(320, 0, 64, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_pnxyp"]
+atlas = ExtResource("1_gyqj2")
+region = Rect2(384, 0, 64, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_aehdx"]
+atlas = ExtResource("1_gyqj2")
+region = Rect2(448, 0, 64, 48)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_tqr0q"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_edv5o")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_krvi0")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_83cy2")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_7bwvu")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_akj03")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_uqcr3")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_pnxyp")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_aehdx")
+}],
+"loop": true,
+"name": &"default",
+"speed": 8.0
+}]
+
 [node name="PowerPlate" type="Node2D"]
 script = ExtResource("1_nft55")
 
-[node name="Sprite2D" type="Sprite2D" parent="."]
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 z_index = 1
 texture_filter = 1
-texture = ExtResource("1_gyqj2")
+sprite_frames = SubResource("SpriteFrames_tqr0q")
+autoplay = "default"
+frame_progress = 0.938611
 centered = false
