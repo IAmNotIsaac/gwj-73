@@ -28,6 +28,7 @@ const LEVELS := [
 @onready var _game_over_retry_button := %GameOverRetryButton
 @onready var _progress_loss_warning_confirm_popup = $ProgressLossWarningConfirmPopup
 @onready var _settings_panel := %SettingsPanel
+@onready var _middle_panel := %MiddlePanel
 
 var current_scene: Node
 var player_team: Piece.Team
@@ -147,6 +148,11 @@ func report_turn(team: Piece.Team, do_wipe: bool) -> void:
 			_turn_value.text = "NONE"
 			_turn_value.label_settings.font_color = Color("b0b0b0")
 			_turn_value.label_settings.outline_size = 0
+	
+	_player_turn_particles[0].global_position = _middle_panel.global_position + Vector2(16.0, 16.0)
+	_player_turn_particles[1].global_position = _middle_panel.global_position + Vector2(-16.0, 16.0) + Vector2(_middle_panel.size.x, 0.0)
+	_player_turn_particles[2].global_position = _middle_panel.global_position + Vector2(16.0, -16.0) + Vector2(0.0, _middle_panel.size.y)
+	_player_turn_particles[3].global_position = _middle_panel.global_position + Vector2(-16.0, -16.0) + _middle_panel.size
 	
 	if team == player_team:
 		for p in _player_turn_particles:
