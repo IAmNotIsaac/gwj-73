@@ -203,6 +203,11 @@ func report_turn(team: Piece.Team, do_wipe: bool) -> void:
 
 
 func game_over(reason: GameOver) -> void:
+	if current_scene is World and current_scene.test_mode:
+		get_tree().reload_current_scene()
+		print("Game over during test mode -- reason: %s" % GameOver.keys()[reason])
+		return
+	
 	current_scene.stop_music()
 	current_scene.get_camera_controller().set_free(false)
 	
