@@ -163,3 +163,7 @@ func game_over(reason: GameOver) -> void:
 	
 	_game_over_music.play(0.0)
 	_anim.play(&"game_over_show")
+
+
+func is_settings_open() -> bool:
+	return _settings_panel.visible

@@ -26,7 +26,7 @@ func _ready() -> void:
 
 func _process(delta: float) -> void:
 	if camera != null:
-		var d := Input.get_vector(&"move_left", &"move_right", &"move_up", &"move_down") * int(_camera_free)
+		var d := Input.get_vector(&"move_left", &"move_right", &"move_up", &"move_down") * int(_camera_free) * int(not Hud.is_settings_open())
 		_camera_position += d * delta * Settings.camera_speed
 		_camera_position = _camera_position.clamp(_bound_tl, _bound_br)
 		var mp := get_viewport().get_mouse_position() / get_viewport().get_visible_rect().size
