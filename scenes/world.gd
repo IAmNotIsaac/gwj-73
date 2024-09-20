@@ -7,6 +7,7 @@ signal cutscene_ended
 
 @export var track: AudioStream
 
+var test_mode := false
 var _boards: Array[Board] = []
 var _controllers: Array[Controller] = []
 var _speakers: Array[Speaker] = []
@@ -16,6 +17,8 @@ var _capture_effect: AudioEffectCapture
 
 
 func _ready() -> void:
+	test_mode = self == get_tree().current_scene
+	
 	var tl := Vector2.INF
 	var br := -Vector2.INF
 	for b in _boards:
@@ -24,6 +27,9 @@ func _ready() -> void:
 		tl = tl.min(tl_cmp)
 		br = br.max(br_cmp)
 	_camera_controller.declare_bounds(tl, br)
+	
+	if test_mode:
+		_turn_manager.next_turn()
 
 
 func register_board(board: Board) -> void:

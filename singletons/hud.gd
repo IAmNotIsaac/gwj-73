@@ -51,6 +51,9 @@ func _init() -> void:
 
 
 func _ready() -> void:
+	if get_tree().current_scene is World:
+		current_scene = get_tree().current_scene
+	
 	_settings_panel.hide()
 	_game_view.hide()
 
