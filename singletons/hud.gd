@@ -4,6 +4,7 @@ extends CanvasLayer
 enum GameOver {
 	DRAW,
 	FORFEIT,
+	NO_MATERIAL,
 }
 
 const LEVELS := [
@@ -169,6 +170,10 @@ func game_over(reason: GameOver) -> void:
 		
 		GameOver.FORFEIT:
 			_game_over_reason_label.text = "FORFEIT"
+			_game_over_reason_label.label_settings.font_color = Color.RED
+		
+		GameOver.NO_MATERIAL:
+			_game_over_reason_label.text = "NO MATERIAL"
 			_game_over_reason_label.label_settings.font_color = Color.RED
 	
 	_game_over_music.play(0.0)

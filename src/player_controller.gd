@@ -55,6 +55,14 @@ func _ready() -> void:
 
 func _turn_begun() -> void:
 	if get_available_move_count() == 0:
+		var remaining_pieces_count := 0
+		for board in _world.get_boards():
+			remaining_pieces_count += board.get_team_count(get_team())
+		if remaining_pieces_count == 0:
+			await get_tree().create_timer(_TIME_COMPREHENSION).timeout
+			Hud.game_over(Hud.GameOver.NO_MATERIAL)
+			return
+		
 		await get_tree().create_timer(_TIME_COMPREHENSION).timeout
 		turn_passed.emit()
 		return
