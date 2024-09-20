@@ -1,6 +1,8 @@
 extends Control
 
 
+signal _show_menu
+
 @onready var _continue_button := %ContinueButton
 @onready var _new_game_button := %NewGameButton
 @onready var _settings_button := %SettingsButton
@@ -8,6 +10,8 @@ extends Control
 @onready var _settings_panel := %SettingsPanel
 @onready var _credits_panel := %CreditsPanel
 @onready var _music := $Music
+@onready var _intro_sequence := $IntroSequence
+@onready var _anim := $AnimationPlayer
 
 
 func _ready() -> void:
@@ -16,6 +20,15 @@ func _ready() -> void:
 	_continue_button.visible = Progress.last_level >= 0
 	_quit_button.visible = OS.get_name() != "Web"
 	_start_music()
+	_intro_sequence.intro0_finished.connect(_show_menu.emit)
+	await _show_menu
+	_anim.play(&"fade_in")
+
+
+func _input(event: InputEvent) -> void:
+	if event is InputEventKey and Progress.play_count > 0:
+		_show_menu.emit()
+		_intro_sequence.skip_intro0()
 
 
 func _on_continue_button_pressed() -> void:

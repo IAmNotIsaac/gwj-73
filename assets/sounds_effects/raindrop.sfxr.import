@@ -1,0 +1,17 @@
+[remap]
+
+importer="com.timothyqiu.gdfxr.importer"
+type="AudioStreamWAV"
+uid="uid://mjpph8hhmkxd"
+path="res://.godot/imported/raindrop.sfxr-5fd03368dad3406b4351eeb5af1893f4.sample"
+
+[deps]
+
+source_file="res://assets/sounds_effects/raindrop.sfxr"
+dest_files=["res://.godot/imported/raindrop.sfxr-5fd03368dad3406b4351eeb5af1893f4.sample"]
+
+[params]
+
+loop=false
+bit_depth=0
+sample_rate=0

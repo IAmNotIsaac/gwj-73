@@ -1,17 +1,12 @@
-[gd_scene load_steps=14 format=3 uid="uid://3b2nn77g8vmi"]
+[gd_scene load_steps=15 format=3 uid="uid://3b2nn77g8vmi"]
 
 [ext_resource type="Script" path="res://scenes/main_menu.gd" id="1_jfl8o"]
 [ext_resource type="PackedScene" uid="uid://bhi0cnsm5tmbq" path="res://scenes/instantiables/settings_panel.tscn" id="2_4kimc"]
-[ext_resource type="FontFile" uid="uid://dmleww6cdg4ji" path="res://assets/fonts/roboto_slab/static/RobotoSlab-Bold.ttf" id="2_xq5at"]
 [ext_resource type="AudioStream" uid="uid://b13gq4gk8ewd5" path="res://assets/soundtrack/daunt.mp3" id="3_aptqi"]
 [ext_resource type="FontFile" uid="uid://dxws7nhjytmtc" path="res://assets/fonts/bonk/Bonkfat.ttf" id="3_n13u4"]
-[ext_resource type="Texture2D" uid="uid://csdqi4ek0gt3c" path="res://assets/textures/crossfade_gradient.png" id="3_o3alf"]
 [ext_resource type="Shader" path="res://shaders/uv_cycler.gdshader" id="3_oiyid"]
 [ext_resource type="Texture2D" uid="uid://bpqrmpeodnpum" path="res://assets/textures/frame.png" id="4_kqrhi"]
-
-[sub_resource type="LabelSettings" id="LabelSettings_kdt15"]
-font = ExtResource("2_xq5at")
-font_size = 128
+[ext_resource type="PackedScene" uid="uid://dyg0tb3bl3l5l" path="res://scenes/intro_sequence.tscn" id="9_pvm4v"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_0eyg4"]
 shader = ExtResource("3_oiyid")
@@ -27,6 +22,66 @@ font_color = Color(0.690196, 0.690196, 0.690196, 1)
 [sub_resource type="LabelSettings" id="LabelSettings_mrfyl"]
 font_color = Color(0.690196, 0.690196, 0.690196, 1)
 
+[sub_resource type="Animation" id="Animation_kdqge"]
+resource_name = "fade_in"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("CenterContainer:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("CenterContainer:visible")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+
+[sub_resource type="Animation" id="Animation_m8hh6"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("CenterContainer:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("CenterContainer:visible")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_mhxnr"]
+_data = {
+"RESET": SubResource("Animation_m8hh6"),
+"fade_in": SubResource("Animation_kdqge")
+}
+
 [node name="MainMenu" type="Control"]
 layout_mode = 3
 anchors_preset = 15
@@ -36,7 +91,12 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_jfl8o")
 
+[node name="IntroSequence" parent="." instance=ExtResource("9_pvm4v")]
+layout_mode = 1
+
 [node name="CenterContainer" type="CenterContainer" parent="."]
+visible = false
+modulate = Color(1, 1, 1, 0)
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -47,22 +107,6 @@ grow_vertical = 2
 [node name="VBoxContainer" type="VBoxContainer" parent="CenterContainer"]
 layout_mode = 2
 theme_override_constants/separation = 100
-
-[node name="GameTitle" type="Label" parent="CenterContainer/VBoxContainer"]
-layout_mode = 2
-text = "CHESS RPG"
-label_settings = SubResource("LabelSettings_kdt15")
-horizontal_alignment = 1
-
-[node name="TextureRect" type="TextureRect" parent="CenterContainer/VBoxContainer/GameTitle"]
-show_behind_parent = true
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-texture = ExtResource("3_o3alf")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="CenterContainer/VBoxContainer"]
 layout_mode = 2
@@ -294,6 +338,11 @@ metadata/_edit_lock_ = true
 stream = ExtResource("3_aptqi")
 bus = &"BGM"
 parameters/looping = true
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_mhxnr")
+}
 
 [connection signal="pressed" from="CenterContainer/VBoxContainer/VBoxContainer/ContinueButton" to="." method="_on_continue_button_pressed"]
 [connection signal="pressed" from="CenterContainer/VBoxContainer/VBoxContainer/NewGameButton" to="." method="_on_new_game_button_pressed"]
