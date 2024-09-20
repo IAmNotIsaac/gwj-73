@@ -57,7 +57,7 @@ func _ready() -> void:
 
 
 func _on_forfeit_button_pressed() -> void:
-	_warn(game_over.bind(GameOver.FORFEIT))
+	warn(game_over.bind(GameOver.FORFEIT))
 
 
 func _on_settings_button_pressed() -> void:
@@ -73,7 +73,11 @@ func _on_game_over_retry_button_pressed() -> void:
 
 
 func _on_game_over_quit_button_pressed() -> void:
-	_warn(_go_to_menu)
+	var tween := get_tree().create_tween()
+	tween.tween_property(_game_over_music, ^"volume_db", -40.0, 1.0)
+	tween.tween_callback(_game_over_music.stop)
+	tween.tween_property(_game_over_music, ^"volume_db", 0.0, 0.0)
+	warn(_go_to_menu)
 
 
 func _on_game_over_music_finished() -> void:
@@ -102,20 +106,27 @@ func _on_warning_confirm_button_pressed() -> void:
 	_warned_action.call()
 
 
-func _warn(unsafe_action: Callable) -> void:
-	_warned_action = unsafe_action
-	_progress_loss_warning_confirm_popup.popup()
-
-
 func _go_to_menu() -> void:
-	printerr("TODO: Hud::_go_to_menu")
+	disable()
+	get_tree().change_scene_to_file("res://scenes/main_menu.tscn")
+	#printerr("TODO: Hud::_go_to_menu")
 
 
 func _restart_level() -> void:
-	load_level(last_level_data)
+	load_level_data(last_level_data)
 
 
-func load_level(level_data: Dictionary) -> void:
+func load_level(level_index: int, progress := true, save := true) -> void:
+	if progress:
+		Progress.last_level = level_index
+	if save:
+		Progress.save_to_file()
+	load_level_data(LEVELS[level_index])
+
+
+## Load level through data instead. This will not save the level to the progress
+## file. Instead, use load_level.
+func load_level_data(level_data: Dictionary) -> void:
 	if current_scene != null and current_scene is World and current_scene.test_mode:
 		printerr("During test mode, one cannot load levels.")
 		get_tree().reload_current_scene()
@@ -202,7 +213,16 @@ func report_turn(team: Piece.Team, do_wipe: bool) -> void:
 		for p in _player_turn_particles:
 			p.emitting = true
 		if do_wipe:
+			_forfeit_button.disabled = true
+			_settings_button.disabled = true
+			_game_over_retry_button.disabled = true
+			_game_over_quit_button.disabled = true
 			_anim.play(&"player_turn_wipe", -1.0, 1.0)
+			await _anim.animation_finished
+			_forfeit_button.disabled = false
+			_settings_button.disabled = false
+			_game_over_retry_button.disabled = false
+			_game_over_quit_button.disabled = false
 
 
 func game_over(reason: GameOver) -> void:
@@ -233,3 +253,8 @@ func game_over(reason: GameOver) -> void:
 
 func is_settings_open() -> bool:
 	return _settings_panel.visible
+
+
+func warn(unsafe_action: Callable) -> void:
+	_warned_action = unsafe_action
+	_progress_loss_warning_confirm_popup.popup()
