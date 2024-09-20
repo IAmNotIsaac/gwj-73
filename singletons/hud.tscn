@@ -12,7 +12,7 @@
 [ext_resource type="Texture2D" uid="uid://bdf0cww3lbthg" path="res://assets/textures/crossfade.png" id="8_o0c71"]
 [ext_resource type="Theme" uid="uid://c3d5oegbtblqx" path="res://resources/themes/default_theme.tres" id="9_aenb0"]
 [ext_resource type="Texture2D" uid="uid://csdqi4ek0gt3c" path="res://assets/textures/crossfade_gradient.png" id="10_i1ohp"]
-[ext_resource type="FontFile" uid="uid://dqy4rq61hcrua" path="res://assets/fonts/bonk/Bonkout.ttf" id="11_fryv3"]
+[ext_resource type="FontFile" uid="uid://cpd7wgmg0lli1" path="res://assets/fonts/bonk/Bonkoff.TTF" id="11_86d32"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_son0n"]
 shader = ExtResource("1_gwte5")
@@ -64,7 +64,7 @@ texture_margin_left = 64.0
 texture_margin_right = 64.0
 
 [sub_resource type="LabelSettings" id="LabelSettings_3edbb"]
-font = ExtResource("11_fryv3")
+font = ExtResource("11_86d32")
 font_size = 128
 
 [sub_resource type="Animation" id="Animation_w7iv6"]
