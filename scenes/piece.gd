@@ -562,23 +562,20 @@ func kill() -> void:
 	var move_time := _ANIM_TIME_PIECE_MOVE
 	var kill_time := _ANIM_TIME_PIECE_KILL
 	
+	var spm: Callable = func(x: float): _power_hint.material.set_shader_parameter(&"ball_size", x)
+	
 	var tween := get_tree().create_tween().set_parallel(true)
-	tween.tween_callback(_shadow.hide) \
-			.set_delay(move_time)
-	tween.tween_callback(_direction_hint.hide) \
-			.set_delay(move_time)
-	tween.tween_property(_particles_smoke_0, ^"emitting", true, 0.0) \
-			.set_delay(move_time)
-	tween.tween_property(_particles_smoke_1, ^"emitting", true, 0.0) \
-			.set_delay(move_time)
-	tween.tween_property(_sprite, ^"modulate:a", 0.0, kill_time) \
-			.set_delay(move_time)
-	tween.tween_property(_sprite, ^"scale", Vector2(2.0, 2.0), kill_time) \
-			.set_delay(move_time)
-	tween.tween_property(_sprite, ^"rotation", randf_range(-PI, PI), kill_time) \
-			.set_delay(move_time)
+	tween.tween_interval(move_time)
+	tween.tween_callback(_shadow.hide)
+	tween.tween_callback(_direction_hint.hide)
+	tween.tween_property(_particles_smoke_0, ^"emitting", true, 0.0)
+	tween.tween_property(_particles_smoke_1, ^"emitting", true, 0.0)
+	tween.tween_property(_sprite, ^"modulate:a", 0.0, kill_time)
+	tween.tween_property(_sprite, ^"scale", Vector2(2.0, 2.0), kill_time)
+	tween.tween_property(_sprite, ^"rotation", randf_range(-PI, PI), kill_time)
+	tween.tween_method(spm, 1.0, 0.0, kill_time * 0.25)
 	tween.tween_callback(queue_free) \
-			.set_delay(move_time + kill_time)
+			.set_delay(kill_time)
 
 
 func add_power(power: Power) -> void:
