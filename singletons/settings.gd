@@ -86,8 +86,8 @@ func load_from_file() -> void:
 	InputMap.action_erase_events(&"move_right")
 	
 	InputMap.action_add_event(&"move_up", load("user://settings/event_move_up.tres"))
-	InputMap.action_add_event(&"move_down", load("user://settings/event_move_up.tres"))
-	InputMap.action_add_event(&"move_left", load("user://settings/event_move_up.tres"))
-	InputMap.action_add_event(&"move_right", load("user://settings/event_move_up.tres"))
+	InputMap.action_add_event(&"move_down", load("user://settings/event_move_down.tres"))
+	InputMap.action_add_event(&"move_left", load("user://settings/event_move_left.tres"))
+	InputMap.action_add_event(&"move_right", load("user://settings/event_move_right.tres"))
 	
 	print("LOADED SETTINGS FROM FILE '%s'" % file.get_path_absolute())
