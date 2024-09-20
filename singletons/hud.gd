@@ -17,6 +17,7 @@ const LEVELS := [
 @onready var viewport := %SubViewport
 @onready var _moves_value := %Moves/Value
 @onready var _turn_value := %Turn/Value
+@onready var _level_value := %Level/Value
 @onready var _player_turn_particles := [
 	%PlayerTurnParticles0,
 	%PlayerTurnParticles1,
@@ -129,12 +130,15 @@ func load_level(level_data: Dictionary) -> void:
 	viewport.add_child(current_scene)
 	last_level_data = level_data
 	
-	_anim.play(&"crossfade_out")
-	await _anim.animation_finished
+	_level_value.text = level_data.name
 	_title_label.text = level_data.name
 	_anim.play(&"flash_title")
 	await _anim.animation_finished
+	_anim.play(&"crossfade_out")
+	await _anim.animation_finished
 	
+	_forfeit_button.disabled = false
+	_settings_button.disabled = false
 	current_scene.get_turn_manager().next_turn()
 
 
