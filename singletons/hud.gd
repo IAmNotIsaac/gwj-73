@@ -5,6 +5,7 @@ enum GameOver {
 	DRAW,
 	FORFEIT,
 	NO_MATERIAL,
+	TEST_MODE,
 }
 
 const LEVELS := [
@@ -115,6 +116,11 @@ func _restart_level() -> void:
 
 
 func load_level(level_data: Dictionary) -> void:
+	if current_scene != null and current_scene is World and current_scene.test_mode:
+		printerr("During test mode, one cannot load levels.")
+		get_tree().reload_current_scene()
+		return
+	
 	_forfeit_button.disabled = true
 	_settings_button.disabled = true
 	_game_over_retry_button.disabled = true
