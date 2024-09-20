@@ -36,6 +36,7 @@ const LEVELS := [
 @onready var _forfeit_button := %ForfeitButton
 @onready var _settings_button := %SettingsButton
 @onready var _title_label := %TitleLabel
+@onready var _game_view := $GameView
 
 var current_scene: Node
 var player_team: Piece.Team
@@ -51,6 +52,7 @@ func _init() -> void:
 
 func _ready() -> void:
 	_settings_panel.hide()
+	_game_view.hide()
 
 
 func _on_forfeit_button_pressed() -> void:
@@ -133,6 +135,7 @@ func load_level(level_data: Dictionary) -> void:
 	last_level_data = level_data
 	
 	_game_over_screen.hide()
+	_game_view.show()
 	
 	_level_value.text = level_data.name
 	_title_label.text = level_data.name
@@ -149,8 +152,16 @@ func load_level(level_data: Dictionary) -> void:
 
 
 func disable() -> void:
-	current_scene.queue_free()
+	if current_scene != null and current_scene is World:
+		current_scene.stop_music()
+	_anim.play(&"crossfade_in")
+	await _anim.animation_finished
+	if current_scene != null:
+		current_scene.queue_free()
 	current_scene = null
+	_game_view.hide()
+	_anim.play(&"crossfade_out")
+	await _anim.animation_finished
 
 
 func report_remaining_moves(moves: int) -> void:

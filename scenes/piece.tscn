@@ -975,7 +975,7 @@ texture_filter = 1
 position = Vector2(0, -24)
 sprite_frames = SubResource("SpriteFrames_riloh")
 animation = &"0_w"
-frame_progress = 0.516785
+frame_progress = 0.942349
 
 [node name="Shadow" type="Sprite2D" parent="."]
 texture = ExtResource("2_3o6u8")
