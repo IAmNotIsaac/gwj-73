@@ -166,7 +166,7 @@ func load_level_data(level_data: Dictionary) -> void:
 	_game_over_retry_button.disabled = false
 	_game_over_quit_button.disabled = false
 	current_scene.get_turn_manager().next_turn()
-	_anim.play(&"reset")
+	_anim.play(&"RESET")
 
 
 func disable() -> void:
@@ -180,7 +180,7 @@ func disable() -> void:
 	_game_view.hide()
 	_anim.play(&"crossfade_out")
 	await _anim.animation_finished
-	_anim.play(&"reset")
+	_anim.play(&"RESET")
 
 
 func report_remaining_moves(moves: int) -> void:

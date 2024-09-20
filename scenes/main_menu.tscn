@@ -1,0 +1,305 @@
+[gd_scene load_steps=14 format=3 uid="uid://3b2nn77g8vmi"]
+
+[ext_resource type="Script" path="res://scenes/main_menu.gd" id="1_jfl8o"]
+[ext_resource type="PackedScene" uid="uid://bhi0cnsm5tmbq" path="res://scenes/instantiables/settings_panel.tscn" id="2_4kimc"]
+[ext_resource type="FontFile" uid="uid://dmleww6cdg4ji" path="res://assets/fonts/roboto_slab/static/RobotoSlab-Bold.ttf" id="2_xq5at"]
+[ext_resource type="AudioStream" uid="uid://b13gq4gk8ewd5" path="res://assets/soundtrack/daunt.mp3" id="3_aptqi"]
+[ext_resource type="FontFile" uid="uid://dxws7nhjytmtc" path="res://assets/fonts/bonk/Bonkfat.ttf" id="3_n13u4"]
+[ext_resource type="Texture2D" uid="uid://csdqi4ek0gt3c" path="res://assets/textures/crossfade_gradient.png" id="3_o3alf"]
+[ext_resource type="Shader" path="res://shaders/uv_cycler.gdshader" id="3_oiyid"]
+[ext_resource type="Texture2D" uid="uid://bpqrmpeodnpum" path="res://assets/textures/frame.png" id="4_kqrhi"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_kdt15"]
+font = ExtResource("2_xq5at")
+font_size = 128
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_0eyg4"]
+shader = ExtResource("3_oiyid")
+shader_parameter/direction = Vector2(0.2, 0.1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_4tjv7"]
+font = ExtResource("3_n13u4")
+font_size = 64
+
+[sub_resource type="LabelSettings" id="LabelSettings_74j2v"]
+font_color = Color(0.690196, 0.690196, 0.690196, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_mrfyl"]
+font_color = Color(0.690196, 0.690196, 0.690196, 1)
+
+[node name="MainMenu" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_jfl8o")
+
+[node name="CenterContainer" type="CenterContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CenterContainer"]
+layout_mode = 2
+theme_override_constants/separation = 100
+
+[node name="GameTitle" type="Label" parent="CenterContainer/VBoxContainer"]
+layout_mode = 2
+text = "CHESS RPG"
+label_settings = SubResource("LabelSettings_kdt15")
+horizontal_alignment = 1
+
+[node name="TextureRect" type="TextureRect" parent="CenterContainer/VBoxContainer/GameTitle"]
+show_behind_parent = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("3_o3alf")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CenterContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+
+[node name="ContinueButton" type="Button" parent="CenterContainer/VBoxContainer/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Continue"
+
+[node name="NewGameButton" type="Button" parent="CenterContainer/VBoxContainer/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "New Game"
+
+[node name="SettingsButton" type="Button" parent="CenterContainer/VBoxContainer/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Settings"
+
+[node name="CreditsButton" type="Button" parent="CenterContainer/VBoxContainer/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Credits"
+
+[node name="QuitButton" type="Button" parent="CenterContainer/VBoxContainer/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Quit"
+
+[node name="SettingsPanel" parent="CenterContainer" instance=ExtResource("2_4kimc")]
+unique_name_in_owner = true
+visible = false
+layout_mode = 2
+
+[node name="CreditsPanel" type="PanelContainer" parent="CenterContainer"]
+unique_name_in_owner = true
+visible = false
+material = SubResource("ShaderMaterial_0eyg4")
+custom_minimum_size = Vector2(800, 400)
+layout_mode = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="CenterContainer/CreditsPanel"]
+layout_mode = 2
+theme_override_constants/margin_left = 16
+theme_override_constants/margin_top = 16
+theme_override_constants/margin_right = 16
+theme_override_constants/margin_bottom = 16
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CenterContainer/CreditsPanel/MarginContainer"]
+layout_mode = 2
+
+[node name="Header" type="HBoxContainer" parent="CenterContainer/CreditsPanel/MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="CreditsExitButton" type="Button" parent="CenterContainer/CreditsPanel/MarginContainer/VBoxContainer/Header"]
+layout_mode = 2
+size_flags_horizontal = 0
+text = "Exit"
+
+[node name="ColorRect" type="ColorRect" parent="CenterContainer/CreditsPanel/MarginContainer/VBoxContainer/Header"]
+custom_minimum_size = Vector2(20, 1)
+layout_mode = 2
+size_flags_vertical = 4
+color = Color(0.615686, 0.615686, 0.615686, 1)
+
+[node name="Label" type="Label" parent="CenterContainer/CreditsPanel/MarginContainer/VBoxContainer/Header"]
+layout_mode = 2
+text = "CREDITS"
+label_settings = SubResource("LabelSettings_4tjv7")
+
+[node name="ColorRect2" type="ColorRect" parent="CenterContainer/CreditsPanel/MarginContainer/VBoxContainer/Header"]
+custom_minimum_size = Vector2(20, 1)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+color = Color(0.615686, 0.615686, 0.615686, 1)
+
+[node name="BonkFont" type="HBoxContainer" parent="CenterContainer/CreditsPanel/MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Asset" type="Label" parent="CenterContainer/CreditsPanel/MarginContainer/VBoxContainer/BonkFont"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Bonk font family"
+
+[node name="License" type="Label" parent="CenterContainer/CreditsPanel/MarginContainer/VBoxContainer/BonkFont"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Freeware"
+
+[node name="Author" type="Label" parent="CenterContainer/CreditsPanel/MarginContainer/VBoxContainer/BonkFont"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Graham Meade"
+
+[node name="Link" type="LinkButton" parent="CenterContainer/CreditsPanel/MarginContainer/VBoxContainer/BonkFont"]
+layout_mode = 2
+text = "Source"
+uri = "https://www.dafont.com/bonk.font"
+
+[node name="Sep0" type="ColorRect" parent="CenterContainer/CreditsPanel/MarginContainer/VBoxContainer"]
+custom_minimum_size = Vector2(20, 1)
+layout_mode = 2
+size_flags_vertical = 4
+color = Color(0.615686, 0.615686, 0.615686, 1)
+
+[node name="RobotoFont" type="HBoxContainer" parent="CenterContainer/CreditsPanel/MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Asset" type="Label" parent="CenterContainer/CreditsPanel/MarginContainer/VBoxContainer/RobotoFont"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Roboto Slab font family"
+
+[node name="License" type="Label" parent="CenterContainer/CreditsPanel/MarginContainer/VBoxContainer/RobotoFont"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Apache License 2.0"
+
+[node name="Author" type="Label" parent="CenterContainer/CreditsPanel/MarginContainer/VBoxContainer/RobotoFont"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Christian Robertson"
+
+[node name="Link" type="LinkButton" parent="CenterContainer/CreditsPanel/MarginContainer/VBoxContainer/RobotoFont"]
+layout_mode = 2
+text = "Source"
+uri = "https://fonts.google.com/specimen/Roboto"
+
+[node name="Sep1" type="ColorRect" parent="CenterContainer/CreditsPanel/MarginContainer/VBoxContainer"]
+custom_minimum_size = Vector2(20, 1)
+layout_mode = 2
+size_flags_vertical = 4
+color = Color(0.615686, 0.615686, 0.615686, 1)
+
+[node name="FireShader" type="HBoxContainer" parent="CenterContainer/CreditsPanel/MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Asset" type="Label" parent="CenterContainer/CreditsPanel/MarginContainer/VBoxContainer/FireShader"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Fireball shader"
+
+[node name="License" type="Label" parent="CenterContainer/CreditsPanel/MarginContainer/VBoxContainer/FireShader"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "MIT License"
+
+[node name="Author" type="Label" parent="CenterContainer/CreditsPanel/MarginContainer/VBoxContainer/FireShader"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Muhammad Mujtaba"
+
+[node name="Link" type="LinkButton" parent="CenterContainer/CreditsPanel/MarginContainer/VBoxContainer/FireShader"]
+layout_mode = 2
+text = "Source"
+uri = "https://godotshaders.com/shader/fireball-or-candle-fire-shader/"
+
+[node name="InHouse" type="Label" parent="CenterContainer/CreditsPanel/MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "Everything else was made in-house!"
+label_settings = SubResource("LabelSettings_74j2v")
+horizontal_alignment = 1
+
+[node name="Software" type="Label" parent="CenterContainer/CreditsPanel/MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "Software used:
+- Godot Game Engine 4.3 <3
+- GNU Image Manipulation Program
+- Inkscape
+- Krita"
+
+[node name="Developers" type="HBoxContainer" parent="CenterContainer/CreditsPanel/MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="IsaacAstell" type="VBoxContainer" parent="CenterContainer/CreditsPanel/MarginContainer/VBoxContainer/Developers"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Name" type="Label" parent="CenterContainer/CreditsPanel/MarginContainer/VBoxContainer/Developers/IsaacAstell"]
+layout_mode = 2
+size_flags_horizontal = 6
+text = "Isaac Astell"
+
+[node name="Job" type="Label" parent="CenterContainer/CreditsPanel/MarginContainer/VBoxContainer/Developers/IsaacAstell"]
+layout_mode = 2
+size_flags_horizontal = 6
+text = "Design"
+
+[node name="SterlingAster" type="VBoxContainer" parent="CenterContainer/CreditsPanel/MarginContainer/VBoxContainer/Developers"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Name" type="Label" parent="CenterContainer/CreditsPanel/MarginContainer/VBoxContainer/Developers/SterlingAster"]
+layout_mode = 2
+size_flags_horizontal = 6
+text = "Sterling Aster"
+
+[node name="Job" type="Label" parent="CenterContainer/CreditsPanel/MarginContainer/VBoxContainer/Developers/SterlingAster"]
+layout_mode = 2
+size_flags_horizontal = 6
+text = "Art"
+
+[node name="Footer" type="HBoxContainer" parent="CenterContainer/CreditsPanel/MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="CenterContainer/CreditsPanel/MarginContainer/VBoxContainer/Footer"]
+layout_mode = 2
+text = "Made (with love) in 9 days for Godot Wild Jam #73!"
+label_settings = SubResource("LabelSettings_mrfyl")
+
+[node name="LinkButton" type="LinkButton" parent="CenterContainer/CreditsPanel/MarginContainer/VBoxContainer/Footer"]
+layout_mode = 2
+size_flags_horizontal = 10
+text = "The source code is on GitHub!"
+uri = "https://github.com/IAmNotIsaac/gwj-73"
+
+[node name="GoldFrame" type="NinePatchRect" parent="CenterContainer/CreditsPanel"]
+layout_mode = 2
+texture = ExtResource("4_kqrhi")
+patch_margin_left = 16
+patch_margin_top = 16
+patch_margin_right = 16
+patch_margin_bottom = 16
+metadata/_edit_lock_ = true
+
+[node name="Music" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("3_aptqi")
+bus = &"BGM"
+parameters/looping = true
+
+[connection signal="pressed" from="CenterContainer/VBoxContainer/VBoxContainer/ContinueButton" to="." method="_on_continue_button_pressed"]
+[connection signal="pressed" from="CenterContainer/VBoxContainer/VBoxContainer/NewGameButton" to="." method="_on_new_game_button_pressed"]
+[connection signal="pressed" from="CenterContainer/VBoxContainer/VBoxContainer/SettingsButton" to="." method="_on_settings_button_pressed"]
+[connection signal="pressed" from="CenterContainer/VBoxContainer/VBoxContainer/CreditsButton" to="." method="_on_credits_button_pressed"]
+[connection signal="pressed" from="CenterContainer/VBoxContainer/VBoxContainer/QuitButton" to="." method="_on_quit_button_pressed"]
+[connection signal="hidden" from="CenterContainer/SettingsPanel" to="." method="_on_settings_panel_hidden"]
+[connection signal="hidden" from="CenterContainer/CreditsPanel" to="." method="_on_credits_panel_hidden"]
+[connection signal="pressed" from="CenterContainer/CreditsPanel/MarginContainer/VBoxContainer/Header/CreditsExitButton" to="." method="_on_credits_exit_button_pressed"]
