@@ -687,6 +687,7 @@ anchor_bottom = 0.5
 offset_top = -64.0
 offset_bottom = 64.0
 grow_vertical = 2
+mouse_filter = 2
 color = Color(0, 0, 0, 0.858824)
 
 [node name="PlayerTurnLabel" type="Label" parent="."]
