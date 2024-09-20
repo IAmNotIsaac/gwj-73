@@ -5,11 +5,12 @@ enum GameOver {
 	DRAW,
 }
 
-const LEVELS := {
-	&"test": {
+const LEVELS := [
+	{
+		&"name": "Test Level",
 		&"packed": preload("res://scenes/world.tscn"),
 	}
-}
+]
 
 @onready var viewport := %SubViewport
 @onready var _moves_value := %Moves/Value
