@@ -179,7 +179,7 @@ func report_turn(team: Piece.Team, do_wipe: bool) -> void:
 		for p in _player_turn_particles:
 			p.emitting = true
 		if do_wipe:
-			_anim.play(&"player_turn_wipe", -1.0, 3.0)
+			_anim.play(&"player_turn_wipe", -1.0, 1.0)
 
 
 func game_over(reason: GameOver) -> void:
