@@ -73,10 +73,6 @@ func _on_game_over_retry_button_pressed() -> void:
 
 
 func _on_game_over_quit_button_pressed() -> void:
-	var tween := get_tree().create_tween()
-	tween.tween_property(_game_over_music, ^"volume_db", -40.0, 1.0)
-	tween.tween_callback(_game_over_music.stop)
-	tween.tween_property(_game_over_music, ^"volume_db", 0.0, 0.0)
 	warn(_go_to_menu)
 
 
@@ -107,6 +103,10 @@ func _on_warning_confirm_button_pressed() -> void:
 
 
 func _go_to_menu() -> void:
+	var tween := get_tree().create_tween()
+	tween.tween_property(_game_over_music, ^"volume_db", -40.0, 1.0)
+	tween.tween_callback(_game_over_music.stop)
+	tween.tween_property(_game_over_music, ^"volume_db", 0.0, 0.0)
 	disable()
 	get_tree().change_scene_to_file("res://scenes/main_menu.tscn")
 	#printerr("TODO: Hud::_go_to_menu")
@@ -166,6 +166,7 @@ func load_level_data(level_data: Dictionary) -> void:
 	_game_over_retry_button.disabled = false
 	_game_over_quit_button.disabled = false
 	current_scene.get_turn_manager().next_turn()
+	_anim.play(&"reset")
 
 
 func disable() -> void:
@@ -179,6 +180,7 @@ func disable() -> void:
 	_game_view.hide()
 	_anim.play(&"crossfade_out")
 	await _anim.animation_finished
+	_anim.play(&"reset")
 
 
 func report_remaining_moves(moves: int) -> void:
