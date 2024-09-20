@@ -495,13 +495,9 @@ patch_margin_bottom = 16
 layout_mode = 2
 size_flags_vertical = 8
 
-[node name="QuitButton" type="Button" parent="PanelContainer/VBoxContainer/HBoxContainer"]
+[node name="ForfeitButton" type="Button" parent="PanelContainer/VBoxContainer/HBoxContainer"]
 layout_mode = 2
-text = "Go To Menu"
-
-[node name="RestartButton" type="Button" parent="PanelContainer/VBoxContainer/HBoxContainer"]
-layout_mode = 2
-text = "Restart"
+text = "Forfeit"
 
 [node name="SettingsButton" type="Button" parent="PanelContainer/VBoxContainer/HBoxContainer"]
 layout_mode = 2
@@ -626,8 +622,7 @@ patch_margin_bottom = 16
 
 [connection signal="pressed" from="PanelContainer/VBoxContainer/AspectRatioContainer/MarginContainer/MiddlePanel/GameOverScreen/VBoxContainer/Buttons/VBoxContainer/GameOverRetryButton" to="." method="_on_game_over_retry_button_pressed"]
 [connection signal="pressed" from="PanelContainer/VBoxContainer/AspectRatioContainer/MarginContainer/MiddlePanel/GameOverScreen/VBoxContainer/Buttons/VBoxContainer/GameOverQuitButton" to="." method="_on_game_over_quit_button_pressed"]
-[connection signal="pressed" from="PanelContainer/VBoxContainer/HBoxContainer/QuitButton" to="." method="_on_quit_button_pressed"]
-[connection signal="pressed" from="PanelContainer/VBoxContainer/HBoxContainer/RestartButton" to="." method="_on_restart_button_pressed"]
+[connection signal="pressed" from="PanelContainer/VBoxContainer/HBoxContainer/ForfeitButton" to="." method="_on_forfeit_button_pressed"]
 [connection signal="pressed" from="PanelContainer/VBoxContainer/HBoxContainer/SettingsButton" to="." method="_on_settings_button_pressed"]
 [connection signal="finished" from="GameOverMusic" to="." method="_on_game_over_music_finished"]
 [connection signal="pressed" from="ProgressLossWarningConfirmPopup/MarginContainer/VBoxContainer/HBoxContainer/WarningCancelButton" to="." method="_on_warning_cancel_button_pressed"]

@@ -3,6 +3,7 @@ extends CanvasLayer
 
 enum GameOver {
 	DRAW,
+	FORFEIT,
 }
 
 const LEVELS := [
@@ -46,12 +47,8 @@ func _ready() -> void:
 	_settings_panel.hide()
 
 
-func _on_quit_button_pressed() -> void:
-	_warn(_go_to_menu)
-
-
-func _on_restart_button_pressed() -> void:
-	_warn(_restart_level)
+func _on_forfeit_button_pressed() -> void:
+	_warn(game_over.bind(GameOver.FORFEIT))
 
 
 func _on_settings_button_pressed() -> void:
@@ -169,6 +166,10 @@ func game_over(reason: GameOver) -> void:
 		GameOver.DRAW:
 			_game_over_reason_label.text = "DRAW"
 			_game_over_reason_label.label_settings.font_color = Color("b0b0b0")
+		
+		GameOver.FORFEIT:
+			_game_over_reason_label.text = "FORFEIT"
+			_game_over_reason_label.label_settings.font_color = Color.RED
 	
 	_game_over_music.play(0.0)
 	_anim.play(&"game_over_show")
