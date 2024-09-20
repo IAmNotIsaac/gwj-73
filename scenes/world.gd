@@ -29,6 +29,7 @@ func _ready() -> void:
 	_camera_controller.declare_bounds(tl, br)
 	
 	if test_mode:
+		Hud.current_scene = self
 		_turn_manager.next_turn()
 
 
