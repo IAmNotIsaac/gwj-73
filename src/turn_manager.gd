@@ -8,6 +8,7 @@ var _turn_idx := -1
 
 func _ready() -> void:
 	if get_parent() is World:
+		get_parent().register_turn_manager(self)
 		_controllers = get_parent().get_controllers().duplicate()
 		_controllers.sort_custom(_sort_controller)
 		

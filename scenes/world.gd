@@ -11,6 +11,7 @@ var _boards: Array[Board] = []
 var _controllers: Array[Controller] = []
 var _speakers: Array[Speaker] = []
 var _camera_controller: CameraController
+var _turn_manager: TurnManager
 var _capture_effect: AudioEffectCapture
 
 
@@ -52,6 +53,12 @@ func register_camera_controller(controller: CameraController) -> void:
 	_camera_controller = controller
 
 
+func register_turn_manager(turn_manager: TurnManager) -> void:
+	if _turn_manager != null:
+		printerr("Overwriting previously registered turn manager (%s)" % turn_manager)
+	_turn_manager = turn_manager
+
+
 func get_boards() -> Array[Board]:
 	return _boards
 
@@ -66,6 +73,10 @@ func get_speakers() -> Array[Speaker]:
 
 func get_camera_controller() -> CameraController:
 	return _camera_controller
+
+
+func get_turn_manager() -> TurnManager:
+	return _turn_manager
 
 
 func begin_cutscene() -> void:

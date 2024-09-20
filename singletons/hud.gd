@@ -116,6 +116,8 @@ func load_level(level_data: Dictionary) -> void:
 	current_scene = level_data.packed.instantiate()
 	viewport.add_child(current_scene)
 	last_level_data = level_data
+	
+	current_scene.get_turn_manager().next_turn()
 
 
 func disable() -> void:
