@@ -1,4 +1,4 @@
-[gd_scene load_steps=27 format=3 uid="uid://buhlc6vmq4kta"]
+[gd_scene load_steps=28 format=3 uid="uid://buhlc6vmq4kta"]
 
 [ext_resource type="Texture2D" uid="uid://bpqrmpeodnpum" path="res://assets/textures/frame.png" id="1_6vkef"]
 [ext_resource type="Script" path="res://singletons/hud.gd" id="1_amupb"]
@@ -8,6 +8,7 @@
 [ext_resource type="FontFile" uid="uid://mxmx06144eto" path="res://assets/fonts/bonk/Bonkund.ttf" id="6_g4tmi"]
 [ext_resource type="FontFile" uid="uid://bmwb85xyahi2f" path="res://assets/fonts/bonk/Bonkit.ttf" id="6_p4j86"]
 [ext_resource type="AudioStream" uid="uid://cl3y074h2cc8i" path="res://assets/soundtrack/lullaby.mp3" id="7_6y2b8"]
+[ext_resource type="PackedScene" uid="uid://bhi0cnsm5tmbq" path="res://scenes/instantiables/settings_panel.tscn" id="7_e8c1b"]
 [ext_resource type="Theme" uid="uid://c3d5oegbtblqx" path="res://resources/themes/default_theme.tres" id="9_aenb0"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_son0n"]
@@ -428,6 +429,11 @@ text = "Try Again"
 unique_name_in_owner = true
 layout_mode = 2
 text = "Go To Menu"
+
+[node name="SettingsPanel" parent="PanelContainer/VBoxContainer/MarginContainer/PanelContainer" instance=ExtResource("7_e8c1b")]
+unique_name_in_owner = true
+visible = false
+layout_mode = 2
 
 [node name="GoldFrame" type="NinePatchRect" parent="PanelContainer/VBoxContainer/MarginContainer/PanelContainer"]
 layout_mode = 2

@@ -1,0 +1,355 @@
+[gd_scene load_steps=8 format=3 uid="uid://bhi0cnsm5tmbq"]
+
+[ext_resource type="Texture2D" uid="uid://bbhvjpppea50p" path="res://assets/textures/thin_frame_neutral.png" id="1_dm13q"]
+[ext_resource type="Script" path="res://scenes/instantiables/settings_panel.gd" id="2_axqey"]
+[ext_resource type="Texture2D" uid="uid://dlg4mvtsubsba" path="res://assets/textures/dash_2_1.png" id="3_rgrkp"]
+[ext_resource type="FontFile" uid="uid://dmleww6cdg4ji" path="res://assets/fonts/roboto_slab/static/RobotoSlab-Bold.ttf" id="4_t18vr"]
+[ext_resource type="Theme" uid="uid://cuohieu5ecxbf" path="res://resources/themes/godot_theme.tres" id="5_b6t1m"]
+[ext_resource type="FontFile" uid="uid://b8bqa6nox6x3g" path="res://assets/fonts/roboto_slab/static/RobotoSlab-Regular.ttf" id="6_367hb"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_08618"]
+texture = ExtResource("1_dm13q")
+texture_margin_left = 16.0
+texture_margin_top = 16.0
+texture_margin_right = 16.0
+texture_margin_bottom = 16.0
+
+[node name="SettingsPanel" type="PanelContainer"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxTexture_08618")
+script = ExtResource("2_axqey")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 2
+theme_override_constants/separation = 15
+
+[node name="ExitButton" type="Button" parent="VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 0
+text = "EXIT"
+
+[node name="Header" type="HBoxContainer" parent="VBoxContainer"]
+layout_mode = 2
+
+[node name="ColorRect" type="ColorRect" parent="VBoxContainer/Header"]
+custom_minimum_size = Vector2(20, 1)
+layout_mode = 2
+size_flags_vertical = 4
+color = Color(0.615686, 0.615686, 0.615686, 1)
+
+[node name="Label" type="Label" parent="VBoxContainer/Header"]
+layout_mode = 2
+size_flags_horizontal = 0
+text = "Settings"
+
+[node name="Line1" type="ColorRect" parent="VBoxContainer/Header"]
+custom_minimum_size = Vector2(0, 1)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+color = Color(0.617455, 0.617455, 0.617455, 1)
+
+[node name="Sound" type="VBoxContainer" parent="VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="SubHeader" type="Label" parent="VBoxContainer/Sound"]
+layout_mode = 2
+text = "Sound"
+
+[node name="Master" type="HBoxContainer" parent="VBoxContainer/Sound"]
+layout_mode = 2
+
+[node name="Bullet" type="TextureRect" parent="VBoxContainer/Sound/Master"]
+modulate = Color(0.615686, 0.615686, 0.615686, 1)
+layout_mode = 2
+size_flags_vertical = 4
+texture = ExtResource("3_rgrkp")
+
+[node name="Label" type="Label" parent="VBoxContainer/Sound/Master"]
+custom_minimum_size = Vector2(64, 0)
+layout_mode = 2
+text = "Master"
+
+[node name="ValueHint" type="Label" parent="VBoxContainer/Sound/Master"]
+custom_minimum_size = Vector2(42, 0)
+layout_mode = 2
+text = "100%"
+
+[node name="HSlider" type="HSlider" parent="VBoxContainer/Sound/Master"]
+custom_minimum_size = Vector2(200, 0)
+layout_mode = 2
+size_flags_horizontal = 3
+max_value = 1.0
+step = 0.01
+value = 1.0
+
+[node name="Music" type="HBoxContainer" parent="VBoxContainer/Sound"]
+layout_mode = 2
+
+[node name="Bullet" type="TextureRect" parent="VBoxContainer/Sound/Music"]
+modulate = Color(0.615686, 0.615686, 0.615686, 1)
+layout_mode = 2
+size_flags_vertical = 4
+texture = ExtResource("3_rgrkp")
+
+[node name="Label" type="Label" parent="VBoxContainer/Sound/Music"]
+custom_minimum_size = Vector2(64, 0)
+layout_mode = 2
+text = "Music"
+
+[node name="ValueHint" type="Label" parent="VBoxContainer/Sound/Music"]
+custom_minimum_size = Vector2(42, 0)
+layout_mode = 2
+text = "10%"
+
+[node name="HSlider" type="HSlider" parent="VBoxContainer/Sound/Music"]
+custom_minimum_size = Vector2(200, 0)
+layout_mode = 2
+size_flags_horizontal = 3
+max_value = 1.0
+step = 0.01
+value = 1.0
+
+[node name="Effects" type="HBoxContainer" parent="VBoxContainer/Sound"]
+layout_mode = 2
+
+[node name="Bullet" type="TextureRect" parent="VBoxContainer/Sound/Effects"]
+modulate = Color(0.615686, 0.615686, 0.615686, 1)
+layout_mode = 2
+size_flags_vertical = 4
+texture = ExtResource("3_rgrkp")
+
+[node name="Label" type="Label" parent="VBoxContainer/Sound/Effects"]
+custom_minimum_size = Vector2(64, 0)
+layout_mode = 2
+text = "Effects"
+
+[node name="ValueHint" type="Label" parent="VBoxContainer/Sound/Effects"]
+custom_minimum_size = Vector2(42, 0)
+layout_mode = 2
+text = "1%"
+
+[node name="HSlider" type="HSlider" parent="VBoxContainer/Sound/Effects"]
+custom_minimum_size = Vector2(200, 0)
+layout_mode = 2
+size_flags_horizontal = 3
+max_value = 1.0
+step = 0.01
+value = 1.0
+
+[node name="Camera" type="VBoxContainer" parent="VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="SubHeader" type="Label" parent="VBoxContainer/Camera"]
+layout_mode = 2
+text = "Camera"
+
+[node name="Speed" type="HBoxContainer" parent="VBoxContainer/Camera"]
+layout_mode = 2
+
+[node name="Bullet" type="TextureRect" parent="VBoxContainer/Camera/Speed"]
+modulate = Color(0.615686, 0.615686, 0.615686, 1)
+layout_mode = 2
+size_flags_vertical = 4
+texture = ExtResource("3_rgrkp")
+
+[node name="Label" type="Label" parent="VBoxContainer/Camera/Speed"]
+custom_minimum_size = Vector2(64, 0)
+layout_mode = 2
+text = "Speed"
+
+[node name="ValueHint" type="Label" parent="VBoxContainer/Camera/Speed"]
+custom_minimum_size = Vector2(42, 0)
+layout_mode = 2
+text = "100%"
+
+[node name="HSlider" type="HSlider" parent="VBoxContainer/Camera/Speed"]
+custom_minimum_size = Vector2(200, 0)
+layout_mode = 2
+size_flags_horizontal = 3
+max_value = 1000.0
+step = 100.0
+value = 500.0
+
+[node name="Pan" type="HBoxContainer" parent="VBoxContainer/Camera"]
+layout_mode = 2
+
+[node name="Bullet" type="TextureRect" parent="VBoxContainer/Camera/Pan"]
+modulate = Color(0.615686, 0.615686, 0.615686, 1)
+layout_mode = 2
+size_flags_vertical = 4
+texture = ExtResource("3_rgrkp")
+
+[node name="Label" type="Label" parent="VBoxContainer/Camera/Pan"]
+custom_minimum_size = Vector2(64, 0)
+layout_mode = 2
+text = "Pan"
+
+[node name="ValueHint" type="Label" parent="VBoxContainer/Camera/Pan"]
+custom_minimum_size = Vector2(42, 0)
+layout_mode = 2
+text = "10%"
+
+[node name="HSlider" type="HSlider" parent="VBoxContainer/Camera/Pan"]
+custom_minimum_size = Vector2(200, 0)
+layout_mode = 2
+size_flags_horizontal = 3
+max_value = 50.0
+step = 5.0
+value = 25.0
+
+[node name="UpControl" type="HBoxContainer" parent="VBoxContainer/Camera"]
+layout_mode = 2
+
+[node name="Bullet" type="TextureRect" parent="VBoxContainer/Camera/UpControl"]
+modulate = Color(0.615686, 0.615686, 0.615686, 1)
+layout_mode = 2
+size_flags_vertical = 4
+texture = ExtResource("3_rgrkp")
+
+[node name="Label" type="Label" parent="VBoxContainer/Camera/UpControl"]
+custom_minimum_size = Vector2(64, 0)
+layout_mode = 2
+text = "Up"
+
+[node name="ValueHint" type="Label" parent="VBoxContainer/Camera/UpControl"]
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+theme_override_fonts/font = ExtResource("4_t18vr")
+text = "W"
+
+[node name="ReassignButton" type="Button" parent="VBoxContainer/Camera/UpControl"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme = ExtResource("5_b6t1m")
+theme_override_fonts/font = ExtResource("6_367hb")
+text = "Reassign"
+
+[node name="ResetButton" type="Button" parent="VBoxContainer/Camera/UpControl"]
+layout_mode = 2
+theme = ExtResource("5_b6t1m")
+theme_override_fonts/font = ExtResource("6_367hb")
+text = "Reset"
+
+[node name="DownControl" type="HBoxContainer" parent="VBoxContainer/Camera"]
+layout_mode = 2
+
+[node name="Bullet" type="TextureRect" parent="VBoxContainer/Camera/DownControl"]
+modulate = Color(0.615686, 0.615686, 0.615686, 1)
+layout_mode = 2
+size_flags_vertical = 4
+texture = ExtResource("3_rgrkp")
+
+[node name="Label" type="Label" parent="VBoxContainer/Camera/DownControl"]
+custom_minimum_size = Vector2(64, 0)
+layout_mode = 2
+text = "Down"
+
+[node name="ValueHint" type="Label" parent="VBoxContainer/Camera/DownControl"]
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+theme_override_fonts/font = ExtResource("4_t18vr")
+text = "S"
+
+[node name="ReassignButton" type="Button" parent="VBoxContainer/Camera/DownControl"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme = ExtResource("5_b6t1m")
+theme_override_fonts/font = ExtResource("6_367hb")
+text = "Reassign"
+
+[node name="ResetButton" type="Button" parent="VBoxContainer/Camera/DownControl"]
+layout_mode = 2
+theme = ExtResource("5_b6t1m")
+theme_override_fonts/font = ExtResource("6_367hb")
+text = "Reset"
+
+[node name="LeftControl" type="HBoxContainer" parent="VBoxContainer/Camera"]
+layout_mode = 2
+
+[node name="Bullet" type="TextureRect" parent="VBoxContainer/Camera/LeftControl"]
+modulate = Color(0.615686, 0.615686, 0.615686, 1)
+layout_mode = 2
+size_flags_vertical = 4
+texture = ExtResource("3_rgrkp")
+
+[node name="Label" type="Label" parent="VBoxContainer/Camera/LeftControl"]
+custom_minimum_size = Vector2(64, 0)
+layout_mode = 2
+text = "Left"
+
+[node name="ValueHint" type="Label" parent="VBoxContainer/Camera/LeftControl"]
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+theme_override_fonts/font = ExtResource("4_t18vr")
+text = "A
+"
+
+[node name="ReassignButton" type="Button" parent="VBoxContainer/Camera/LeftControl"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme = ExtResource("5_b6t1m")
+theme_override_fonts/font = ExtResource("6_367hb")
+text = "Reassign"
+
+[node name="ResetButton" type="Button" parent="VBoxContainer/Camera/LeftControl"]
+layout_mode = 2
+theme = ExtResource("5_b6t1m")
+theme_override_fonts/font = ExtResource("6_367hb")
+text = "Reset"
+
+[node name="RightControl" type="HBoxContainer" parent="VBoxContainer/Camera"]
+layout_mode = 2
+
+[node name="Bullet" type="TextureRect" parent="VBoxContainer/Camera/RightControl"]
+modulate = Color(0.615686, 0.615686, 0.615686, 1)
+layout_mode = 2
+size_flags_vertical = 4
+texture = ExtResource("3_rgrkp")
+
+[node name="Label" type="Label" parent="VBoxContainer/Camera/RightControl"]
+custom_minimum_size = Vector2(64, 0)
+layout_mode = 2
+text = "Right"
+
+[node name="ValueHint" type="Label" parent="VBoxContainer/Camera/RightControl"]
+custom_minimum_size = Vector2(100, 0)
+layout_mode = 2
+theme_override_fonts/font = ExtResource("4_t18vr")
+text = "D
+"
+
+[node name="ReassignButton" type="Button" parent="VBoxContainer/Camera/RightControl"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme = ExtResource("5_b6t1m")
+theme_override_fonts/font = ExtResource("6_367hb")
+text = "Reassign"
+
+[node name="ResetButton" type="Button" parent="VBoxContainer/Camera/RightControl"]
+layout_mode = 2
+theme = ExtResource("5_b6t1m")
+theme_override_fonts/font = ExtResource("6_367hb")
+text = "Reset"
+
+[connection signal="visibility_changed" from="." to="." method="_on_visibility_changed"]
+[connection signal="pressed" from="VBoxContainer/ExitButton" to="." method="_on_exit_button_pressed"]
+[connection signal="value_changed" from="VBoxContainer/Sound/Master/HSlider" to="." method="_on_sound_master_slider_value_changed"]
+[connection signal="value_changed" from="VBoxContainer/Sound/Music/HSlider" to="." method="_on_sound_music_slider_value_changed"]
+[connection signal="value_changed" from="VBoxContainer/Sound/Effects/HSlider" to="." method="_on_sound_effects_slider_value_changed"]
+[connection signal="value_changed" from="VBoxContainer/Camera/Speed/HSlider" to="." method="_on_camera_speed_slider_value_changed"]
+[connection signal="value_changed" from="VBoxContainer/Camera/Pan/HSlider" to="." method="_on_camera_pan_slider_value_changed"]
+[connection signal="pressed" from="VBoxContainer/Camera/UpControl/ReassignButton" to="." method="_on_up_control_button_pressed"]
+[connection signal="pressed" from="VBoxContainer/Camera/UpControl/ResetButton" to="." method="_on_up_control_reset_button_pressed"]
+[connection signal="pressed" from="VBoxContainer/Camera/DownControl/ReassignButton" to="." method="_on_down_control_button_pressed"]
+[connection signal="pressed" from="VBoxContainer/Camera/DownControl/ResetButton" to="." method="_on_down_control_reset_button_pressed"]
+[connection signal="pressed" from="VBoxContainer/Camera/LeftControl/ReassignButton" to="." method="_on_left_control_button_pressed"]
+[connection signal="pressed" from="VBoxContainer/Camera/LeftControl/ResetButton" to="." method="_on_left_control_reset_button_pressed"]
+[connection signal="pressed" from="VBoxContainer/Camera/RightControl/ReassignButton" to="." method="_on_right_control_button_pressed"]
+[connection signal="pressed" from="VBoxContainer/Camera/RightControl/ResetButton" to="." method="_on_right_control_reset_button_pressed"]

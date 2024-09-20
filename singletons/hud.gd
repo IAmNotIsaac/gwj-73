@@ -26,6 +26,7 @@ const LEVELS := {
 @onready var _game_over_reason_label := %GameOverReasonLabel
 @onready var _game_over_retry_button := %GameOverRetryButton
 @onready var _progress_loss_warning_confirm_popup = $ProgressLossWarningConfirmPopup
+@onready var _settings_panel := %SettingsPanel
 
 var current_scene: Node
 var player_team: Piece.Team
@@ -39,6 +40,10 @@ func _init() -> void:
 	c.free()
 
 
+func _ready() -> void:
+	_settings_panel.hide()
+
+
 func _on_quit_button_pressed() -> void:
 	_warn(_go_to_menu)
 
@@ -48,7 +53,7 @@ func _on_restart_button_pressed() -> void:
 
 
 func _on_settings_button_pressed() -> void:
-	printerr("TODO: Add settings")
+	_settings_panel.visible = not _settings_panel.visible
 
 
 func _on_game_over_retry_button_pressed() -> void:

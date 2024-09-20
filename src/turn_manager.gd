@@ -15,11 +15,6 @@ func _ready() -> void:
 			c.turn_passed.connect(next_turn)
 
 
-func _input(event: InputEvent) -> void:
-	if event.is_action_pressed("ui_accept"):
-		next_turn()
-
-
 func _sort_controller(a: Controller, b: Controller) -> bool:
 	return a.get_team() < b.get_team()
 

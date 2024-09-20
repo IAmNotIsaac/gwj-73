@@ -17,6 +17,7 @@ config/features=PackedStringArray("4.3", "GL Compatibility")
 [autoload]
 
 Hud="*res://singletons/hud.tscn"
+Settings="*res://singletons/settings.gd"
 
 [display]
 
