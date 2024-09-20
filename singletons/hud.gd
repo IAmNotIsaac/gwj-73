@@ -29,6 +29,7 @@ const LEVELS := [
 @onready var _game_over_screen := %GameOverScreen
 @onready var _game_over_reason_label := %GameOverReasonLabel
 @onready var _game_over_retry_button := %GameOverRetryButton
+@onready var _game_over_quit_button := %GameOverQuitButton
 @onready var _progress_loss_warning_confirm_popup = $ProgressLossWarningConfirmPopup
 @onready var _settings_panel := %SettingsPanel
 @onready var _middle_panel := %MiddlePanel
@@ -65,7 +66,6 @@ func _on_game_over_retry_button_pressed() -> void:
 	tween.tween_property(_game_over_music, ^"volume_db", -40.0, 1.0)
 	tween.tween_callback(_game_over_music.stop)
 	tween.tween_property(_game_over_music, ^"volume_db", 0.0, 0.0)
-	_game_over_screen.hide()
 	_restart_level()
 
 
@@ -115,6 +115,8 @@ func _restart_level() -> void:
 func load_level(level_data: Dictionary) -> void:
 	_forfeit_button.disabled = true
 	_settings_button.disabled = true
+	_game_over_retry_button.disabled = true
+	_game_over_quit_button.disabled = true
 	_settings_panel.visible = false
 	
 	if current_scene != null and current_scene is World:
@@ -130,6 +132,8 @@ func load_level(level_data: Dictionary) -> void:
 	viewport.add_child(current_scene)
 	last_level_data = level_data
 	
+	_game_over_screen.hide()
+	
 	_level_value.text = level_data.name
 	_title_label.text = level_data.name
 	_anim.play(&"flash_title")
@@ -139,6 +143,8 @@ func load_level(level_data: Dictionary) -> void:
 	
 	_forfeit_button.disabled = false
 	_settings_button.disabled = false
+	_game_over_retry_button.disabled = false
+	_game_over_quit_button.disabled = false
 	current_scene.get_turn_manager().next_turn()
 
 
