@@ -33,6 +33,8 @@ var _initial_input_move_right := InputMap.action_get_events(&"move_right")[0].du
 func _on_visibility_changed() -> void:
 	if visible:
 		_update_all()
+	if not visible and is_node_ready():
+		Settings.save_to_file()
 
 
 func _on_exit_button_pressed() -> void:
