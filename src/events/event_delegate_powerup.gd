@@ -6,4 +6,4 @@ extends EventDelegate
 
 
 func _ready() -> void:
-	connect_to_signal(powerup.tree_exiting)
+	handle(powerup.tree_exiting)

@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=3 uid="uid://p88gmincih8g"]
+[gd_scene load_steps=20 format=3 uid="uid://p88gmincih8g"]
 
 [ext_resource type="Script" path="res://scenes/world.gd" id="1_ym46n"]
 [ext_resource type="AudioStream" uid="uid://bg7w2qfqwh4k1" path="res://assets/soundtrack/monday_16th.mp3" id="2_blutv"]
@@ -10,6 +10,7 @@
 [ext_resource type="Script" path="res://src/ai_controller.gd" id="5_ji8hh"]
 [ext_resource type="Script" path="res://src/events/event_delegate_interface.gd" id="5_lsxe8"]
 [ext_resource type="Script" path="res://src/board.gd" id="7_fu6hh"]
+[ext_resource type="Script" path="res://src/events/event_delegate_powerup.gd" id="8_dg22c"]
 [ext_resource type="PackedScene" uid="uid://bey5grytf1drn" path="res://scenes/instantiables/level_camera.tscn" id="8_oj4ul"]
 [ext_resource type="PackedScene" uid="uid://bhm65qdan0ll2" path="res://scenes/piece.tscn" id="8_qf2gx"]
 [ext_resource type="Script" path="res://src/camera_controller.gd" id="10_sq8sc"]
@@ -17,6 +18,7 @@
 [ext_resource type="PackedScene" uid="uid://cgut83635k6rj" path="res://scenes/instantiables/background.tscn" id="11_tymw8"]
 [ext_resource type="PackedScene" uid="uid://bck0o028i4kg1" path="res://scenes/instantiables/power_plate.tscn" id="15_48xxh"]
 [ext_resource type="PackedScene" uid="uid://b4h06e2esvmcu" path="res://scenes/instantiables/next_level_plate.tscn" id="17_r53np"]
+[ext_resource type="PackedScene" uid="uid://bn77po1rhcnjk" path="res://scenes/instantiables/speaker.tscn" id="18_pok00"]
 
 [node name="World" type="Node2D"]
 script = ExtResource("1_ym46n")
@@ -41,7 +43,18 @@ event = NodePath("EventMessage")
 
 [node name="EventMessage" type="Node" parent="Tutorial/Board0Cleared"]
 script = ExtResource("4_n8flx")
-message = "Excellent! You've cleared the board of enemy pieces! Make your way to the Interface, and continue to the next board."
+message = "Excellent! You've cleared the board of enemy pieces! Make your way through the Interface, and continue to the next board."
+fire_once = true
+delegate_only = true
+
+[node name="EventDelegatePowerup" type="Node" parent="Tutorial" node_paths=PackedStringArray("powerup", "event")]
+script = ExtResource("8_dg22c")
+powerup = NodePath("../../Board1/PowerPlate")
+event = NodePath("EventMessage")
+
+[node name="EventMessage" type="Node" parent="Tutorial/EventDelegatePowerup"]
+script = ExtResource("4_n8flx")
+message = "You picked up a possession power-up! You can now possess a white piece -- at the cost of your own piece."
 fire_once = true
 delegate_only = true
 
@@ -102,3 +115,9 @@ direction = 1
 grid_position = Vector2i(0, 1)
 move_count = 1
 board = NodePath("../Board1")
+
+[node name="Speaker" parent="." instance=ExtResource("18_pok00")]
+position = Vector2(-368, -398)
+
+[node name="Speaker2" parent="." instance=ExtResource("18_pok00")]
+position = Vector2(1058, -156)
