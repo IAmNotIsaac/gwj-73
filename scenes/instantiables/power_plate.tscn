@@ -75,5 +75,5 @@ z_index = 1
 texture_filter = 1
 sprite_frames = SubResource("SpriteFrames_tqr0q")
 autoplay = "default"
-frame_progress = 0.938611
+frame_progress = 0.0310442
 centered = false

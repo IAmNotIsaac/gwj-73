@@ -1,4 +1,4 @@
-[gd_scene load_steps=36 format=3 uid="uid://buhlc6vmq4kta"]
+[gd_scene load_steps=37 format=3 uid="uid://buhlc6vmq4kta"]
 
 [ext_resource type="Texture2D" uid="uid://bpqrmpeodnpum" path="res://assets/textures/frame.png" id="1_6vkef"]
 [ext_resource type="Script" path="res://singletons/hud.gd" id="1_amupb"]
@@ -13,6 +13,7 @@
 [ext_resource type="Theme" uid="uid://c3d5oegbtblqx" path="res://resources/themes/default_theme.tres" id="9_aenb0"]
 [ext_resource type="Texture2D" uid="uid://csdqi4ek0gt3c" path="res://assets/textures/crossfade_gradient.png" id="10_i1ohp"]
 [ext_resource type="FontFile" uid="uid://cpd7wgmg0lli1" path="res://assets/fonts/bonk/Bonkoff.TTF" id="11_86d32"]
+[ext_resource type="Texture2D" uid="uid://dom74xclkgnm1" path="res://assets/textures/frame_silver.png" id="14_o6j3n"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_son0n"]
 shader = ExtResource("1_gwte5")
@@ -823,6 +824,49 @@ patch_margin_top = 16
 patch_margin_right = 16
 patch_margin_bottom = 16
 
+[node name="MessagePopup" type="PopupPanel" parent="."]
+auto_translate_mode = 1
+initial_position = 1
+size = Vector2i(440, 120)
+theme = ExtResource("9_aenb0")
+
+[node name="MarginContainer" type="MarginContainer" parent="MessagePopup"]
+offset_left = 4.0
+offset_top = 4.0
+offset_right = 436.0
+offset_bottom = 116.0
+size_flags_horizontal = 3
+theme_override_constants/margin_left = 16
+theme_override_constants/margin_top = 16
+theme_override_constants/margin_right = 16
+theme_override_constants/margin_bottom = 16
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MessagePopup/MarginContainer"]
+layout_mode = 2
+
+[node name="MessagePopupLabel" type="RichTextLabel" parent="MessagePopup/MarginContainer/VBoxContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(400, 0)
+layout_mode = 2
+bbcode_enabled = true
+fit_content = true
+
+[node name="MessagePopupOKButton" type="Button" parent="MessagePopup/MarginContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+text = "OK"
+
+[node name="GoldFrame" type="NinePatchRect" parent="MessagePopup"]
+offset_left = 4.0
+offset_top = 4.0
+offset_right = 436.0
+offset_bottom = 116.0
+texture = ExtResource("14_o6j3n")
+patch_margin_left = 16
+patch_margin_top = 16
+patch_margin_right = 16
+patch_margin_bottom = 16
+
 [connection signal="pressed" from="GameView/VBoxContainer/AspectRatioContainer/MarginContainer/MiddlePanel/GameOverScreen/VBoxContainer/Buttons/VBoxContainer/GameOverRetryButton" to="." method="_on_game_over_retry_button_pressed"]
 [connection signal="pressed" from="GameView/VBoxContainer/AspectRatioContainer/MarginContainer/MiddlePanel/GameOverScreen/VBoxContainer/Buttons/VBoxContainer/GameOverQuitButton" to="." method="_on_game_over_quit_button_pressed"]
 [connection signal="pressed" from="GameView/VBoxContainer/HBoxContainer/ForfeitButton" to="." method="_on_forfeit_button_pressed"]
@@ -830,3 +874,5 @@ patch_margin_bottom = 16
 [connection signal="finished" from="GameOverMusic" to="." method="_on_game_over_music_finished"]
 [connection signal="pressed" from="ProgressLossWarningConfirmPopup/MarginContainer/VBoxContainer/HBoxContainer/WarningCancelButton" to="." method="_on_warning_cancel_button_pressed"]
 [connection signal="pressed" from="ProgressLossWarningConfirmPopup/MarginContainer/VBoxContainer/HBoxContainer/WarningConfirmButton" to="." method="_on_warning_confirm_button_pressed"]
+[connection signal="popup_hide" from="MessagePopup" to="." method="_on_message_popup_popup_hide"]
+[connection signal="pressed" from="MessagePopup/MarginContainer/VBoxContainer/MessagePopupOKButton" to="." method="_on_message_popup_ok_button_pressed"]

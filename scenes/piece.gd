@@ -135,9 +135,20 @@ var _is_moving := false:
 @onready var _power_hint := $Sprite2D/PowerHint
 
 
+func _enter_tree() -> void:
+	update_configuration_warnings()
+
+
 func _ready() -> void:
 	_update_position()
 	_update_sprite()
+
+
+func _get_configuration_warnings() -> PackedStringArray:
+	if board == null:
+		return ["Board is not assigned!"]
+	
+	return []
 
 
 func _update_position() -> void:
@@ -186,10 +197,18 @@ func _update_sprite() -> void:
 
 
 func _on_land() -> void:
+	if team == Team.WHITE:
+		return
+	
 	var p := board.get_power_plate(grid_position)
 	if p != null:
 		add_power(p.power)
 		p.queue_free()
+	
+	var n := board.get_next_level_plate(grid_position)
+	if n != null:
+		Hud.load_level(n.next_level)
+	
 	_update_sprite()
 
 
@@ -564,8 +583,9 @@ func kill() -> void:
 	
 	var spm: Callable = func(x: float): _power_hint.material.set_shader_parameter(&"ball_size", x)
 	
-	var tween := get_tree().create_tween().set_parallel(true)
+	var tween := get_tree().create_tween()
 	tween.tween_interval(move_time)
+	tween.set_parallel(true)
 	tween.tween_callback(_shadow.hide)
 	tween.tween_callback(_direction_hint.hide)
 	tween.tween_property(_particles_smoke_0, ^"emitting", true, 0.0)

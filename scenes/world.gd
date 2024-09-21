@@ -30,7 +30,7 @@ func _ready() -> void:
 	
 	if test_mode:
 		Hud.current_scene = self
-		_turn_manager.next_turn()
+		_turn_manager.next_turn.call_deferred()
 
 
 func register_board(board: Board) -> void:

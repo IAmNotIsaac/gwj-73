@@ -3,6 +3,8 @@ class_name BoardInterface
 extends Node
 
 
+signal unlocked
+
 const _TIME_COMPREHENSION := 1.0
 
 @export var grid_position: Vector2i:
@@ -73,6 +75,7 @@ func unlock() -> void:
 	if _unlocked:
 		return
 	_unlocked = true
+	unlocked.emit()
 	
 	_stars_begin.emitting = true
 	var initial_camera_pos = _camera_controller.get_position()

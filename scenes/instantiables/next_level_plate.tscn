@@ -1,0 +1,13 @@
+[gd_scene load_steps=3 format=3 uid="uid://b4h06e2esvmcu"]
+
+[ext_resource type="Script" path="res://scenes/instantiables/next_level_plate.gd" id="1_1k43u"]
+[ext_resource type="Texture2D" uid="uid://dj0e64wv5wo8q" path="res://assets/textures/next_level_tile.png" id="1_h574s"]
+
+[node name="NextLevelPlate" type="Node2D"]
+script = ExtResource("1_1k43u")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+z_index = 1
+texture_filter = 1
+texture = ExtResource("1_h574s")
+centered = false

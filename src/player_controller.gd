@@ -26,6 +26,7 @@ var _reason_show_selection_hint = -_REASON_MY_TURN:
 	set(v):
 		_reason_show_selection_hint = v
 		_selection_hint.visible = _reason_show_selection_hint > 0
+		_selection_hint.z_index = 3
 
 
 func _init() -> void:
@@ -54,6 +55,8 @@ func _ready() -> void:
 
 
 func _turn_begun() -> void:
+	_handled_pieces = []
+	
 	if get_available_move_count() == 0:
 		var remaining_pieces_count := 0
 		for board in _world.get_boards():
@@ -155,8 +158,8 @@ func _handle_click_root(button_index: MouseButton, grid_position: Vector2i, boar
 	
 	selected_piece.mark_selected()
 	var pos := (Vector2(grid_position) + Vector2.ONE * 0.5) * Vector2(Board.TILE_WIDTH, Board.TILE_HEIGHT)
-	var top_left := Vector2.INF
-	var bot_right := -Vector2.INF
+	var top_left := selected_piece.global_position
+	var bot_right := selected_piece.global_position
 	
 	for i in movable_interfaces:
 		var icon := Sprite2D.new()
@@ -164,6 +167,7 @@ func _handle_click_root(button_index: MouseButton, grid_position: Vector2i, boar
 		icon.texture = _ICON_MOVE_INTERFACE
 		icon.position = i.to_board.position + Vector2(i.to_grid_position * Vector2i(Board.TILE_WIDTH, Board.TILE_HEIGHT))
 		icon.position += Vector2(float(Board.TILE_WIDTH), float(Board.TILE_HEIGHT)) * 0.5
+		icon.z_index = 3
 		icons.push_back(icon)
 		top_left = top_left.min(icon.position)
 		bot_right = bot_right.max(icon.position)
@@ -174,6 +178,7 @@ func _handle_click_root(button_index: MouseButton, grid_position: Vector2i, boar
 		icon.texture = _ICON_STRIKE_INTERFACE
 		icon.position = i.to_board.position + Vector2(i.to_grid_position * Vector2i(Board.TILE_WIDTH, Board.TILE_HEIGHT))
 		icon.position += Vector2(float(Board.TILE_WIDTH), float(Board.TILE_HEIGHT)) * 0.5
+		icon.z_index = 3
 		icons.push_back(icon)
 		top_left = top_left.min(icon.position)
 		bot_right = bot_right.max(icon.position)
@@ -184,6 +189,7 @@ func _handle_click_root(button_index: MouseButton, grid_position: Vector2i, boar
 		icon.texture = _ICON_POSSESS
 		icon.position = i.to_board.position + Vector2(i.to_grid_position * Vector2i(Board.TILE_WIDTH, Board.TILE_HEIGHT))
 		icon.position += Vector2(float(Board.TILE_WIDTH), float(Board.TILE_HEIGHT)) * 0.5
+		icon.z_index = 3
 		icons.push_back(icon)
 		top_left = top_left.min(icon.position)
 		bot_right = bot_right.max(icon.position)
@@ -194,6 +200,7 @@ func _handle_click_root(button_index: MouseButton, grid_position: Vector2i, boar
 		icon.texture = _ICON_MOVE
 		icon.position = board.position + Vector2(p * Vector2i(Board.TILE_WIDTH, Board.TILE_HEIGHT))
 		icon.position += Vector2(float(Board.TILE_WIDTH), float(Board.TILE_HEIGHT)) * 0.5
+		icon.z_index = 3
 		icons.push_back(icon)
 		top_left = top_left.min(icon.position)
 		bot_right = bot_right.max(icon.position)
@@ -204,6 +211,7 @@ func _handle_click_root(button_index: MouseButton, grid_position: Vector2i, boar
 		icon.texture = _ICON_STRIKE
 		icon.position = board.position + Vector2(p * Vector2i(Board.TILE_WIDTH, Board.TILE_HEIGHT))
 		icon.position += Vector2(float(Board.TILE_WIDTH), float(Board.TILE_HEIGHT)) * 0.5
+		icon.z_index = 3
 		icons.push_back(icon)
 		top_left = top_left.min(icon.position)
 		bot_right = bot_right.max(icon.position)
@@ -214,6 +222,7 @@ func _handle_click_root(button_index: MouseButton, grid_position: Vector2i, boar
 		icon.texture = _ICON_POSSESS
 		icon.position = board.position + Vector2(p * Vector2i(Board.TILE_WIDTH, Board.TILE_HEIGHT))
 		icon.position += Vector2(float(Board.TILE_WIDTH), float(Board.TILE_HEIGHT)) * 0.5
+		icon.z_index = 3
 		icons.push_back(icon)
 		top_left = top_left.min(icon.position)
 		bot_right = bot_right.max(icon.position)
@@ -298,6 +307,7 @@ func _handle_click_move(
 	await get_tree().create_timer(_TIME_COMPREHENSION).timeout
 	_camera_controller.reset_zoom()
 	_camera_controller.set_free(true)
+	_camera_controller.set_position(board.position + Vector2(grid_position) * Vector2(Board.TILE_WIDTH, Board.TILE_HEIGHT) + Vector2(Board.TILE_WIDTH, Board.TILE_HEIGHT) * 0.5)
 	
 	if get_available_move_count() == 0:
 		await get_tree().create_timer(_TIME_COMPREHENSION).timeout

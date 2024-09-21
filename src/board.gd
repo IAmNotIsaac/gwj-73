@@ -8,6 +8,7 @@ signal mouse_exited
 signal mouse_moved(grid_position: Vector2i)
 signal tile_clicked(button_index: MouseButton, grid_position: Vector2i)
 signal state_changed
+signal piece_set(grid_position: Vector2i, type: Piece.Type, team: Piece.Team)
 
 const TILE_WIDTH := 64.0
 const TILE_HEIGHT := 48.0
@@ -33,6 +34,7 @@ var _click_area := ClickArea.new()
 var _click_area_shape := CollisionShape2D.new()
 var _interfaces: Array[Node]
 var _power_plates: Array[Node]
+var _next_level_plates: Array[Node]
 var _team_count := { Piece.Team.WHITE: 0, Piece.Team.BLACK: 0 }
 
 
@@ -92,6 +94,7 @@ func _enter_tree() -> void:
 func _ready() -> void:
 	_interfaces = get_children().filter(func(c): return c is BoardInterface)
 	_power_plates = get_children().filter(func(c): return c is PowerPlate)
+	_next_level_plates = get_children().filter(func(c): return c is NextLevelPlate)
 
 
 func _update_size() -> void:
@@ -157,6 +160,7 @@ func set_piece(grid_position: Vector2i, type: Piece.Type, team: Piece.Team) -> v
 	var team_int := (int(team) << 4) & _MASK_TEAM
 	_board_state[grid_position.x + grid_position.y * size.x] = type_int + team_int
 	state_changed.emit()
+	piece_set.emit(grid_position, type, team)
 
 
 func clear_piece(grid_position: Vector2i) -> void:
@@ -182,6 +186,13 @@ func get_interface(grid_position: Vector2i) -> BoardInterface:
 
 func get_power_plate(grid_position: Vector2i) -> PowerPlate:
 	for plate in _power_plates:
+		if plate.grid_position == grid_position:
+			return plate
+	return null
+
+
+func get_next_level_plate(grid_position: Vector2i) -> NextLevelPlate:
+	for plate in _next_level_plates:
 		if plate.grid_position == grid_position:
 			return plate
 	return null

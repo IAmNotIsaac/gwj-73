@@ -4,6 +4,8 @@ extends Node
 
 signal turn_passed
 
+var turn := 0
+
 
 func _enter_tree() -> void:
 	if get_parent() is World:
@@ -44,6 +46,7 @@ func get_available_move_count() -> int:
 
 func begin_turn() -> void:
 	_turn_begun()
+	turn += 1
 
 
 func end_turn() -> void:

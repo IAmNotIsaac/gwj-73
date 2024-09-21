@@ -1,0 +1,104 @@
+[gd_scene load_steps=18 format=3 uid="uid://p88gmincih8g"]
+
+[ext_resource type="Script" path="res://scenes/world.gd" id="1_ym46n"]
+[ext_resource type="AudioStream" uid="uid://bg7w2qfqwh4k1" path="res://assets/soundtrack/monday_16th.mp3" id="2_blutv"]
+[ext_resource type="Script" path="res://src/turn_manager.gd" id="2_gat5c"]
+[ext_resource type="Script" path="res://src/player_controller.gd" id="3_fdw0x"]
+[ext_resource type="Script" path="res://src/events/event_message.gd" id="4_n8flx"]
+[ext_resource type="Script" path="res://src/event_controller.gd" id="4_oeonk"]
+[ext_resource type="Script" path="res://src/events/event_message_on_turn.gd" id="5_142h2"]
+[ext_resource type="Script" path="res://src/ai_controller.gd" id="5_ji8hh"]
+[ext_resource type="Script" path="res://src/events/event_delegate_interface.gd" id="5_lsxe8"]
+[ext_resource type="Script" path="res://src/board.gd" id="7_fu6hh"]
+[ext_resource type="PackedScene" uid="uid://bey5grytf1drn" path="res://scenes/instantiables/level_camera.tscn" id="8_oj4ul"]
+[ext_resource type="PackedScene" uid="uid://bhm65qdan0ll2" path="res://scenes/piece.tscn" id="8_qf2gx"]
+[ext_resource type="Script" path="res://src/camera_controller.gd" id="10_sq8sc"]
+[ext_resource type="PackedScene" uid="uid://drcui3tw3c1k" path="res://scenes/instantiables/board_interface.tscn" id="11_3w3vw"]
+[ext_resource type="PackedScene" uid="uid://cgut83635k6rj" path="res://scenes/instantiables/background.tscn" id="11_tymw8"]
+[ext_resource type="PackedScene" uid="uid://bck0o028i4kg1" path="res://scenes/instantiables/power_plate.tscn" id="15_48xxh"]
+[ext_resource type="PackedScene" uid="uid://b4h06e2esvmcu" path="res://scenes/instantiables/next_level_plate.tscn" id="17_r53np"]
+
+[node name="World" type="Node2D"]
+script = ExtResource("1_ym46n")
+track = ExtResource("2_blutv")
+
+[node name="TurnManager" type="Node" parent="."]
+script = ExtResource("2_gat5c")
+
+[node name="Tutorial" type="Node" parent="."]
+script = ExtResource("4_oeonk")
+
+[node name="EventMessageOnTurn0" type="Node" parent="Tutorial"]
+script = ExtResource("5_142h2")
+message = "Hello, rogue! Welcome to the King's Tower. You find yourself on the first floor, with a foreboding adventure of strategem and manoeuvre ahead of you.
+
+You play as black. Click your piece and make a move!"
+
+[node name="Board0Cleared" type="Node" parent="Tutorial" node_paths=PackedStringArray("interface", "event")]
+script = ExtResource("5_lsxe8")
+interface = NodePath("../../Board0/BoardInterface")
+event = NodePath("EventMessage")
+
+[node name="EventMessage" type="Node" parent="Tutorial/Board0Cleared"]
+script = ExtResource("4_n8flx")
+message = "Excellent! You've cleared the board of enemy pieces! Make your way to the Interface, and continue to the next board."
+fire_once = true
+delegate_only = true
+
+[node name="PlayerController" type="Node" parent="."]
+script = ExtResource("3_fdw0x")
+
+[node name="AIController" type="Node" parent="."]
+script = ExtResource("5_ji8hh")
+
+[node name="CameraController" type="Node" parent="." node_paths=PackedStringArray("camera")]
+script = ExtResource("10_sq8sc")
+camera = NodePath("../LevelCamera")
+
+[node name="Background" parent="." instance=ExtResource("11_tymw8")]
+
+[node name="LevelCamera" parent="." instance=ExtResource("8_oj4ul")]
+
+[node name="Board0" type="Node2D" parent="."]
+z_index = -1
+position = Vector2(-256, -192)
+script = ExtResource("7_fu6hh")
+size = Vector2i(4, 5)
+
+[node name="BoardInterface" parent="Board0" node_paths=PackedStringArray("to_board") instance=ExtResource("11_3w3vw")]
+grid_position = Vector2i(3, 0)
+to_board = NodePath("../../Board1")
+to_grid_position = Vector2i(3, 3)
+
+[node name="Piece0" parent="." node_paths=PackedStringArray("board") instance=ExtResource("8_qf2gx")]
+position = Vector2(-224, -144)
+direction = 1
+board = NodePath("../Board0")
+
+[node name="Piece1" parent="." node_paths=PackedStringArray("board") instance=ExtResource("8_qf2gx")]
+position = Vector2(-96, 48)
+team = 1
+grid_position = Vector2i(2, 4)
+board = NodePath("../Board0")
+
+[node name="Board1" type="Node2D" parent="."]
+z_index = -1
+position = Vector2(736, -544)
+script = ExtResource("7_fu6hh")
+size = Vector2i(6, 4)
+
+[node name="PowerPlate" parent="Board1" instance=ExtResource("15_48xxh")]
+position = Vector2(192, 96)
+grid_position = Vector2i(3, 2)
+
+[node name="NextLevelPlate" parent="Board1" instance=ExtResource("17_r53np")]
+position = Vector2(320, 48)
+next_level = 1
+grid_position = Vector2i(5, 1)
+
+[node name="Piece2" parent="." node_paths=PackedStringArray("board") instance=ExtResource("8_qf2gx")]
+position = Vector2(768, -448)
+direction = 1
+grid_position = Vector2i(0, 1)
+move_count = 1
+board = NodePath("../Board1")

@@ -1,6 +1,8 @@
 extends CanvasLayer
 
 
+signal message_ok
+
 enum GameOver {
 	DRAW,
 	FORFEIT,
@@ -9,6 +11,10 @@ enum GameOver {
 }
 
 const LEVELS := [
+	{
+		&"name": "Pawns' lair",
+		&"packed": preload("res://scenes/levels/tutorial.tscn"),
+	},
 	{
 		&"name": "Test Level",
 		&"packed": preload("res://scenes/world.tscn"),
@@ -38,6 +44,8 @@ const LEVELS := [
 @onready var _settings_button := %SettingsButton
 @onready var _title_label := %TitleLabel
 @onready var _game_view := $GameView
+@onready var _message_popup := $MessagePopup
+@onready var _message_popup_label := %MessagePopupLabel
 
 var current_scene: Node
 var player_team: Piece.Team
@@ -97,6 +105,10 @@ func _on_warning_cancel_button_pressed() -> void:
 	_progress_loss_warning_confirm_popup.hide()
 
 
+func _on_message_popup_popup_hide() -> void:
+	message_ok.emit()
+
+
 func _on_warning_confirm_button_pressed() -> void:
 	_progress_loss_warning_confirm_popup.hide()
 	_warned_action.call()
@@ -110,6 +122,15 @@ func _go_to_menu() -> void:
 	disable()
 	get_tree().change_scene_to_file("res://scenes/main_menu.tscn")
 	#printerr("TODO: Hud::_go_to_menu")
+
+
+func _on_message_popup_ok_button_pressed() -> void:
+	_forfeit_button.disabled = false
+	_settings_button.disabled = false
+	_game_over_retry_button.disabled = false
+	_game_over_quit_button.disabled = false
+	_message_popup.hide()
+	message_ok.emit()
 
 
 func _restart_level() -> void:
@@ -260,3 +281,11 @@ func is_settings_open() -> bool:
 func warn(unsafe_action: Callable) -> void:
 	_warned_action = unsafe_action
 	_progress_loss_warning_confirm_popup.popup()
+
+
+func message(message: String) -> void:
+	_message_popup_label.text = message
+	_message_popup.transient = false
+	_message_popup.transient_to_focused = false
+	_message_popup.popup()
+	_message_popup.size = Vector2.ZERO

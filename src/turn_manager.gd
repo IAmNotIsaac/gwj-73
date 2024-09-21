@@ -10,7 +10,7 @@ func _ready() -> void:
 	if get_parent() is World:
 		get_parent().register_turn_manager(self)
 		_controllers = get_parent().get_controllers().duplicate()
-		_controllers.sort_custom(_sort_controller)
+		#_controllers.sort_custom(_sort_controller)
 		
 		for c in _controllers:
 			c.turn_passed.connect(next_turn)
@@ -44,4 +44,5 @@ func next_turn() -> void:
 	
 	var available_move_count := next.get_available_move_count()
 	var prev_move_count := prev.get_move_count() if prev != null else 0
-	Hud.report_turn(next.get_team(), prev_move_count > 0 and available_move_count > 0)
+	if next.get_team() != Piece.Team.NEUTRAL:
+		Hud.report_turn(next.get_team(), prev_move_count > 0 and available_move_count > 0)
