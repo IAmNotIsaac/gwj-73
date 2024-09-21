@@ -11,8 +11,8 @@ const _ZOOM_DEFAULT := 1.0
 const _ZOOM_SELECTED := 1.1
 const _TIME_COMPREHENSION := 1.0
 const _REASON_HOVER_BOARD := 1
-const _REASON_MY_TURN := 100
-const _REASON_CUTSCENE := 101
+const _REASON_MY_TURN := 2
+const _REASON_CUTSCENE := 4
 
 @export var moves_per_turn := 1
 
@@ -66,8 +66,7 @@ func _turn_begun() -> void:
 			Hud.game_over(Hud.GameOver.NO_MATERIAL)
 			return
 		
-		await get_tree().create_timer(_TIME_COMPREHENSION).timeout
-		turn_passed.emit()
+		_pass_turn()
 		return
 	
 	_move_count = 0
@@ -310,13 +309,17 @@ func _handle_click_move(
 	_camera_controller.set_free(true)
 	
 	if get_available_move_count() == 0:
-		await get_tree().create_timer(_TIME_COMPREHENSION).timeout
-		turn_passed.emit()
-		return
+		_pass_turn()
 	
 	elif _move_count >= moves_per_turn:
-		for piece in _handled_pieces:
-			_handled_pieces.erase(piece)
-			piece.mark_movable()
-		await get_tree().create_timer(_TIME_COMPREHENSION).timeout
-		turn_passed.emit()
+		_pass_turn()
+
+
+func _pass_turn() -> void:
+	_reason_show_selection_hint -= _REASON_CUTSCENE
+	for piece in _handled_pieces.duplicate():
+		_handled_pieces.erase(piece)
+		piece.mark_movable()
+	await get_tree().create_timer(_TIME_COMPREHENSION).timeout
+	_reason_show_selection_hint += _REASON_CUTSCENE
+	turn_passed.emit()
