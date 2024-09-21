@@ -41,8 +41,6 @@ func load_from_file() -> void:
 	last_level = json.last_level
 	
 	print("LOADED PROGRESS FROM FILE '%s'" % file.get_path_absolute())
-	
-	print(json)
 
 
 func delete_progress_file() -> void:

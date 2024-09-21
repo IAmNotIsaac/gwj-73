@@ -71,6 +71,7 @@ camera = NodePath("../LevelCamera")
 [node name="Background" parent="." instance=ExtResource("11_tymw8")]
 
 [node name="LevelCamera" parent="." instance=ExtResource("8_oj4ul")]
+position = Vector2(-128, -64)
 
 [node name="Board0" type="Node2D" parent="."]
 z_index = -1
@@ -117,7 +118,13 @@ move_count = 1
 board = NodePath("../Board1")
 
 [node name="Speaker" parent="." instance=ExtResource("18_pok00")]
-position = Vector2(-368, -398)
+position = Vector2(-192, -288)
+
+[node name="Speaker4" parent="." instance=ExtResource("18_pok00")]
+position = Vector2(-64, 144)
 
 [node name="Speaker2" parent="." instance=ExtResource("18_pok00")]
-position = Vector2(1058, -156)
+position = Vector2(1088, -640)
+
+[node name="Speaker3" parent="." instance=ExtResource("18_pok00")]
+position = Vector2(896, -256)

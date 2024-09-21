@@ -90,7 +90,7 @@ func _enable_buttons() -> void:
 
 func _start_music() -> void:
 	_music.volume_db = -40.0
-	_music.play(0.0)
+	_music.play()
 	var tween := get_tree().create_tween()
 	tween.tween_property(_music, ^"volume_db", 0.0, 1.0)
 

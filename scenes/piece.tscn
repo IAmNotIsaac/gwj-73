@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" path="res://scenes/piece.gd" id="1_jfn20"]
 [ext_resource type="Texture2D" uid="uid://bii5gpthli3mv" path="res://assets/textures/shadow.svg" id="2_3o6u8"]
-[ext_resource type="Texture2D" uid="uid://bx03aq0xv012f" path="res://assets/textures/placeholder_pieces.png" id="2_j74uc"]
+[ext_resource type="Texture2D" uid="uid://f3vst5r5qebc" path="res://assets/textures/chess_pieces.png" id="4_eiqca"]
 [ext_resource type="Texture2D" uid="uid://4dmvajgfypsg" path="res://assets/textures/icon_possess.svg" id="4_mrg1g"]
 [ext_resource type="Texture2D" uid="uid://bcgnsxxh237ht" path="res://assets/textures/particles/smoke0.png" id="4_vbp2o"]
 [ext_resource type="Texture2D" uid="uid://cnyruyfwde54y" path="res://assets/textures/particles/smoke1.png" id="5_u6x3f"]
@@ -976,7 +976,7 @@ texture_filter = 1
 position = Vector2(0, -24)
 sprite_frames = SubResource("SpriteFrames_riloh")
 animation = &"0_w"
-frame_progress = 0.779762
+frame_progress = 0.27115
 
 [node name="Shadow" type="Sprite2D" parent="."]
 texture = ExtResource("2_3o6u8")
@@ -985,7 +985,7 @@ offset = Vector2(-32, -32)
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 texture_filter = 1
-texture = ExtResource("2_j74uc")
+texture = ExtResource("4_eiqca")
 offset = Vector2(0, -40)
 hframes = 6
 vframes = 2
