@@ -120,11 +120,5 @@ board = NodePath("../Board1")
 [node name="Speaker" parent="." instance=ExtResource("18_pok00")]
 position = Vector2(-192, -288)
 
-[node name="Speaker4" parent="." instance=ExtResource("18_pok00")]
-position = Vector2(-64, 144)
-
-[node name="Speaker2" parent="." instance=ExtResource("18_pok00")]
-position = Vector2(1088, -640)
-
 [node name="Speaker3" parent="." instance=ExtResource("18_pok00")]
 position = Vector2(896, -256)

@@ -6,6 +6,7 @@ const _ICON_STRIKE := preload("res://assets/textures/icon_strike.svg")
 const _ICON_MOVE_INTERFACE := preload("res://assets/textures/icon_move_interface.svg")
 const _ICON_STRIKE_INTERFACE := preload("res://assets/textures/icon_strike_interface.svg")
 const _ICON_POSSESS := preload("res://assets/textures/icon_possess.svg")
+const _ICON_ARCHERY := preload("res://assets/textures/icon_archery.svg")
 const _SELECTION_HINT := preload("res://scenes/instantiables/selection_hint.tscn")
 const _ZOOM_DEFAULT := 1.0
 const _ZOOM_SELECTED := 1.1

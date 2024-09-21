@@ -22,6 +22,7 @@ enum Type {
 
 enum Power {
 	POSSESS,
+	ARCHERY,
 }
 
 const _DELTAS_KNIGHT: Array[Vector2i] = [
@@ -60,10 +61,22 @@ const _DELTAS_ROYALTY: Array[Vector2i] = [
 	Vector2i(-1, 0),
 ]
 
+const _DELTAS_ARCHERY: Array[Vector2i] = [
+	Vector2i(-1, -1),
+	Vector2i(0, -1),
+	Vector2i(1, -1),
+	Vector2i(1, 0),
+	Vector2i(1, 1),
+	Vector2i(0, 1),
+	Vector2i(-1, 1),
+	Vector2i(-1, 0),
+]
+
 const _DISTANCE_BISHOP := 7
 const _DISTANCE_ROOK := 7
 const _DISTANCE_QUEEN := 7
 const _DISTANCE_KING := 1
+const _DISTANCE_ARCHERY := 7
 const _ANIM_TIME_PIECE_MOVE := 0.5
 const _ANIM_TIME_PIECE_KILL := 1.0
 
@@ -118,6 +131,8 @@ var _docache_strikeable_positions := false
 var _cache_strikeable_positions: Array[Vector2i] = []
 var _docache_possessable_positions := false
 var _cache_possessable_positions: Array[Vector2i] = []
+var _docache_archery_positions := false
+var _cache_archery_positions: Array[Vector2i] = []
 var _is_pawn := type == Type.PAWN:
 	set(v):
 		_is_pawn = v
@@ -132,7 +147,8 @@ var _is_moving := false:
 @onready var _direction_hint := $DirectionHint
 @onready var _particles_smoke_0 = $ParticlesSmoke0
 @onready var _particles_smoke_1 = $ParticlesSmoke1
-@onready var _power_hint := $Sprite2D/PowerHint
+@onready var _power_hint_possess := $Sprite2D/PowerHintPossess
+@onready var _power_hint_archery := $Shadow/PowerHintArchery
 
 
 func _enter_tree() -> void:
@@ -180,20 +196,25 @@ func _update_sprite() -> void:
 	_direction_hint.play(str(direction) + "_" + c)
 	_direction_hint.visible = _is_pawn and not _is_moving
 	
-	var was_power_hint_visible = _power_hint.visible
-	_power_hint.visible = not powers.is_empty()
+	var was_power_hint_visible = _power_hint_possess.visible
+	_power_hint_possess.visible = has_power(Power.POSSESS)
 	
-	if _power_hint.visible != was_power_hint_visible:
-		var spm: Callable = func(x: float): _power_hint.material.set_shader_parameter(&"ball_size", x)
+	if _power_hint_possess.visible != was_power_hint_visible:
+		var spm: Callable = func(x: float): _power_hint_possess.material.set_shader_parameter(&"ball_size", x)
 		var tween := get_tree().create_tween()
-		if _power_hint.visible:
+		if _power_hint_possess.visible:
 			tween.tween_method(spm, 0.0, 1.0, 1.0) \
-				.set_trans(Tween.TRANS_CIRC) \
-				.set_ease(Tween.EASE_OUT_IN)
+					.set_trans(Tween.TRANS_CIRC) \
+					.set_ease(Tween.EASE_OUT_IN)
 		else:
+			_power_hint_possess.visible = true
 			tween.tween_method(spm, 1.0, 0.0, 1.0) \
-				.set_trans(Tween.TRANS_CIRC) \
-				.set_ease(Tween.EASE_OUT)
+					.set_trans(Tween.TRANS_CIRC) \
+					.set_ease(Tween.EASE_OUT)
+			tween.tween_callback(_power_hint_possess.hide) \
+					.set_delay(1.0)
+	
+	_power_hint_archery.visible = has_power(Power.ARCHERY)
 
 
 func _on_land() -> void:
@@ -420,6 +441,30 @@ func get_possessable_positions() -> Array[Vector2i]:
 	return _cache_possessable_positions
 
 
+func get_archery_positions() -> Array[Vector2i]:
+	if board == null:
+		return []
+	
+	if not has_power(Power.ARCHERY):
+		return []
+	
+	if _docache_archery_positions:
+		return _cache_archery_positions
+	
+	_cache_archery_positions = []
+	
+	for d in _DELTAS_ARCHERY:
+		for i in _DISTANCE_ARCHERY:
+			var p: Vector2i = grid_position + d * (i + 1)
+			if board.is_piece_strikeable(p, team):
+				_cache_archery_positions.push_back(p)
+				break
+			elif not board.is_open(p):
+				break
+	
+	return _cache_archery_positions
+
+
 func get_movable_interfaces() -> Array[BoardInterface]:
 	if board == null:
 		return []
@@ -560,10 +605,10 @@ func convert_piece(to: Vector2i, to_board: Board = null) -> void:
 	var delta: Vector2 = piece.position - position
 	
 	var anim_time := _ANIM_TIME_PIECE_MOVE
-	var spm: Callable = func(x: float): _power_hint.material.set_shader_parameter(&"ball_size", x)
+	var spm: Callable = func(x: float): _power_hint_possess.material.set_shader_parameter(&"ball_size", x)
 	
 	var tween := get_tree().create_tween()
-	tween.tween_property(_power_hint, ^"position", _power_hint.position + delta, anim_time * 0.5) \
+	tween.tween_property(_power_hint_possess, ^"position", _power_hint_possess.position + delta, anim_time * 0.5) \
 		.set_trans(Tween.TRANS_EXPO) \
 		.set_ease(Tween.EASE_OUT)
 	tween.tween_method(spm, 1.0, 0.0, anim_time * 0.5)
@@ -581,7 +626,7 @@ func kill() -> void:
 	var move_time := _ANIM_TIME_PIECE_MOVE
 	var kill_time := _ANIM_TIME_PIECE_KILL
 	
-	var spm: Callable = func(x: float): _power_hint.material.set_shader_parameter(&"ball_size", x)
+	var spm: Callable = func(x: float): _power_hint_possess.material.set_shader_parameter(&"ball_size", x)
 	
 	var tween := get_tree().create_tween().set_parallel(true)
 	tween.tween_callback(_shadow.hide)

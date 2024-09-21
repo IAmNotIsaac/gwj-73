@@ -24,8 +24,9 @@ background = 1
 [node name="TurnManager" type="Node" parent="."]
 script = ExtResource("6_vm1tm")
 
-[node name="CameraController" type="Node" parent="."]
+[node name="CameraController" type="Node" parent="." node_paths=PackedStringArray("camera")]
 script = ExtResource("4_hgjjn")
+camera = NodePath("../LevelCamera")
 
 [node name="PlayerController" type="Node" parent="."]
 script = ExtResource("4_p526j")
@@ -41,19 +42,20 @@ position = Vector2(64, 64)
 script = ExtResource("2_qor4q")
 
 [node name="PowerPlate" parent="Board" instance=ExtResource("9_1hm18")]
-position = Vector2(128, 48)
-grid_position = Vector2i(2, 1)
+position = Vector2(128, 144)
+power = 1
+grid_position = Vector2i(2, 3)
 
 [node name="Piece" parent="." node_paths=PackedStringArray("board") instance=ExtResource("1_k4efd")]
-position = Vector2(416, 112)
+position = Vector2(352, 112)
 direction = 3
-grid_position = Vector2i(5, 0)
+grid_position = Vector2i(4, 0)
 board = NodePath("../Board")
 
 [node name="Piece6" parent="." node_paths=PackedStringArray("board") instance=ExtResource("1_k4efd")]
-position = Vector2(224, 208)
+position = Vector2(224, 352)
 team = 1
-grid_position = Vector2i(2, 2)
+grid_position = Vector2i(2, 5)
 board = NodePath("../Board")
 
 [node name="Speaker" parent="." instance=ExtResource("9_1lsn5")]
