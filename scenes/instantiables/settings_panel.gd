@@ -91,7 +91,7 @@ func _on_up_control_reset_button_pressed() -> void:
 
 
 func _on_down_control_reset_button_pressed() -> void:
-	var event := _initial_input_move_up.duplicate()
+	var event := _initial_input_move_down.duplicate()
 	var action := &"move_down"
 	InputMap.action_erase_events(action)
 	InputMap.action_add_event(action, event)
@@ -99,7 +99,7 @@ func _on_down_control_reset_button_pressed() -> void:
 
 
 func _on_left_control_reset_button_pressed() -> void:
-	var event := _initial_input_move_up.duplicate()
+	var event := _initial_input_move_left.duplicate()
 	var action := &"move_left"
 	InputMap.action_erase_events(action)
 	InputMap.action_add_event(action, event)
@@ -107,7 +107,7 @@ func _on_left_control_reset_button_pressed() -> void:
 
 
 func _on_right_control_reset_button_pressed() -> void:
-	var event := _initial_input_move_up.duplicate()
+	var event := _initial_input_move_right.duplicate()
 	var action := &"move_right"
 	InputMap.action_erase_events(action)
 	InputMap.action_add_event(action, event)
