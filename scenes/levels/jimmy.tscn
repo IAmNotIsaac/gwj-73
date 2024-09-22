@@ -36,6 +36,7 @@ camera = NodePath("../LevelCamera")
 [node name="LevelCamera" parent="." instance=ExtResource("6_visj8")]
 
 [node name="Background" parent="." instance=ExtResource("7_p68gt")]
+background = 5
 
 [node name="Board" type="Node2D" parent="."]
 z_index = -1

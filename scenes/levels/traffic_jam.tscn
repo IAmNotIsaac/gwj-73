@@ -34,6 +34,7 @@ script = ExtResource("5_mioug")
 position = Vector2(128, 96)
 
 [node name="Background" parent="." instance=ExtResource("7_rvfyh")]
+background = 5
 
 [node name="Board" type="Node2D" parent="."]
 z_index = -1

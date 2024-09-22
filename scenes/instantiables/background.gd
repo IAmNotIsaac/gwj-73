@@ -9,6 +9,7 @@ enum Type {
 	CROWNS,
 	LETTERS,
 	THRONE,
+	MOCK_MATRIX,
 	NONE,
 }
 
