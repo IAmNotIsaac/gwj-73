@@ -10,8 +10,6 @@ func _enter_tree() -> void:
 
 
 func save_to_file() -> void:
-	var dir := DirAccess.open("user://")
-	
 	var json := JSON.stringify({
 		&"play_count": play_count,
 		&"last_level": last_level,
