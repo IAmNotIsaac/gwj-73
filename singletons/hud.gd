@@ -17,7 +17,39 @@ const LEVELS := [
 		&"packed": preload("res://scenes/levels/tutorial.tscn"),
 	},
 	{
-		&"name": "Test Level",
+		&"name": "The Perfect Combination",
+		&"packed": preload("res://scenes/levels/jimmy.tscn"),
+	},
+	{
+		&"name": "Battlefield",
+		&"packed": preload("res://scenes/levels/battlefield.tscn"),
+	},
+	{
+		&"name": "Waiting on The Bishop",
+		&"packed": preload("res://scenes/levels/waiting_on_the_bishop.tscn"),
+	},
+	{
+		&"name": "Traffic Jam",
+		&"packed": preload("res://scenes/levels/traffic_jam.tscn"),
+	},
+	{
+		&"name": "Jailbreak",
+		&"packed": preload("res://scenes/levels/jailbreak.tscn"),
+	},
+	{
+		&"name": "Ducks Crossing",
+		&"packed": preload("res://scenes/levels/ducks_crossing.tscn"),
+	},
+	{
+		&"name": "Run",
+		&"packed": preload("res://scenes/levels/run.tscn"),
+	},
+	{
+		&"name": "Throne Room",
+		&"packed": preload("res://scenes/levels/throne_room.tscn")
+	},
+	{
+		&"name": "The End",
 		&"packed": preload("res://scenes/world.tscn"),
 	}
 ]

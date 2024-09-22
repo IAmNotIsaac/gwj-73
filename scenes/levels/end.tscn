@@ -1,0 +1,77 @@
+[gd_scene load_steps=11 format=3 uid="uid://y34mcisespqx"]
+
+[ext_resource type="Script" path="res://scenes/world.gd" id="1_rrhus"]
+[ext_resource type="Script" path="res://src/turn_manager.gd" id="2_1igca"]
+[ext_resource type="AudioStream" uid="uid://cl3y074h2cc8i" path="res://assets/soundtrack/lullaby.mp3" id="2_4wxan"]
+[ext_resource type="Script" path="res://src/player_controller.gd" id="3_n41g8"]
+[ext_resource type="Script" path="res://src/camera_controller.gd" id="4_k4624"]
+[ext_resource type="PackedScene" uid="uid://bey5grytf1drn" path="res://scenes/instantiables/level_camera.tscn" id="5_4hyx1"]
+[ext_resource type="PackedScene" uid="uid://cgut83635k6rj" path="res://scenes/instantiables/background.tscn" id="8_jgc5q"]
+[ext_resource type="PackedScene" uid="uid://bn77po1rhcnjk" path="res://scenes/instantiables/speaker.tscn" id="8_tju1a"]
+[ext_resource type="PackedScene" uid="uid://bhm65qdan0ll2" path="res://scenes/piece.tscn" id="9_hqria"]
+[ext_resource type="Script" path="res://src/board.gd" id="10_cryj6"]
+
+[node name="World" type="Node2D"]
+script = ExtResource("1_rrhus")
+track = ExtResource("2_4wxan")
+
+[node name="TurnManager" type="Node" parent="."]
+script = ExtResource("2_1igca")
+
+[node name="PlayerController" type="Node" parent="."]
+script = ExtResource("3_n41g8")
+
+[node name="CameraController" type="Node" parent="." node_paths=PackedStringArray("camera")]
+script = ExtResource("4_k4624")
+camera = NodePath("../LevelCamera")
+
+[node name="LevelCamera" parent="." instance=ExtResource("5_4hyx1")]
+
+[node name="Label" type="Label" parent="."]
+offset_left = -180.0
+offset_top = -119.0
+offset_right = 173.0
+offset_bottom = 128.0
+text = "That's it! That's the end!
+
+Sorry, a little underwhelming...
+
+That's can be the nature of a game jam though.
+
+We dearly hope you appreciated the game!
+
+Isaac Astell
+Sterling Anders"
+horizontal_alignment = 1
+
+[node name="ColorRect" type="ColorRect" parent="Label"]
+show_behind_parent = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 1)
+
+[node name="Speaker" parent="." instance=ExtResource("8_tju1a")]
+position = Vector2(-320, 0)
+
+[node name="Speaker2" parent="." instance=ExtResource("8_tju1a")]
+position = Vector2(320, 0)
+
+[node name="Background" parent="." instance=ExtResource("8_jgc5q")]
+background = 1
+
+[node name="Piece" parent="." node_paths=PackedStringArray("board") instance=ExtResource("9_hqria")]
+position = Vector2(0, 208)
+team = 1
+type = 6
+grid_position = Vector2i(2, 0)
+board = NodePath("../Board")
+
+[node name="Board" type="Node2D" parent="."]
+z_index = -1
+position = Vector2(-160, 160)
+script = ExtResource("10_cryj6")
+size = Vector2i(5, 1)

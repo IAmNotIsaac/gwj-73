@@ -55,12 +55,6 @@ z_index = -1
 position = Vector2(48, 352)
 script = ExtResource("8_o7qwq")
 
-[node name="BoardInterface" parent="Board" node_paths=PackedStringArray("to_board") instance=ExtResource("10_14xyn")]
-locked = true
-grid_position = Vector2i(2, 0)
-to_board = NodePath("../../Board2")
-to_grid_position = Vector2i(1, 1)
-
 [node name="BoardInterface2" parent="Board" node_paths=PackedStringArray("to_board") instance=ExtResource("10_14xyn")]
 locked = true
 grid_position = Vector2i(5, 0)
@@ -162,56 +156,18 @@ type = 6
 grid_position = Vector2i(1, 1)
 board = NodePath("../Board4")
 
-[node name="WhiteQueen2" parent="." node_paths=PackedStringArray("board") instance=ExtResource("9_hhoy8")]
-position = Vector2(368, -704)
-type = 6
-grid_position = Vector2i(2, 3)
-board = NodePath("../Board4")
-
-[node name="WhiteQueen3" parent="." node_paths=PackedStringArray("board") instance=ExtResource("9_hhoy8")]
-position = Vector2(240, -704)
-type = 6
-grid_position = Vector2i(0, 3)
-board = NodePath("../Board4")
-
 [node name="WhiteQueen4" parent="." node_paths=PackedStringArray("board") instance=ExtResource("9_hhoy8")]
 position = Vector2(304, -608)
 type = 6
 grid_position = Vector2i(1, 5)
 board = NodePath("../Board4")
 
-[node name="WhiteQueen5" parent="." node_paths=PackedStringArray("board") instance=ExtResource("9_hhoy8")]
-position = Vector2(368, -512)
-type = 6
-grid_position = Vector2i(2, 7)
-board = NodePath("../Board4")
-
-[node name="WhiteQueen6" parent="." node_paths=PackedStringArray("board") instance=ExtResource("9_hhoy8")]
-position = Vector2(240, -512)
-type = 6
-grid_position = Vector2i(0, 7)
-board = NodePath("../Board4")
-
 [node name="Support" parent="." node_paths=PackedStringArray("board") instance=ExtResource("9_hhoy8")]
 position = Vector2(304, -368)
 team = 2
+type = 7
 grid_position = Vector2i(1, 10)
 board = NodePath("../Board4")
-powers = Array[int]([0])
-
-[node name="Support2" parent="." node_paths=PackedStringArray("board") instance=ExtResource("9_hhoy8")]
-position = Vector2(240, -272)
-team = 2
-grid_position = Vector2i(0, 12)
-board = NodePath("../Board4")
-powers = Array[int]([0])
-
-[node name="Support3" parent="." node_paths=PackedStringArray("board") instance=ExtResource("9_hhoy8")]
-position = Vector2(368, -272)
-team = 2
-grid_position = Vector2i(2, 12)
-board = NodePath("../Board4")
-powers = Array[int]([0])
 
 [node name="BlackPawn1" parent="." node_paths=PackedStringArray("board") instance=ExtResource("9_hhoy8")]
 position = Vector2(80, 688)
@@ -335,22 +291,6 @@ position = Vector2(304, -96)
 [node name="Speaker2" parent="." instance=ExtResource("11_yc5ef")]
 position = Vector2(688, 544)
 
-[node name="Board2" type="Node2D" parent="."]
-z_index = -1
-position = Vector2(-256, 80)
-script = ExtResource("8_o7qwq")
-size = Vector2i(3, 3)
-
-[node name="BoardInterface" parent="Board2" node_paths=PackedStringArray("to_board") instance=ExtResource("10_14xyn")]
-locked = false
-grid_position = Vector2i(1, 1)
-to_board = NodePath("../../Board4")
-to_grid_position = Vector2i(1, 13)
-
-[node name="PowerPlate" parent="Board2" instance=ExtResource("13_1d7wl")]
-position = Vector2(64, 48)
-grid_position = Vector2i(1, 1)
-
 [node name="Board3" type="Node2D" parent="."]
 z_index = -1
 position = Vector2(672, 80)
@@ -374,21 +314,6 @@ position = Vector2(208, -896)
 script = ExtResource("8_o7qwq")
 size = Vector2i(3, 15)
 
-[node name="PowerPlate" parent="Board4" instance=ExtResource("13_1d7wl")]
-position = Vector2(64, 624)
-power = 2
-grid_position = Vector2i(1, 13)
-
-[node name="PowerPlate2" parent="Board4" instance=ExtResource("13_1d7wl")]
-position = Vector2(0, 624)
-power = 1
-grid_position = Vector2i(0, 13)
-
-[node name="PowerPlate3" parent="Board4" instance=ExtResource("13_1d7wl")]
-position = Vector2(128, 624)
-power = 1
-grid_position = Vector2i(2, 13)
-
 [node name="BoardInterface" parent="Board4" node_paths=PackedStringArray("to_board") instance=ExtResource("10_14xyn")]
 locked = true
 grid_position = Vector2i(1, 1)
@@ -397,7 +322,7 @@ to_grid_position = Vector2i(1, 1)
 
 [node name="Board5" type="Node2D" parent="."]
 z_index = -1
-position = Vector2(208, -1808)
+position = Vector2(608, -1008)
 script = ExtResource("8_o7qwq")
 size = Vector2i(3, 3)
 

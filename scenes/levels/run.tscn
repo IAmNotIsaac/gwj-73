@@ -1,0 +1,373 @@
+[gd_scene load_steps=14 format=3 uid="uid://bapvwrgkcnf1x"]
+
+[ext_resource type="Script" path="res://scenes/world.gd" id="1_xs4ya"]
+[ext_resource type="AudioStream" uid="uid://vgtep007ihxr" path="res://assets/soundtrack/no_more.mp3" id="2_5rkmv"]
+[ext_resource type="Script" path="res://src/camera_controller.gd" id="2_cnne0"]
+[ext_resource type="Script" path="res://src/player_controller.gd" id="3_wqlt3"]
+[ext_resource type="Script" path="res://src/ai_controller.gd" id="4_xplsc"]
+[ext_resource type="Script" path="res://src/turn_manager.gd" id="5_mfvki"]
+[ext_resource type="PackedScene" uid="uid://bey5grytf1drn" path="res://scenes/instantiables/level_camera.tscn" id="6_yol6e"]
+[ext_resource type="PackedScene" uid="uid://cgut83635k6rj" path="res://scenes/instantiables/background.tscn" id="7_kj44u"]
+[ext_resource type="Script" path="res://src/board.gd" id="8_sy88h"]
+[ext_resource type="PackedScene" uid="uid://b4h06e2esvmcu" path="res://scenes/instantiables/next_level_plate.tscn" id="9_w1145"]
+[ext_resource type="PackedScene" uid="uid://bck0o028i4kg1" path="res://scenes/instantiables/power_plate.tscn" id="10_sab7q"]
+[ext_resource type="PackedScene" uid="uid://bhm65qdan0ll2" path="res://scenes/piece.tscn" id="11_niiyl"]
+[ext_resource type="PackedScene" uid="uid://bn77po1rhcnjk" path="res://scenes/instantiables/speaker.tscn" id="13_ki7rj"]
+
+[node name="Run" type="Node2D"]
+script = ExtResource("1_xs4ya")
+track = ExtResource("2_5rkmv")
+
+[node name="CameraController" type="Node" parent="." node_paths=PackedStringArray("camera")]
+script = ExtResource("2_cnne0")
+camera = NodePath("../LevelCamera")
+
+[node name="PlayerController" type="Node" parent="."]
+script = ExtResource("3_wqlt3")
+moves_per_turn = 999
+
+[node name="AIController" type="Node" parent="."]
+script = ExtResource("4_xplsc")
+
+[node name="TurnManager" type="Node" parent="."]
+script = ExtResource("5_mfvki")
+
+[node name="LevelCamera" parent="." instance=ExtResource("6_yol6e")]
+position = Vector2(128, 96)
+
+[node name="Background" parent="." instance=ExtResource("7_kj44u")]
+
+[node name="Board" type="Node2D" parent="."]
+z_index = -1
+script = ExtResource("8_sy88h")
+size = Vector2i(16, 7)
+
+[node name="NextLevelPlate" parent="Board" instance=ExtResource("9_w1145")]
+position = Vector2(960, 144)
+grid_position = Vector2i(15, 3)
+
+[node name="Ambhammer" parent="Board" instance=ExtResource("10_sab7q")]
+position = Vector2(256, 144)
+power = 2
+grid_position = Vector2i(4, 3)
+
+[node name="Ambhammer2" parent="Board" instance=ExtResource("10_sab7q")]
+position = Vector2(448, 96)
+power = 2
+grid_position = Vector2i(7, 2)
+
+[node name="Ambhammer3" parent="Board" instance=ExtResource("10_sab7q")]
+position = Vector2(704, 48)
+power = 2
+grid_position = Vector2i(11, 1)
+
+[node name="Ambhammer4" parent="Board" instance=ExtResource("10_sab7q")]
+position = Vector2(896, 96)
+power = 2
+grid_position = Vector2i(14, 2)
+
+[node name="wall 1" parent="." node_paths=PackedStringArray("board") instance=ExtResource("11_niiyl")]
+position = Vector2(160, 144)
+team = 2
+type = 7
+grid_position = Vector2i(2, 2)
+board = NodePath("../Board")
+
+[node name="wall 2" parent="." node_paths=PackedStringArray("board") instance=ExtResource("11_niiyl")]
+position = Vector2(96, 96)
+team = 2
+type = 7
+grid_position = Vector2i(1, 1)
+board = NodePath("../Board")
+
+[node name="wall 3" parent="." node_paths=PackedStringArray("board") instance=ExtResource("11_niiyl")]
+position = Vector2(288, 336)
+team = 2
+type = 7
+grid_position = Vector2i(4, 6)
+board = NodePath("../Board")
+
+[node name="wall 4" parent="." node_paths=PackedStringArray("board") instance=ExtResource("11_niiyl")]
+position = Vector2(224, 240)
+team = 2
+type = 7
+grid_position = Vector2i(3, 4)
+board = NodePath("../Board")
+
+[node name="wall 5" parent="." node_paths=PackedStringArray("board") instance=ExtResource("11_niiyl")]
+position = Vector2(288, 48)
+team = 2
+type = 7
+grid_position = Vector2i(4, 0)
+board = NodePath("../Board")
+
+[node name="wall 6" parent="." node_paths=PackedStringArray("board") instance=ExtResource("11_niiyl")]
+position = Vector2(416, 96)
+team = 2
+type = 7
+grid_position = Vector2i(6, 1)
+board = NodePath("../Board")
+
+[node name="wall 7" parent="." node_paths=PackedStringArray("board") instance=ExtResource("11_niiyl")]
+position = Vector2(608, 96)
+team = 2
+type = 7
+grid_position = Vector2i(9, 1)
+board = NodePath("../Board")
+
+[node name="wall 8" parent="." node_paths=PackedStringArray("board") instance=ExtResource("11_niiyl")]
+position = Vector2(672, 240)
+team = 2
+type = 7
+grid_position = Vector2i(10, 4)
+board = NodePath("../Board")
+
+[node name="wall 9" parent="." node_paths=PackedStringArray("board") instance=ExtResource("11_niiyl")]
+position = Vector2(608, 336)
+team = 2
+type = 7
+grid_position = Vector2i(9, 6)
+board = NodePath("../Board")
+
+[node name="wall 10" parent="." node_paths=PackedStringArray("board") instance=ExtResource("11_niiyl")]
+position = Vector2(32, 192)
+team = 2
+type = 7
+grid_position = Vector2i(0, 3)
+board = NodePath("../Board")
+
+[node name="wall 11" parent="." node_paths=PackedStringArray("board") instance=ExtResource("11_niiyl")]
+position = Vector2(352, 144)
+team = 2
+type = 7
+grid_position = Vector2i(5, 2)
+board = NodePath("../Board")
+
+[node name="wall 12" parent="." node_paths=PackedStringArray("board") instance=ExtResource("11_niiyl")]
+position = Vector2(800, 144)
+team = 2
+type = 7
+grid_position = Vector2i(12, 2)
+board = NodePath("../Board")
+
+[node name="wall 13" parent="." node_paths=PackedStringArray("board") instance=ExtResource("11_niiyl")]
+position = Vector2(864, 192)
+team = 2
+type = 7
+grid_position = Vector2i(13, 3)
+board = NodePath("../Board")
+
+[node name="wall 14" parent="." node_paths=PackedStringArray("board") instance=ExtResource("11_niiyl")]
+position = Vector2(544, 192)
+team = 2
+type = 7
+grid_position = Vector2i(8, 3)
+board = NodePath("../Board")
+
+[node name="wall 15" parent="." node_paths=PackedStringArray("board") instance=ExtResource("11_niiyl")]
+position = Vector2(672, 48)
+team = 2
+type = 7
+grid_position = Vector2i(10, 0)
+board = NodePath("../Board")
+
+[node name="wall 16" parent="." node_paths=PackedStringArray("board") instance=ExtResource("11_niiyl")]
+position = Vector2(928, 48)
+team = 2
+type = 7
+grid_position = Vector2i(14, 0)
+board = NodePath("../Board")
+
+[node name="wall 17" parent="." node_paths=PackedStringArray("board") instance=ExtResource("11_niiyl")]
+position = Vector2(864, 288)
+team = 2
+type = 7
+grid_position = Vector2i(13, 5)
+board = NodePath("../Board")
+
+[node name="wall 18" parent="." node_paths=PackedStringArray("board") instance=ExtResource("11_niiyl")]
+position = Vector2(416, 288)
+team = 2
+type = 7
+grid_position = Vector2i(6, 5)
+board = NodePath("../Board")
+
+[node name="wall 19" parent="." node_paths=PackedStringArray("board") instance=ExtResource("11_niiyl")]
+position = Vector2(96, 288)
+team = 2
+type = 7
+grid_position = Vector2i(1, 5)
+board = NodePath("../Board")
+
+[node name="pawn" parent="." node_paths=PackedStringArray("board") instance=ExtResource("11_niiyl")]
+position = Vector2(160, 192)
+team = 1
+direction = 1
+grid_position = Vector2i(2, 3)
+board = NodePath("../Board")
+
+[node name="knight 1" parent="." node_paths=PackedStringArray("board") instance=ExtResource("11_niiyl")]
+position = Vector2(96, 48)
+team = 1
+type = 2
+grid_position = Vector2i(1, 0)
+board = NodePath("../Board")
+
+[node name="knight 2" parent="." node_paths=PackedStringArray("board") instance=ExtResource("11_niiyl")]
+position = Vector2(96, 336)
+team = 1
+type = 2
+grid_position = Vector2i(1, 6)
+board = NodePath("../Board")
+
+[node name="knight 3" parent="." node_paths=PackedStringArray("board") instance=ExtResource("11_niiyl")]
+position = Vector2(32, 96)
+team = 1
+type = 2
+grid_position = Vector2i(0, 1)
+board = NodePath("../Board")
+
+[node name="knight 4" parent="." node_paths=PackedStringArray("board") instance=ExtResource("11_niiyl")]
+position = Vector2(96, 240)
+team = 1
+type = 2
+grid_position = Vector2i(1, 4)
+board = NodePath("../Board")
+
+[node name="knight 5" parent="." node_paths=PackedStringArray("board") instance=ExtResource("11_niiyl")]
+position = Vector2(96, 144)
+team = 1
+type = 2
+grid_position = Vector2i(1, 2)
+board = NodePath("../Board")
+
+[node name="knight 6" parent="." node_paths=PackedStringArray("board") instance=ExtResource("11_niiyl")]
+position = Vector2(32, 288)
+team = 1
+type = 2
+grid_position = Vector2i(0, 5)
+board = NodePath("../Board")
+
+[node name="knight 7" parent="." node_paths=PackedStringArray("board") instance=ExtResource("11_niiyl")]
+position = Vector2(160, 288)
+team = 1
+type = 2
+grid_position = Vector2i(2, 5)
+board = NodePath("../Board")
+
+[node name="knight 8" parent="." node_paths=PackedStringArray("board") instance=ExtResource("11_niiyl")]
+position = Vector2(160, 96)
+team = 1
+type = 2
+grid_position = Vector2i(2, 1)
+board = NodePath("../Board")
+
+[node name="queen 1" parent="." node_paths=PackedStringArray("board") instance=ExtResource("11_niiyl")]
+position = Vector2(96, 192)
+type = 5
+grid_position = Vector2i(1, 3)
+board = NodePath("../Board")
+
+[node name="queen 2" parent="." node_paths=PackedStringArray("board") instance=ExtResource("11_niiyl")]
+position = Vector2(96, 192)
+type = 5
+grid_position = Vector2i(1, 3)
+board = NodePath("../Board")
+
+[node name="queen 3" parent="." node_paths=PackedStringArray("board") instance=ExtResource("11_niiyl")]
+position = Vector2(96, 192)
+type = 5
+grid_position = Vector2i(1, 3)
+board = NodePath("../Board")
+
+[node name="queen 4" parent="." node_paths=PackedStringArray("board") instance=ExtResource("11_niiyl")]
+position = Vector2(96, 192)
+type = 5
+grid_position = Vector2i(1, 3)
+board = NodePath("../Board")
+
+[node name="queen 5" parent="." node_paths=PackedStringArray("board") instance=ExtResource("11_niiyl")]
+position = Vector2(96, 192)
+type = 5
+grid_position = Vector2i(1, 3)
+board = NodePath("../Board")
+
+[node name="queen 6" parent="." node_paths=PackedStringArray("board") instance=ExtResource("11_niiyl")]
+position = Vector2(96, 192)
+type = 5
+grid_position = Vector2i(1, 3)
+board = NodePath("../Board")
+
+[node name="queen 7" parent="." node_paths=PackedStringArray("board") instance=ExtResource("11_niiyl")]
+position = Vector2(96, 192)
+type = 5
+grid_position = Vector2i(1, 3)
+board = NodePath("../Board")
+
+[node name="queen 8" parent="." node_paths=PackedStringArray("board") instance=ExtResource("11_niiyl")]
+position = Vector2(96, 192)
+type = 5
+grid_position = Vector2i(1, 3)
+board = NodePath("../Board")
+
+[node name="queen 9" parent="." node_paths=PackedStringArray("board") instance=ExtResource("11_niiyl")]
+position = Vector2(96, 192)
+type = 5
+grid_position = Vector2i(1, 3)
+board = NodePath("../Board")
+
+[node name="queen 10" parent="." node_paths=PackedStringArray("board") instance=ExtResource("11_niiyl")]
+position = Vector2(96, 192)
+type = 5
+grid_position = Vector2i(1, 3)
+board = NodePath("../Board")
+
+[node name="amber 1" parent="." node_paths=PackedStringArray("board") instance=ExtResource("11_niiyl")]
+position = Vector2(352, 192)
+team = 2
+direction = 1
+grid_position = Vector2i(5, 3)
+board = NodePath("../Board")
+
+[node name="amber 2" parent="." node_paths=PackedStringArray("board") instance=ExtResource("11_niiyl")]
+position = Vector2(544, 144)
+team = 2
+direction = 1
+grid_position = Vector2i(8, 2)
+board = NodePath("../Board")
+
+[node name="amber 3" parent="." node_paths=PackedStringArray("board") instance=ExtResource("11_niiyl")]
+position = Vector2(800, 96)
+team = 2
+direction = 1
+grid_position = Vector2i(12, 1)
+board = NodePath("../Board")
+
+[node name="amber 4" parent="." node_paths=PackedStringArray("board") instance=ExtResource("11_niiyl")]
+position = Vector2(928, 192)
+team = 2
+direction = 1
+grid_position = Vector2i(14, 3)
+board = NodePath("../Board")
+
+[node name="amber 5" parent="." node_paths=PackedStringArray("board") instance=ExtResource("11_niiyl")]
+position = Vector2(416, 144)
+grid_position = Vector2i(6, 2)
+board = NodePath("../Board")
+
+[node name="amber 6" parent="." node_paths=PackedStringArray("board") instance=ExtResource("11_niiyl")]
+position = Vector2(672, 96)
+grid_position = Vector2i(10, 1)
+board = NodePath("../Board")
+
+[node name="amber 7" parent="." node_paths=PackedStringArray("board") instance=ExtResource("11_niiyl")]
+position = Vector2(864, 144)
+direction = 2
+grid_position = Vector2i(13, 2)
+board = NodePath("../Board")
+
+[node name="Speaker" parent="." instance=ExtResource("13_ki7rj")]
+position = Vector2(192, -112)
+
+[node name="Speaker2" parent="." instance=ExtResource("13_ki7rj")]
+position = Vector2(704, 448)

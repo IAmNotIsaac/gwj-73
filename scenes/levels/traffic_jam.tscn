@@ -1,6 +1,7 @@
-[gd_scene load_steps=11 format=3 uid="uid://cwi788ci0gxxg"]
+[gd_scene load_steps=13 format=3 uid="uid://cwi788ci0gxxg"]
 
 [ext_resource type="Script" path="res://scenes/world.gd" id="1_1b4be"]
+[ext_resource type="AudioStream" uid="uid://bpy83abe7kigt" path="res://assets/soundtrack/central_redistributor.mp3" id="2_g1x4y"]
 [ext_resource type="Script" path="res://src/camera_controller.gd" id="2_snoti"]
 [ext_resource type="Script" path="res://src/player_controller.gd" id="3_hxidu"]
 [ext_resource type="Script" path="res://src/ai_controller.gd" id="4_6v4p8"]
@@ -10,9 +11,11 @@
 [ext_resource type="Script" path="res://src/board.gd" id="8_2cewp"]
 [ext_resource type="PackedScene" uid="uid://b4h06e2esvmcu" path="res://scenes/instantiables/next_level_plate.tscn" id="10_1ond8"]
 [ext_resource type="PackedScene" uid="uid://bhm65qdan0ll2" path="res://scenes/piece.tscn" id="11_j8ckj"]
+[ext_resource type="PackedScene" uid="uid://bn77po1rhcnjk" path="res://scenes/instantiables/speaker.tscn" id="12_opb3k"]
 
 [node name="Traffic Jam" type="Node2D"]
 script = ExtResource("1_1b4be")
+track = ExtResource("2_g1x4y")
 
 [node name="CameraController" type="Node" parent="." node_paths=PackedStringArray("camera")]
 script = ExtResource("2_snoti")
@@ -137,3 +140,6 @@ type = 5
 direction = 3
 grid_position = Vector2i(3, 0)
 board = NodePath("../Board")
+
+[node name="Speaker" parent="." instance=ExtResource("12_opb3k")]
+position = Vector2(128, -128)

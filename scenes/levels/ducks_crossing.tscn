@@ -1,6 +1,7 @@
-[gd_scene load_steps=12 format=3 uid="uid://dh2r38d0wt0i6"]
+[gd_scene load_steps=14 format=3 uid="uid://owlvb6cr7eyc"]
 
 [ext_resource type="Script" path="res://scenes/world.gd" id="1_tym2r"]
+[ext_resource type="AudioStream" uid="uid://cn2s54gyd8x0j" path="res://assets/soundtrack/deep_blue.mp3" id="2_71avq"]
 [ext_resource type="Script" path="res://src/camera_controller.gd" id="2_i0j31"]
 [ext_resource type="Script" path="res://src/player_controller.gd" id="3_0d5sk"]
 [ext_resource type="Script" path="res://src/ai_controller.gd" id="4_ut4es"]
@@ -11,9 +12,11 @@
 [ext_resource type="PackedScene" uid="uid://b4h06e2esvmcu" path="res://scenes/instantiables/next_level_plate.tscn" id="9_s22hs"]
 [ext_resource type="PackedScene" uid="uid://bhm65qdan0ll2" path="res://scenes/piece.tscn" id="10_k1igf"]
 [ext_resource type="PackedScene" uid="uid://bck0o028i4kg1" path="res://scenes/instantiables/power_plate.tscn" id="10_un201"]
+[ext_resource type="PackedScene" uid="uid://bn77po1rhcnjk" path="res://scenes/instantiables/speaker.tscn" id="12_ydxt0"]
 
 [node name="Run" type="Node2D"]
 script = ExtResource("1_tym2r")
+track = ExtResource("2_71avq")
 
 [node name="CameraController" type="Node" parent="." node_paths=PackedStringArray("camera")]
 script = ExtResource("2_i0j31")
@@ -250,3 +253,9 @@ team = 1
 type = 4
 grid_position = Vector2i(0, 7)
 board = NodePath("../Board")
+
+[node name="Speaker" parent="." instance=ExtResource("12_ydxt0")]
+position = Vector2(-96, 192)
+
+[node name="Speaker2" parent="." instance=ExtResource("12_ydxt0")]
+position = Vector2(864, 192)

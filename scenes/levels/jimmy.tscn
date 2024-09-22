@@ -49,7 +49,7 @@ power = 1
 grid_position = Vector2i(3, 3)
 
 [node name="BoardInterface" parent="Board" node_paths=PackedStringArray("to_board") instance=ExtResource("10_hwiv3")]
-locked = null
+locked = true
 grid_position = Vector2i(3, 0)
 to_board = NodePath("../../Board2")
 to_grid_position = Vector2i(0, 4)
