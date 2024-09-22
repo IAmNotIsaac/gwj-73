@@ -69,6 +69,7 @@ grid_position = Vector2i(7, 7)
 
 [node name="NextLevelPlate" parent="Board" instance=ExtResource("9_s22hs")]
 position = Vector2(640, 192)
+next_level = 6
 grid_position = Vector2i(10, 4)
 
 [node name="north wall 1" parent="." node_paths=PackedStringArray("board") instance=ExtResource("10_k1igf")]

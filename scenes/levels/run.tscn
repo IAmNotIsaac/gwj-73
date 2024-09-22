@@ -44,6 +44,7 @@ size = Vector2i(16, 7)
 
 [node name="NextLevelPlate" parent="Board" instance=ExtResource("9_w1145")]
 position = Vector2(960, 144)
+next_level = 7
 grid_position = Vector2i(15, 3)
 
 [node name="Ambhammer" parent="Board" instance=ExtResource("10_sab7q")]

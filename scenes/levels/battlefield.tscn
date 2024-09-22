@@ -58,6 +58,7 @@ size = Vector2i(3, 3)
 
 [node name="NextLevelPlate" parent="Goalboard" instance=ExtResource("9_s22hs")]
 position = Vector2(64, 48)
+next_level = 3
 grid_position = Vector2i(1, 1)
 
 [node name="Startboard" type="Node2D" parent="."]
