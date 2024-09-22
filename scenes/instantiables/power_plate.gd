@@ -12,12 +12,15 @@ extends Node2D
 
 var _board: Board
 
+@onready var _sprite := $AnimatedSprite2D
+
 
 func _ready() -> void:
 	if get_parent() is not Board:
 		printerr("PowerPlate expects parent to be a Board")
 		return
 	
+	_sprite.play(str(power))
 	_board = get_parent()
 	_update_position()
 
