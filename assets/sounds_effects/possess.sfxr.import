@@ -1,0 +1,17 @@
+[remap]
+
+importer="com.timothyqiu.gdfxr.importer"
+type="AudioStreamWAV"
+uid="uid://ckvt04w52r3du"
+path="res://.godot/imported/possess.sfxr-79344ade961f3656f61f8761920bfd20.sample"
+
+[deps]
+
+source_file="res://assets/sounds_effects/possess.sfxr"
+dest_files=["res://.godot/imported/possess.sfxr-79344ade961f3656f61f8761920bfd20.sample"]
+
+[params]
+
+loop=false
+bit_depth=0
+sample_rate=0

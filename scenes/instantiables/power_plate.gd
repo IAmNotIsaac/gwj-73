@@ -15,8 +15,10 @@ extends Node2D
 			_update_position()
 
 var _board: Board
+var _audio2: AudioStreamPlayer
 
 @onready var _sprite := $AnimatedSprite2D
+@onready var _sound := $Sound
 
 
 func _ready() -> void:
@@ -27,9 +29,14 @@ func _ready() -> void:
 	_board = get_parent()
 	_update_position()
 	_update_sprite()
+	
+	_audio2 = _sound.duplicate()
+	_audio2.finished.connect(_audio2.queue_free)
+	_board.get_parent().add_child.call_deferred(_audio2)
 
 
 func _exit_tree() -> void:
+	_audio2.play()
 	_board.unregister_power_plate(self)
 
 

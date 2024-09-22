@@ -31,6 +31,8 @@ var _camera_controller: CameraController
 @onready var _land := $InterfaceLand
 @onready var _stars_begin := $StarsBegin
 @onready var _stars_end := $StarsEnd
+@onready var _interface_use_sound := $InterfaceUseSound
+@onready var _interface_unlock_sound := $InterfaceUnlockSound
 
 
 func _ready() -> void:
@@ -84,6 +86,7 @@ func unlock() -> void:
 	_world.begin_cutscene()
 	await get_tree().create_timer(_TIME_COMPREHENSION).timeout
 	_stars_end.emitting = true
+	_interface_unlock_sound.play()
 	for p in _parabola._line.points:
 		_camera_controller.set_position(_parabola.position + p)
 		_line_back.add_point(p)
@@ -98,3 +101,7 @@ func unlock() -> void:
 
 func is_locked() -> bool:
 	return not _unlocked
+
+
+func play_use_sound() -> void:
+	_interface_use_sound.play()

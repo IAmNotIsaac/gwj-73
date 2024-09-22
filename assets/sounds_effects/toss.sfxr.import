@@ -1,0 +1,17 @@
+[remap]
+
+importer="com.timothyqiu.gdfxr.importer"
+type="AudioStreamWAV"
+uid="uid://diit7a3hnbhq2"
+path="res://.godot/imported/toss.sfxr-9b66e08792aa7f66f4fd1925028183c3.sample"
+
+[deps]
+
+source_file="res://assets/sounds_effects/toss.sfxr"
+dest_files=["res://.godot/imported/toss.sfxr-9b66e08792aa7f66f4fd1925028183c3.sample"]
+
+[params]
+
+loop=false
+bit_depth=0
+sample_rate=0

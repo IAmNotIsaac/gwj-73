@@ -1,0 +1,17 @@
+[remap]
+
+importer="com.timothyqiu.gdfxr.importer"
+type="AudioStreamWAV"
+uid="uid://dnf6esmvwgd4"
+path="res://.godot/imported/interface_unlock.sfxr-cba6dcd491cfcc8c82f992ec3be605ce.sample"
+
+[deps]
+
+source_file="res://assets/sounds_effects/interface_unlock.sfxr"
+dest_files=["res://.godot/imported/interface_unlock.sfxr-cba6dcd491cfcc8c82f992ec3be605ce.sample"]
+
+[params]
+
+loop=false
+bit_depth=0
+sample_rate=0

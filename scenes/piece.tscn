@@ -1,4 +1,4 @@
-[gd_scene load_steps=146 format=3 uid="uid://bhm65qdan0ll2"]
+[gd_scene load_steps=149 format=3 uid="uid://bhm65qdan0ll2"]
 
 [ext_resource type="Script" path="res://scenes/piece.gd" id="1_jfn20"]
 [ext_resource type="Texture2D" uid="uid://bii5gpthli3mv" path="res://assets/textures/shadow.svg" id="2_3o6u8"]
@@ -11,6 +11,9 @@
 [ext_resource type="Shader" path="res://shaders/fire.gdshader" id="7_t6vxi"]
 [ext_resource type="Texture2D" uid="uid://coq7ytqpw12l3" path="res://assets/textures/gem_hammer.png" id="8_ywry4"]
 [ext_resource type="Texture2D" uid="uid://c1y22e1gnsx68" path="res://assets/textures/amber_resin.png" id="11_tc6kn"]
+[ext_resource type="AudioStream" uid="uid://cu6xsldw35423" path="res://assets/sounds_effects/land.sfxr" id="12_3xtro"]
+[ext_resource type="AudioStream" uid="uid://d4ihbsr4ku77c" path="res://assets/sounds_effects/die.sfxr" id="13_jpd1a"]
+[ext_resource type="AudioStream" uid="uid://cgcewla33fc0j" path="res://assets/sounds_effects/fire.sfxr" id="14_ha3ea"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_x1slp"]
 atlas = ExtResource("6_sflps")
@@ -1091,3 +1094,22 @@ color_ramp = SubResource("Gradient_g012n")
 visible = false
 position = Vector2(0, -40)
 texture = ExtResource("11_tc6kn")
+
+[node name="LandSound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("12_3xtro")
+bus = &"SFX"
+
+[node name="DieSound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("13_jpd1a")
+bus = &"SFX"
+
+[node name="PossessSound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("13_jpd1a")
+bus = &"SFX"
+
+[node name="FireSound" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("14_ha3ea")
+volume_db = -10.0
+max_distance = 100.0
+bus = &"SFX"
+playback_type = 1

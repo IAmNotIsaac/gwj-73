@@ -1,0 +1,17 @@
+[remap]
+
+importer="com.timothyqiu.gdfxr.importer"
+type="AudioStreamWAV"
+uid="uid://cgcewla33fc0j"
+path="res://.godot/imported/fire.sfxr-d4c97611c9d6edd885b23e36e4aca8ad.sample"
+
+[deps]
+
+source_file="res://assets/sounds_effects/fire.sfxr"
+dest_files=["res://.godot/imported/fire.sfxr-d4c97611c9d6edd885b23e36e4aca8ad.sample"]
+
+[params]
+
+loop=true
+bit_depth=0
+sample_rate=0

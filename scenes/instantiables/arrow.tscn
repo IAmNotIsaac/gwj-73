@@ -1,9 +1,10 @@
-[gd_scene load_steps=6 format=3 uid="uid://18vwxshxofar"]
+[gd_scene load_steps=7 format=3 uid="uid://18vwxshxofar"]
 
 [ext_resource type="Script" path="res://scenes/instantiables/arrow.gd" id="1_oidhc"]
 [ext_resource type="Texture2D" uid="uid://8u318te88cnj" path="res://assets/textures/gem_arrow.png" id="2_eqpov"]
 [ext_resource type="Shader" path="res://shaders/fire.gdshader" id="3_nqg63"]
 [ext_resource type="Texture2D" uid="uid://4dmvajgfypsg" path="res://assets/textures/icon_possess.svg" id="4_y4nu0"]
+[ext_resource type="AudioStream" uid="uid://diit7a3hnbhq2" path="res://assets/sounds_effects/toss.sfxr" id="5_5m2w8"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_dtu5m"]
 shader = ExtResource("3_nqg63")
@@ -32,3 +33,7 @@ material = SubResource("ShaderMaterial_dtu5m")
 position = Vector2(-16, 0)
 scale = Vector2(2, 2)
 texture = ExtResource("4_y4nu0")
+
+[node name="TossSound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("5_5m2w8")
+bus = &"SFX"

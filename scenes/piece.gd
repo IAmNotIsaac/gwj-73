@@ -167,6 +167,10 @@ var _is_moving := false:
 @onready var _power_hint_archery := $Sprite2D/PowerHintArchery
 @onready var _power_hint_ambhammer := $Sprite2D/PowerHintAmbhammer
 @onready var _amber_resin := $AmberResin
+@onready var _land_sound := $LandSound
+@onready var _die_sound := $DieSound
+@onready var _possess_sound := $PossessSound
+@onready var _fire_sound := $FireSound
 
 
 func _enter_tree() -> void:
@@ -237,9 +241,13 @@ func _update_sprite() -> void:
 	_power_hint_ambhammer.visible = has_power(Power.AMBHAMMER)
 	
 	_amber_resin.visible = team == Team.NEUTRAL and type != Type.WALL
+	
+	_fire_sound.playing = _power_hint_possess.visible
 
 
 func _on_land() -> void:
+	_land_sound.play()
+	
 	if team == Team.WHITE:
 		return
 	
@@ -680,6 +688,8 @@ func kill() -> void:
 	var tween := get_tree().create_tween().set_parallel(true)
 	tween.tween_callback(_shadow.hide)
 	tween.tween_callback(_direction_hint.hide)
+	tween.tween_callback(_die_sound.play) \
+			.set_delay(move_time)
 	tween.tween_property(_particles_smoke_0, ^"emitting", true, 0.0) \
 			.set_delay(move_time)
 	tween.tween_property(_particles_smoke_1, ^"emitting", true, 0.0) \

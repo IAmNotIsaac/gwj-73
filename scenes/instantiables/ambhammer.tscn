@@ -1,8 +1,9 @@
-[gd_scene load_steps=8 format=3 uid="uid://bewalvcstx1eg"]
+[gd_scene load_steps=9 format=3 uid="uid://bewalvcstx1eg"]
 
 [ext_resource type="Script" path="res://scenes/instantiables/ambhammer.gd" id="1_3yqkk"]
 [ext_resource type="Texture2D" uid="uid://coq7ytqpw12l3" path="res://assets/textures/gem_hammer.png" id="1_h62bx"]
 [ext_resource type="Texture2D" uid="uid://c1y22e1gnsx68" path="res://assets/textures/amber_resin.png" id="3_tnwt1"]
+[ext_resource type="AudioStream" uid="uid://c1ekkq4t0bj4v" path="res://assets/sounds_effects/break.sfxr" id="4_3ovv3"]
 
 [sub_resource type="Gradient" id="Gradient_c1vcw"]
 offsets = PackedFloat32Array(0, 0.753846, 1)
@@ -46,6 +47,20 @@ tracks/2/keys = {
 "transitions": PackedFloat32Array(1, 1),
 "update": 0,
 "values": [Color(1, 1, 1, 1), Color(1, 1, 1, 0)]
+}
+tracks/3/type = "method"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("BreakSound")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0.4),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [0.0],
+"method": &"play"
+}]
 }
 
 [sub_resource type="Animation" id="Animation_wjx1u"]
@@ -125,4 +140,7 @@ libraries = {
 }
 autoplay = "default"
 
-[connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_animation_player_animation_finished"]
+[node name="BreakSound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("4_3ovv3")
+volume_db = -5.0
+bus = &"SFX"

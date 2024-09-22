@@ -2,11 +2,10 @@ extends Node2D
 
 
 @onready var _particles := $CPUParticles2D
+@onready var _break_sound := $BreakSound
 
 
 func _ready() -> void:
 	_particles.emitting = true
-
-
-func _on_animation_player_animation_finished(_anim_name: StringName) -> void:
+	await _break_sound.finished
 	queue_free()

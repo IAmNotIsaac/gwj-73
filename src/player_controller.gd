@@ -11,6 +11,7 @@ const _ICON_AMBHAMMER := preload("res://assets/textures/icon_ambhammer.svg")
 const _SELECTION_HINT := preload("res://scenes/instantiables/selection_hint.tscn")
 const _ARROW := preload("res://scenes/instantiables/arrow.tscn")
 const _AMBHAMMER := preload("res://scenes/instantiables/ambhammer.tscn")
+const _INTERACT_SOUND := preload("res://assets/sounds_effects/interact.sfxr")
 const _ZOOM_DEFAULT := 1.0
 const _ZOOM_SELECTED := 1.1
 const _TIME_COMPREHENSION := 1.0
@@ -31,6 +32,7 @@ var _reason_show_selection_hint = -_REASON_MY_TURN:
 		_reason_show_selection_hint = v
 		_selection_hint.visible = _reason_show_selection_hint > 0
 		_selection_hint.z_index = 3
+var _interact_sound := AudioStreamPlayer.new()
 
 
 func _init() -> void:
@@ -43,6 +45,10 @@ func _enter_tree() -> void:
 
 
 func _ready() -> void:
+	add_child(_interact_sound)
+	_interact_sound.stream = _INTERACT_SOUND
+	_interact_sound.bus = &"SFX"
+	
 	if get_parent() is World:
 		_world = get_parent()
 		_world.cutscene_begun.connect(_on_cutscene_begun)
@@ -140,6 +146,9 @@ func _handle_click_root(button_index: MouseButton, grid_position: Vector2i, boar
 		return
 	if selected_piece in _handled_pieces:
 		return
+	
+	_interact_sound.pitch_scale = 1.0
+	_interact_sound.play()
 	
 	var movable_positions := selected_piece.get_movable_positions()
 	var strikeable_positions := selected_piece.get_strikeable_positions()
@@ -241,6 +250,9 @@ func _handle_click_move(
 		possessable_interfaces: Array[BoardInterface],
 		icons: Array[Sprite2D],
 ) -> void:
+	_interact_sound.pitch_scale = 1.2
+	_interact_sound.play()
+	
 	var new_selected_piece := board.get_piece(grid_position)
 	
 	if new_selected_piece != null and new_selected_piece != selected_piece and new_selected_piece.team == get_team() and new_selected_piece not in _handled_pieces:
@@ -252,6 +264,7 @@ func _handle_click_move(
 		_handled_pieces.push_back(selected_piece)
 		selected_piece.mark_immovable()
 		_camera_controller.set_position(selected_piece.position)
+		movable_interfaces[0].play_use_sound()
 	
 	elif not strikeable_interfaces.is_empty() and board == strikeable_interfaces[0].to_board and grid_position == strikeable_interfaces[0].to_grid_position:
 		_move_count += 1
@@ -260,6 +273,7 @@ func _handle_click_move(
 		_handled_pieces.push_back(selected_piece)
 		selected_piece.mark_immovable()
 		_camera_controller.set_position(selected_piece.position)
+		strikeable_interfaces[0].play_use_sound()
 	
 	elif not possessable_interfaces.is_empty() and board == possessable_interfaces[0].to_board and grid_position == possessable_interfaces[0].to_grid_position:
 		_move_count += 1
@@ -267,6 +281,7 @@ func _handle_click_move(
 		_camera_controller.set_position(new_selected_piece.position)
 		_camera_controller.set_zoom(_ZOOM_SELECTED)
 		selected_piece.kill()
+		possessable_interfaces[0].play_use_sound()
 	
 	elif grid_position in movable_positions:
 		_move_count += 1

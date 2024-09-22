@@ -6,9 +6,11 @@ const _ANIM_TIME := 0.5
 var to: Vector2
 
 @onready var _last_pos := position
+@onready var _toss_sound := $TossSound
 
 
 func _ready() -> void:
+	_toss_sound.play()
 	var peak := minf(position.y - Board.TILE_HEIGHT, to.y - Board.TILE_HEIGHT)
 	var tween := get_tree().create_tween().bind_node(self).set_parallel(true)
 	tween.tween_property(self, ^"position:x", to.x, _ANIM_TIME)

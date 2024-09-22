@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=3 uid="uid://drcui3tw3c1k"]
+[gd_scene load_steps=16 format=3 uid="uid://drcui3tw3c1k"]
 
 [ext_resource type="Script" path="res://scenes/instantiables/board_interface.gd" id="1_nn17t"]
 [ext_resource type="Shader" path="res://shaders/uv_cycler.gdshader" id="2_1ay55"]
@@ -7,6 +7,8 @@
 [ext_resource type="Texture2D" uid="uid://biff00oindb7a" path="res://assets/textures/dash_1_1.png" id="3_um7py"]
 [ext_resource type="Texture2D" uid="uid://c2ydygtoe4j3s" path="res://assets/textures/interface_land.svg" id="5_doa8v"]
 [ext_resource type="Texture2D" uid="uid://dd26j70gkogud" path="res://assets/textures/particles/sparkle0.png" id="7_w0u7p"]
+[ext_resource type="AudioStream" uid="uid://cv8wvqwlipye6" path="res://assets/sounds_effects/interface_use.sfxr" id="8_goe4n"]
+[ext_resource type="AudioStream" uid="uid://dnf6esmvwgd4" path="res://assets/sounds_effects/interface_unlock.sfxr" id="9_53gex"]
 
 [sub_resource type="Gradient" id="Gradient_yj2t3"]
 offsets = PackedFloat32Array(0, 0.5, 1)
@@ -97,3 +99,11 @@ angular_velocity_min = -30.0
 angular_velocity_max = 30.0
 color_ramp = SubResource("Gradient_g44nr")
 color_initial_ramp = SubResource("Gradient_rolil")
+
+[node name="InterfaceUseSound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("8_goe4n")
+bus = &"SFX"
+
+[node name="InterfaceUnlockSound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("9_53gex")
+bus = &"SFX"
