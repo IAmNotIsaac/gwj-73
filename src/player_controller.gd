@@ -8,6 +8,7 @@ const _ICON_STRIKE_INTERFACE := preload("res://assets/textures/icon_strike_inter
 const _ICON_POSSESS := preload("res://assets/textures/icon_possess.svg")
 const _ICON_ARCHERY := preload("res://assets/textures/icon_archery.svg")
 const _SELECTION_HINT := preload("res://scenes/instantiables/selection_hint.tscn")
+const _ARROW := preload("res://scenes/instantiables/arrow.tscn")
 const _ZOOM_DEFAULT := 1.0
 const _ZOOM_SELECTED := 1.1
 const _TIME_COMPREHENSION := 1.0
@@ -141,6 +142,7 @@ func _handle_click_root(button_index: MouseButton, grid_position: Vector2i, boar
 	var movable_positions := selected_piece.get_movable_positions()
 	var strikeable_positions := selected_piece.get_strikeable_positions()
 	var possessable_positions := selected_piece.get_possessable_positions()
+	var archery_positions := selected_piece.get_archery_positions()
 	var movable_interfaces := selected_piece.get_movable_interfaces()
 	var strikeable_interfaces := selected_piece.get_strikeable_interfaces()
 	var possessable_interfaces := selected_piece.get_possessable_interfaces()
@@ -150,6 +152,7 @@ func _handle_click_root(button_index: MouseButton, grid_position: Vector2i, boar
 		movable_positions,
 		strikeable_positions,
 		possessable_positions,
+		archery_positions,
 		movable_interfaces,
 		strikeable_interfaces,
 		possessable_interfaces,
@@ -162,67 +165,43 @@ func _handle_click_root(button_index: MouseButton, grid_position: Vector2i, boar
 	var bot_right := selected_piece.global_position
 	
 	for i in movable_interfaces:
-		var icon := Sprite2D.new()
-		add_child(icon)
-		icon.texture = _ICON_MOVE_INTERFACE
-		icon.position = i.to_board.position + Vector2(i.to_grid_position * Vector2i(Board.TILE_WIDTH, Board.TILE_HEIGHT))
-		icon.position += Vector2(float(Board.TILE_WIDTH), float(Board.TILE_HEIGHT)) * 0.5
-		icon.z_index = 3
+		var icon := _create_icon(i.to_board, i.to_grid_position, _ICON_MOVE_INTERFACE)
 		icons.push_back(icon)
 		top_left = top_left.min(icon.position)
 		bot_right = bot_right.max(icon.position)
 	
 	for i in strikeable_interfaces:
-		var icon := Sprite2D.new()
-		add_child(icon)
-		icon.texture = _ICON_STRIKE_INTERFACE
-		icon.position = i.to_board.position + Vector2(i.to_grid_position * Vector2i(Board.TILE_WIDTH, Board.TILE_HEIGHT))
-		icon.position += Vector2(float(Board.TILE_WIDTH), float(Board.TILE_HEIGHT)) * 0.5
-		icon.z_index = 3
+		var icon := _create_icon(i.to_board, i.to_grid_position, _ICON_STRIKE_INTERFACE)
 		icons.push_back(icon)
 		top_left = top_left.min(icon.position)
 		bot_right = bot_right.max(icon.position)
 	
 	for i in possessable_interfaces:
-		var icon := Sprite2D.new()
-		add_child(icon)
-		icon.texture = _ICON_POSSESS
-		icon.position = i.to_board.position + Vector2(i.to_grid_position * Vector2i(Board.TILE_WIDTH, Board.TILE_HEIGHT))
-		icon.position += Vector2(float(Board.TILE_WIDTH), float(Board.TILE_HEIGHT)) * 0.5
-		icon.z_index = 3
+		var icon := _create_icon(i.to_board, i.to_grid_position, _ICON_POSSESS)
 		icons.push_back(icon)
 		top_left = top_left.min(icon.position)
 		bot_right = bot_right.max(icon.position)
 	
 	for p in movable_positions:
-		var icon := Sprite2D.new()
-		add_child(icon)
-		icon.texture = _ICON_MOVE
-		icon.position = board.position + Vector2(p * Vector2i(Board.TILE_WIDTH, Board.TILE_HEIGHT))
-		icon.position += Vector2(float(Board.TILE_WIDTH), float(Board.TILE_HEIGHT)) * 0.5
-		icon.z_index = 3
+		var icon := _create_icon(board, p, _ICON_MOVE)
 		icons.push_back(icon)
 		top_left = top_left.min(icon.position)
 		bot_right = bot_right.max(icon.position)
 	
 	for p in strikeable_positions:
-		var icon := Sprite2D.new()
-		add_child(icon)
-		icon.texture = _ICON_STRIKE
-		icon.position = board.position + Vector2(p * Vector2i(Board.TILE_WIDTH, Board.TILE_HEIGHT))
-		icon.position += Vector2(float(Board.TILE_WIDTH), float(Board.TILE_HEIGHT)) * 0.5
-		icon.z_index = 3
+		var icon := _create_icon(board, p, _ICON_STRIKE)
 		icons.push_back(icon)
 		top_left = top_left.min(icon.position)
 		bot_right = bot_right.max(icon.position)
 	
 	for p in possessable_positions:
-		var icon := Sprite2D.new()
-		add_child(icon)
-		icon.texture = _ICON_POSSESS
-		icon.position = board.position + Vector2(p * Vector2i(Board.TILE_WIDTH, Board.TILE_HEIGHT))
-		icon.position += Vector2(float(Board.TILE_WIDTH), float(Board.TILE_HEIGHT)) * 0.5
-		icon.z_index = 3
+		var icon := _create_icon(board, p, _ICON_POSSESS)
+		icons.push_back(icon)
+		top_left = top_left.min(icon.position)
+		bot_right = bot_right.max(icon.position)
+	
+	for p in archery_positions:
+		var icon := _create_icon(board, p, _ICON_ARCHERY)
 		icons.push_back(icon)
 		top_left = top_left.min(icon.position)
 		bot_right = bot_right.max(icon.position)
@@ -245,6 +224,7 @@ func _handle_click_move(
 		movable_positions: Array[Vector2i],
 		strikeable_positions: Array[Vector2i],
 		possessable_positions: Array[Vector2i],
+		archery_positions: Array[Vector2i],
 		movable_interfaces: Array[BoardInterface],
 		strikeable_interfaces: Array[BoardInterface],
 		possessable_interfaces: Array[BoardInterface],
@@ -299,6 +279,15 @@ func _handle_click_move(
 		_camera_controller.set_zoom(_ZOOM_SELECTED)
 		selected_piece.kill()
 	
+	elif grid_position in archery_positions:
+		_move_count += 1
+		var arrow := _ARROW.instantiate()
+		arrow.position = board.grid_to_world(selected_piece.grid_position, true)
+		arrow.to = board.grid_to_world(grid_position, true)
+		add_child(arrow)
+		selected_piece.remove_power(Piece.Power.ARCHERY)
+		new_selected_piece.kill()
+	
 	for icon in icons:
 		icon.queue_free()
 	selected_piece.mark_unselected()
@@ -324,3 +313,13 @@ func _pass_turn() -> void:
 	await get_tree().create_timer(_TIME_COMPREHENSION).timeout
 	_reason_show_selection_hint += _REASON_CUTSCENE
 	turn_passed.emit()
+
+
+func _create_icon(board: Board, grid_position: Vector2i, icon_texture: Texture2D) -> Sprite2D:
+	var icon := Sprite2D.new()
+	add_child(icon)
+	icon.texture = icon_texture
+	icon.position = board.position + Vector2(grid_position * Vector2i(Board.TILE_WIDTH, Board.TILE_HEIGHT))
+	icon.position += Vector2(float(Board.TILE_WIDTH), float(Board.TILE_HEIGHT)) * 0.5
+	icon.z_index = 3
+	return icon

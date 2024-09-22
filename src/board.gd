@@ -244,3 +244,9 @@ func get_team_count(team: Piece.Team) -> int:
 
 func unregister_power_plate(plate: PowerPlate) -> void:
 	_power_plates.erase(plate)
+
+
+func grid_to_world(g: Vector2i, center := false) -> Vector2:
+	var p := position + Vector2(g) * Vector2(Board.TILE_WIDTH, Board.TILE_HEIGHT)
+	p += Vector2(Board.TILE_WIDTH, Board.TILE_HEIGHT) * 0.5 if center else Vector2.ZERO
+	return p

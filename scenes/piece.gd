@@ -148,7 +148,7 @@ var _is_moving := false:
 @onready var _particles_smoke_0 = $ParticlesSmoke0
 @onready var _particles_smoke_1 = $ParticlesSmoke1
 @onready var _power_hint_possess := $Sprite2D/PowerHintPossess
-@onready var _power_hint_archery := $Shadow/PowerHintArchery
+@onready var _power_hint_archery := $Sprite2D/PowerHintArchery
 
 
 func _enter_tree() -> void:
@@ -222,7 +222,7 @@ func _on_land() -> void:
 		return
 	
 	var p := board.get_power_plate(grid_position)
-	if p != null:
+	if p != null and not has_power(p.power):
 		add_power(p.power)
 		p.queue_free()
 	
@@ -628,6 +628,9 @@ func kill() -> void:
 	
 	var spm: Callable = func(x: float): _power_hint_possess.material.set_shader_parameter(&"ball_size", x)
 	
+	powers = []
+	_update_sprite()
+	
 	var tween := get_tree().create_tween().set_parallel(true)
 	tween.tween_callback(_shadow.hide)
 	tween.tween_callback(_direction_hint.hide)
@@ -649,6 +652,10 @@ func kill() -> void:
 
 func add_power(power: Power) -> void:
 	powers.push_back(power)
+
+
+func remove_power(power: Power) -> void:
+	powers.erase(power)
 
 
 func has_power(power: Power) -> bool:
