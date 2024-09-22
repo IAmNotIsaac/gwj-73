@@ -13,7 +13,6 @@ var _controllers: Array[Controller] = []
 var _speakers: Array[Speaker] = []
 var _camera_controller: CameraController
 var _turn_manager: TurnManager
-var _capture_effect: AudioEffectCapture
 
 
 func _ready() -> void:

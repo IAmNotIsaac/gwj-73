@@ -45,10 +45,9 @@ func _ready() -> void:
 	tween.tween_property(_player, ^"volume_db", 0.0, 1.0)
 
 
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
 	if Engine.is_editor_hint():
 		return
-		
 	
 	var a := _get_amplitude()
 	var s := clampf(a + 1.0, 1.0, 1.2 + randf() * 0.1)

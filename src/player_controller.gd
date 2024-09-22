@@ -119,11 +119,11 @@ func _on_cutscene_ended() -> void:
 	_reason_show_selection_hint -= _REASON_CUTSCENE
 
 
-func _on_mouse_entered(board: Board) -> void:
+func _on_mouse_entered(_board: Board) -> void:
 	_reason_show_selection_hint += _REASON_HOVER_BOARD
 
 
-func _on_mouse_exited(board: Board) -> void:
+func _on_mouse_exited(_board: Board) -> void:
 	_reason_show_selection_hint -= _REASON_HOVER_BOARD
 
 

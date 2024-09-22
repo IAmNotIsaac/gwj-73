@@ -104,13 +104,13 @@ func _update_size() -> void:
 	_gradient.size = (size + Vector2i(2, 2)) * Vector2i(TILE_WIDTH, TILE_HEIGHT)
 
 
-func _on_clicked(button_index: MouseButton, click_position: Vector2) -> void:
+func _on_clicked(button_index: MouseButton, _click_position: Vector2) -> void:
 	var p := get_global_mouse_position() - position
 	var g := Vector2i(p / Vector2(TILE_WIDTH, TILE_HEIGHT))
 	tile_clicked.emit(button_index, g)
 
 
-func _on_mouse_moved(mouse_position: Vector2) -> void:
+func _on_mouse_moved(_mouse_position: Vector2) -> void:
 	var p := get_global_mouse_position() - position
 	var g := Vector2i(p / Vector2(TILE_WIDTH, TILE_HEIGHT))
 	mouse_moved.emit(g)
