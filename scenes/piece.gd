@@ -164,6 +164,7 @@ var _is_moving := false:
 @onready var _particles_smoke_1 = $ParticlesSmoke1
 @onready var _power_hint_possess := $Sprite2D/PowerHintPossess
 @onready var _power_hint_archery := $Sprite2D/PowerHintArchery
+@onready var _power_hint_ambhammer := $Sprite2D/PowerHintAmbhammer
 
 
 func _enter_tree() -> void:
@@ -231,6 +232,7 @@ func _update_sprite() -> void:
 					.set_delay(1.0)
 	
 	_power_hint_archery.visible = has_power(Power.ARCHERY)
+	_power_hint_ambhammer.visible = has_power(Power.AMBHAMMER)
 
 
 func _on_land() -> void:

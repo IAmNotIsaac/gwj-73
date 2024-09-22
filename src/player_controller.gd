@@ -93,7 +93,7 @@ func _get_available_move_count() -> int:
 	var moves := 0
 	
 	var pieces = get_tree().get_nodes_in_group(&"pieces")
-	var my_pieces = pieces.filter(func(p): return p.team == get_team())
+	var my_pieces = pieces.filter(func(p): return p.team == get_team() and p not in _handled_pieces)
 	
 	for p: Piece in my_pieces:
 		moves += len(p.get_movable_interfaces())
@@ -282,13 +282,6 @@ func _handle_click_move(
 		selected_piece.mark_immovable()
 		_camera_controller.set_position(selected_piece.position)
 	
-	elif grid_position in possessable_positions:
-		_move_count += 1
-		selected_piece.convert_piece(grid_position)
-		_camera_controller.set_position(new_selected_piece.position)
-		_camera_controller.set_zoom(_ZOOM_SELECTED)
-		selected_piece.kill()
-	
 	elif grid_position in archery_positions:
 		_move_count += 1
 		var arrow := _ARROW.instantiate()
@@ -297,6 +290,13 @@ func _handle_click_move(
 		add_child(arrow)
 		selected_piece.remove_power(Piece.Power.ARCHERY)
 		new_selected_piece.kill()
+	
+	elif grid_position in possessable_positions:
+		_move_count += 1
+		selected_piece.convert_piece(grid_position)
+		_camera_controller.set_position(new_selected_piece.position)
+		_camera_controller.set_zoom(_ZOOM_SELECTED)
+		selected_piece.kill()
 	
 	elif grid_position in ambhammer_positions:
 		_move_count += 1

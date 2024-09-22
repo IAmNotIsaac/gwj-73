@@ -1,4 +1,4 @@
-[gd_scene load_steps=142 format=3 uid="uid://bhm65qdan0ll2"]
+[gd_scene load_steps=145 format=3 uid="uid://bhm65qdan0ll2"]
 
 [ext_resource type="Script" path="res://scenes/piece.gd" id="1_jfn20"]
 [ext_resource type="Texture2D" uid="uid://bii5gpthli3mv" path="res://assets/textures/shadow.svg" id="2_3o6u8"]
@@ -7,7 +7,9 @@
 [ext_resource type="Texture2D" uid="uid://bcgnsxxh237ht" path="res://assets/textures/particles/smoke0.png" id="4_vbp2o"]
 [ext_resource type="Texture2D" uid="uid://cnyruyfwde54y" path="res://assets/textures/particles/smoke1.png" id="5_u6x3f"]
 [ext_resource type="Texture2D" uid="uid://bxruex01ip6ec" path="res://assets/textures/direction_hint.png" id="6_sflps"]
+[ext_resource type="Texture2D" uid="uid://8u318te88cnj" path="res://assets/textures/gem_arrow.png" id="7_1lhob"]
 [ext_resource type="Shader" path="res://shaders/fire.gdshader" id="7_t6vxi"]
+[ext_resource type="Texture2D" uid="uid://coq7ytqpw12l3" path="res://assets/textures/gem_hammer.png" id="8_ywry4"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_x1slp"]
 atlas = ExtResource("6_sflps")
@@ -972,6 +974,18 @@ shader_parameter/detail = 2
 shader_parameter/scale = 3.0
 shader_parameter/lacunarity = 2.0
 
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_w5s0b"]
+shader = ExtResource("7_t6vxi")
+shader_parameter/fire_color = Color(1, 0.736182, 0.485994, 1)
+shader_parameter/fire_power_factor = 4.58
+shader_parameter/fire_intensity = 1.625
+shader_parameter/fire_start = 2.13
+shader_parameter/ball_size = 1.0
+shader_parameter/roughness = 0.675
+shader_parameter/detail = 2
+shader_parameter/scale = 2.0
+shader_parameter/lacunarity = 2.0
+
 [sub_resource type="Curve" id="Curve_aoy1r"]
 _data = [Vector2(0, 0.5), 0.0, 0.0, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
 point_count = 2
@@ -988,7 +1002,7 @@ texture_filter = 1
 position = Vector2(0, -24)
 sprite_frames = SubResource("SpriteFrames_riloh")
 animation = &"0_w"
-frame_progress = 0.685207
+frame_progress = 0.206124
 
 [node name="Shadow" type="Sprite2D" parent="."]
 texture = ExtResource("2_3o6u8")
@@ -1012,12 +1026,32 @@ scale = Vector2(5, 5)
 texture = ExtResource("4_mrg1g")
 
 [node name="PowerHintArchery" type="Sprite2D" parent="Sprite2D"]
-visible = false
 material = SubResource("ShaderMaterial_j7rc2")
 position = Vector2(-24, -88)
 rotation = 1.5708
 scale = Vector2(3, 3)
 texture = ExtResource("4_mrg1g")
+
+[node name="Sprite2D" type="Sprite2D" parent="Sprite2D/PowerHintArchery"]
+show_behind_parent = true
+position = Vector2(10.165, 0)
+rotation = 2.35619
+scale = Vector2(0.06, 0.06)
+texture = ExtResource("7_1lhob")
+
+[node name="PowerHintAmbhammer" type="Sprite2D" parent="Sprite2D"]
+material = SubResource("ShaderMaterial_w5s0b")
+position = Vector2(24, -88)
+rotation = 1.5708
+scale = Vector2(3, 3)
+texture = ExtResource("4_mrg1g")
+
+[node name="Sprite2D" type="Sprite2D" parent="Sprite2D/PowerHintAmbhammer"]
+show_behind_parent = true
+position = Vector2(10.165, 0)
+rotation = 4.71239
+scale = Vector2(0.07, 0.07)
+texture = ExtResource("8_ywry4")
 
 [node name="ParticlesSmoke0" type="CPUParticles2D" parent="."]
 emitting = false
