@@ -6,6 +6,7 @@ signal _show_menu
 @onready var _continue_button := %ContinueButton
 @onready var _new_game_button := %NewGameButton
 @onready var _settings_button := %SettingsButton
+@onready var _credits_button := %CreditsButton
 @onready var _quit_button := %QuitButton
 @onready var _settings_panel := %SettingsPanel
 @onready var _credits_panel := %CreditsPanel
@@ -78,6 +79,7 @@ func _disable_buttons() -> void:
 	_continue_button.disabled = true
 	_new_game_button.disabled = true
 	_settings_button.disabled = true
+	_credits_button.disabled = true
 	_quit_button.disabled = true
 
 
@@ -85,6 +87,7 @@ func _enable_buttons() -> void:
 	_continue_button.disabled = false
 	_new_game_button.disabled = false
 	_settings_button.disabled = false
+	_credits_button.disabled = false
 	_quit_button.disabled = false
 
 
