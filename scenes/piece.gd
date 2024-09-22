@@ -180,6 +180,9 @@ func _enter_tree() -> void:
 
 
 func _ready() -> void:
+	_power_hint_possess.material = _power_hint_possess.material.duplicate()
+	_power_hint_archery.material = _power_hint_archery.material.duplicate()
+	_power_hint_ambhammer.material = _power_hint_ambhammer.material.duplicate()
 	_update_position()
 	_update_sprite()
 

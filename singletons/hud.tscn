@@ -906,6 +906,7 @@ layout_mode = 2
 metadata/_tab_index = 4
 
 [node name="VBoxContainer" type="VBoxContainer" parent="GameView/VBoxContainer/AspectRatioContainer/MarginContainer/MiddlePanel/HelpPanel/MarginContainer/TabContainer/Knight"]
+layout_mode = 0
 offset_right = 40.0
 offset_bottom = 40.0
 
@@ -926,6 +927,7 @@ layout_mode = 2
 metadata/_tab_index = 5
 
 [node name="VBoxContainer" type="VBoxContainer" parent="GameView/VBoxContainer/AspectRatioContainer/MarginContainer/MiddlePanel/HelpPanel/MarginContainer/TabContainer/Bishop"]
+layout_mode = 0
 offset_right = 40.0
 offset_bottom = 40.0
 
@@ -950,6 +952,7 @@ layout_mode = 2
 metadata/_tab_index = 6
 
 [node name="VBoxContainer" type="VBoxContainer" parent="GameView/VBoxContainer/AspectRatioContainer/MarginContainer/MiddlePanel/HelpPanel/MarginContainer/TabContainer/Rook"]
+layout_mode = 0
 offset_right = 40.0
 offset_bottom = 40.0
 
@@ -974,6 +977,7 @@ layout_mode = 2
 metadata/_tab_index = 7
 
 [node name="VBoxContainer" type="VBoxContainer" parent="GameView/VBoxContainer/AspectRatioContainer/MarginContainer/MiddlePanel/HelpPanel/MarginContainer/TabContainer/Queen"]
+layout_mode = 0
 offset_right = 40.0
 offset_bottom = 40.0
 
@@ -997,6 +1001,7 @@ layout_mode = 2
 metadata/_tab_index = 8
 
 [node name="VBoxContainer" type="VBoxContainer" parent="GameView/VBoxContainer/AspectRatioContainer/MarginContainer/MiddlePanel/HelpPanel/MarginContainer/TabContainer/King"]
+layout_mode = 0
 offset_right = 40.0
 offset_bottom = 40.0
 

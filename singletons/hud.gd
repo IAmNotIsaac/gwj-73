@@ -248,7 +248,7 @@ func report_turn(team: Piece.Team, do_wipe: bool) -> void:
 			_settings_button.disabled = true
 			_game_over_retry_button.disabled = true
 			_game_over_quit_button.disabled = true
-			_anim.play(&"player_turn_wipe", -1.0, 1.0)
+			_anim.play(&"player_turn_wipe", -1.0, 2.0)
 			await _anim.animation_finished
 			_forfeit_button.disabled = false
 			_settings_button.disabled = false

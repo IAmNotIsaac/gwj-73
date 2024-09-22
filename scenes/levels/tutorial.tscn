@@ -80,6 +80,7 @@ script = ExtResource("7_fu6hh")
 size = Vector2i(4, 5)
 
 [node name="BoardInterface" parent="Board0" node_paths=PackedStringArray("to_board") instance=ExtResource("11_3w3vw")]
+locked = null
 grid_position = Vector2i(3, 0)
 to_board = NodePath("../../Board1")
 to_grid_position = Vector2i(3, 3)

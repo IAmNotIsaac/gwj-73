@@ -7,6 +7,7 @@ signal unlocked
 
 const _TIME_COMPREHENSION := 1.0
 
+@export var locked := true
 @export var grid_position: Vector2i:
 	set(v):
 		grid_position = v
@@ -21,7 +22,6 @@ const _TIME_COMPREHENSION := 1.0
 		to_grid_position = v
 		_update_parabola()
 
-var _unlocked := false
 var _world: World
 var _camera_controller: CameraController
 
@@ -45,6 +45,12 @@ func _ready() -> void:
 		_camera_controller = _world.get_camera_controller()
 	
 	_update_parabola()
+	
+	if not locked:
+		for p in _parabola._line.points:
+			_line_back.add_point(p)
+			_line_active.add_point(p)
+			_stars_end.position = p + _parabola.position
 
 
 func _enter_tree() -> void:
@@ -74,9 +80,9 @@ func _update_parabola() -> void:
 
 
 func unlock() -> void:
-	if _unlocked:
+	if not locked:
 		return
-	_unlocked = true
+	locked = false
 	unlocked.emit()
 	
 	_stars_begin.emitting = true
@@ -100,7 +106,7 @@ func unlock() -> void:
 
 
 func is_locked() -> bool:
-	return not _unlocked
+	return locked
 
 
 func play_use_sound() -> void:

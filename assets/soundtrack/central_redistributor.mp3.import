@@ -12,7 +12,7 @@ dest_files=["res://.godot/imported/central_redistributor.mp3-22fc09e4a8a2d090100
 
 [params]
 
-loop=false
+loop=true
 loop_offset=0
 bpm=0
 beat_count=0

@@ -16,6 +16,7 @@ var _turn_manager: TurnManager
 
 
 func _ready() -> void:
+	y_sort_enabled = true
 	test_mode = self == get_tree().current_scene
 	
 	var tl := Vector2.INF

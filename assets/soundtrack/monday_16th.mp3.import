@@ -12,7 +12,7 @@ dest_files=["res://.godot/imported/monday_16th.mp3-462fa7b137f23b935ed6b3d664a60
 
 [params]
 
-loop=false
+loop=true
 loop_offset=0
 bpm=0
 beat_count=0

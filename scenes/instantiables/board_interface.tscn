@@ -35,6 +35,7 @@ colors = PackedColorArray(1, 0.705422, 0.260538, 1, 0.968209, 0.59038, 0.312806,
 
 [node name="BoardInterface" type="Node"]
 script = ExtResource("1_nn17t")
+locked = null
 
 [node name="LineBack" type="Line2D" parent="."]
 material = SubResource("ShaderMaterial_3iudn")
