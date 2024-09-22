@@ -110,7 +110,7 @@ func _get_available_move_count() -> int:
 	
 	var pieces = get_tree().get_nodes_in_group(&"pieces")
 	var my_pieces = pieces.filter(func(p): return p.team == get_team())
-	var my_pieces_for_use := my_pieces.filter(func(p): return p.board.get_team_count(Piece.Team.BLACK) > 0 and p not in _handled_pieces)
+	var my_pieces_for_use := my_pieces.filter(func(p): return p.board != null and p.board.get_team_count(Piece.Team.BLACK) > 0 and p not in _handled_pieces)
 	
 	for p: Piece in my_pieces_for_use:
 		moves += len(p.get_movable_interfaces())
