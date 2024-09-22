@@ -260,6 +260,7 @@ func _on_land() -> void:
 	
 	var n := board.get_next_level_plate(grid_position)
 	if n != null:
+		n.play_win_sound()
 		Hud.load_level(n.next_level)
 	
 	_update_sprite()

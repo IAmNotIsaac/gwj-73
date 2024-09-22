@@ -12,6 +12,8 @@ extends Node2D
 
 var _board: Board
 
+@onready var _win_sound := $WinSound
+
 
 func _ready() -> void:
 	if get_parent() is not Board:
@@ -28,3 +30,7 @@ func _update_position() -> void:
 		return
 	
 	position = grid_position * Vector2i(Board.TILE_WIDTH, Board.TILE_HEIGHT)
+
+
+func play_win_sound() -> void:
+	_win_sound.play()
