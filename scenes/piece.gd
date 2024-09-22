@@ -115,7 +115,7 @@ const _ANIM_TIME_PIECE_KILL := 1.0
 		_update_sprite()
 @export var grid_position := Vector2i.ZERO:
 	set(v):
-		if board and not Engine.is_editor_hint() and not _suppress_set_grid_position_board_clear:
+		if board and not Engine.is_editor_hint() and not _suppress_board_update:
 			board.clear_piece(grid_position)
 		grid_position = v
 		clear_caches()
@@ -128,7 +128,8 @@ const _ANIM_TIME_PIECE_KILL := 1.0
 @export var board: Board:
 	set(v):
 		if board != null:
-			board.clear_piece(grid_position)
+			if not _suppress_board_update:
+				board.clear_piece(grid_position)
 			board.report_decrease(team)
 			board.state_changed.disconnect(clear_caches)
 		board = v
@@ -157,7 +158,7 @@ var _is_moving := false:
 	set(v):
 		_is_moving = v
 		_update_sprite()
-var _suppress_set_grid_position_board_clear := false
+var _suppress_board_update := false
 
 @onready var _sprite := $Sprite2D
 @onready var _shadow := $Shadow
@@ -205,7 +206,7 @@ func _update_position() -> void:
 		printerr("Piece (%s) is not inside board!" % self)
 		return
 	
-	if not Engine.is_editor_hint():
+	if not Engine.is_editor_hint() and not _suppress_board_update:
 		board.set_piece(grid_position, type, team)
 
 
@@ -611,13 +612,13 @@ func mark_immovable(do_wait := true) -> void:
 
 func move(to: Vector2i, to_board: Board = null) -> void:
 	board.clear_piece(grid_position)
+	_suppress_board_update = true
 	if to_board != null:
 		board = to_board
-	_suppress_set_grid_position_board_clear = true
 	var pi := position
 	grid_position = to
 	var pf := position
-	_suppress_set_grid_position_board_clear = false
+	_suppress_board_update = false
 	
 	_shadow.position = pi - pf
 	_sprite.position = pi - pf

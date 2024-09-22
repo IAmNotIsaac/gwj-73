@@ -145,7 +145,6 @@ layout_mode = 2
 
 [node name="CreditsPanel" type="PanelContainer" parent="CenterContainer"]
 unique_name_in_owner = true
-visible = false
 material = SubResource("ShaderMaterial_0eyg4")
 custom_minimum_size = Vector2(800, 400)
 layout_mode = 2
@@ -280,7 +279,8 @@ text = "Software used:
 - gdfxr (Godot plugin)
 - GNU Image Manipulation Program
 - Inkscape
-- Krita"
+- Krita
+- Blender"
 
 [node name="Developers" type="HBoxContainer" parent="CenterContainer/CreditsPanel/MarginContainer/VBoxContainer"]
 layout_mode = 2
@@ -312,6 +312,11 @@ text = "Sterling Aster"
 layout_mode = 2
 size_flags_horizontal = 6
 text = "Art"
+
+[node name="Label" type="Label" parent="CenterContainer/CreditsPanel/MarginContainer/VBoxContainer/Developers"]
+layout_mode = 2
+text = "Snifferdragon - Game name
+Oliver Astell - A single level"
 
 [node name="Footer" type="HBoxContainer" parent="CenterContainer/CreditsPanel/MarginContainer/VBoxContainer"]
 layout_mode = 2
