@@ -2,12 +2,15 @@ class_name AIController
 extends Controller
 
 
+@export var moves_per_turn := 999
+
 const _TIME_COMPREHENSION := 1.0
 const _ZOOM := 0.9
 
 var _world: World
 var _camera_controller: CameraController
 var _move_count := 0
+var _handled_pieces: Array[Piece] = []
 
 
 func _ready() -> void:
@@ -21,6 +24,7 @@ func _ready() -> void:
 
 func _turn_begun() -> void:
 	_move_count = 0
+	_handled_pieces = []
 	var regarded_pieces := 0
 	
 	for board in _world.get_boards():
@@ -29,13 +33,17 @@ func _turn_begun() -> void:
 		if pieces.is_empty():
 			continue
 		
-		var my_pieces = pieces.filter(func(p): return p.team == get_team())
+		var my_pieces = pieces.filter(func(p): return p.team == get_team() and p not in _handled_pieces)
 		var enemy_pieces = pieces.filter(func(p): return Piece.can_team_strike_team(get_team(), p.team))
 		
 		if enemy_pieces.is_empty():
 			continue
 		
 		for my_piece: Piece in my_pieces:
+			if _move_count >= moves_per_turn:
+				break
+			
+			_handled_pieces.push_back(my_piece)
 			regarded_pieces += 1
 			_camera_controller.follow(my_piece)
 			_camera_controller.set_zoom(_ZOOM)
@@ -100,7 +108,7 @@ func _get_available_move_count() -> int:
 	
 	var pieces = get_tree().get_nodes_in_group(&"pieces")
 	var my_pieces = pieces.filter(func(p): return p.team == get_team())
-	var my_pieces_for_use := my_pieces.filter(func(p): return p.board.get_team_count(Piece.Team.BLACK) > 0)
+	var my_pieces_for_use := my_pieces.filter(func(p): return p.board.get_team_count(Piece.Team.BLACK) > 0 and p not in _handled_pieces)
 	
 	for p: Piece in my_pieces:
 		moves += len(p.get_movable_interfaces())
