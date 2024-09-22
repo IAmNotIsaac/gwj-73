@@ -675,6 +675,7 @@ func convert_piece(to: Vector2i, to_board: Board = null) -> void:
 		.set_ease(Tween.EASE_OUT)
 	tween.tween_method(spm, 1.0, 0.0, anim_time * 0.5)
 	tween.tween_property(piece, ^"team", team, 0.0)
+	tween.tween_callback(_possess_sound.play)
 	tween.set_parallel(true)
 	tween.tween_property(piece._particles_smoke_0, ^"emitting", true, 0.0)
 	tween.tween_property(piece._particles_smoke_1, ^"emitting", true, 0.0)
