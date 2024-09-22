@@ -115,8 +115,8 @@ const _ANIM_TIME_PIECE_KILL := 1.0
 		_update_sprite()
 @export var grid_position := Vector2i.ZERO:
 	set(v):
-		#if board and not Engine.is_editor_hint():
-			#board.clear_piece(grid_position)
+		if board and not Engine.is_editor_hint():
+			board.clear_piece(grid_position)
 		grid_position = v
 		clear_caches()
 		_update_sprite()
@@ -128,6 +128,7 @@ const _ANIM_TIME_PIECE_KILL := 1.0
 @export var board: Board:
 	set(v):
 		if board != null:
+			board.clear_piece(grid_position)
 			board.report_decrease(team)
 			board.state_changed.disconnect(clear_caches)
 		board = v
