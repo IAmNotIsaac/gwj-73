@@ -1110,6 +1110,7 @@ bus = &"SFX"
 [node name="FireSound" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("14_ha3ea")
 volume_db = -10.0
+stream_paused = true
 max_distance = 100.0
 bus = &"SFX"
 playback_type = 1
