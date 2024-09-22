@@ -35,7 +35,10 @@ func _process(delta: float) -> void:
 		var pan := mp * Settings.camera_pan_factor
 		_camera_position = _follow_node.global_position if _follow_node != null else _camera_position
 		camera.position = _camera_position + pan
-		camera.zoom = camera.zoom.lerp(Vector2.ONE * _camera_zoom, 0.25)
+		if Settings.camera_zoom:
+			camera.zoom = camera.zoom.lerp(Vector2.ONE * _camera_zoom, 0.25)
+		else:
+			camera.zoom = camera.zoom.lerp(Vector2.ONE, 0.25)
 
 
 func settings(position: Vector2, zoom: float, free: bool) -> void:

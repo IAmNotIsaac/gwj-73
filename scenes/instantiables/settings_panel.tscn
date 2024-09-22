@@ -204,6 +204,29 @@ max_value = 50.0
 step = 5.0
 value = 25.0
 
+[node name="Zoom" type="HBoxContainer" parent="VBoxContainer/Camera"]
+layout_mode = 2
+
+[node name="Bullet" type="TextureRect" parent="VBoxContainer/Camera/Zoom"]
+modulate = Color(0.615686, 0.615686, 0.615686, 1)
+layout_mode = 2
+size_flags_vertical = 4
+texture = ExtResource("3_rgrkp")
+
+[node name="Label" type="Label" parent="VBoxContainer/Camera/Zoom"]
+custom_minimum_size = Vector2(64, 0)
+layout_mode = 2
+text = "Zoom"
+
+[node name="ValueHint" type="Label" parent="VBoxContainer/Camera/Zoom"]
+custom_minimum_size = Vector2(42, 0)
+layout_mode = 2
+text = "ON"
+
+[node name="CheckButton" type="CheckButton" parent="VBoxContainer/Camera/Zoom"]
+layout_mode = 2
+button_pressed = true
+
 [node name="UpControl" type="HBoxContainer" parent="VBoxContainer/Camera"]
 layout_mode = 2
 
@@ -345,6 +368,7 @@ text = "Reset"
 [connection signal="value_changed" from="VBoxContainer/Sound/Effects/HSlider" to="." method="_on_sound_effects_slider_value_changed"]
 [connection signal="value_changed" from="VBoxContainer/Camera/Speed/HSlider" to="." method="_on_camera_speed_slider_value_changed"]
 [connection signal="value_changed" from="VBoxContainer/Camera/Pan/HSlider" to="." method="_on_camera_pan_slider_value_changed"]
+[connection signal="toggled" from="VBoxContainer/Camera/Zoom/CheckButton" to="." method="_on_check_button_toggled"]
 [connection signal="pressed" from="VBoxContainer/Camera/UpControl/ReassignButton" to="." method="_on_up_control_button_pressed"]
 [connection signal="pressed" from="VBoxContainer/Camera/UpControl/ResetButton" to="." method="_on_up_control_reset_button_pressed"]
 [connection signal="pressed" from="VBoxContainer/Camera/DownControl/ReassignButton" to="." method="_on_down_control_button_pressed"]

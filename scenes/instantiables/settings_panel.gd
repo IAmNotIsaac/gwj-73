@@ -24,6 +24,7 @@ var _initial_input_move_right := InputMap.action_get_events(&"move_right")[0].du
 @onready var _sound_effects_vh := %Sound/Effects/ValueHint
 @onready var _camera_speed_vh := %Camera/Speed/ValueHint
 @onready var _camera_pan_vh := %Camera/Pan/ValueHint
+@onready var _camera_zoom_vh := %Camera/Zoom/ValueHint
 @onready var _camera_control_up_vh := %Camera/UpControl/ValueHint
 @onready var _camera_control_down_vh := %Camera/DownControl/ValueHint
 @onready var _camera_control_left_vh := %Camera/LeftControl/ValueHint
@@ -64,6 +65,11 @@ func _on_camera_speed_slider_value_changed(value: float) -> void:
 func _on_camera_pan_slider_value_changed(value: float) -> void:
 	_camera_pan_vh.text = str(int(value / _camera_pan_slider.max_value * 100.0)) + "%"
 	Settings.camera_pan_factor = value
+
+
+func _on_check_button_toggled(toggled_on: bool) -> void:
+	_camera_zoom_vh.text = "ON" if toggled_on else "OFF"
+	Settings.camera_zoom = toggled_on
 
 
 func _on_up_control_button_pressed() -> void:

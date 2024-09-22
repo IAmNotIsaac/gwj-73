@@ -15,6 +15,7 @@ var volume_sfx := 1.0:
 		_update_buses()
 var camera_speed := 500.0
 var camera_pan_factor := 25.0
+var camera_zoom := true
 
 
 func _enter_tree() -> void:
@@ -52,6 +53,7 @@ func save_to_file() -> void:
 		&"volume_sfx": volume_sfx,
 		&"camera_speed": camera_speed,
 		&"camera_pan_factor": camera_pan_factor,
+		&"camera_zoom": camera_zoom
 	})
 	
 	var file := FileAccess.open("user://settings/settings.json", FileAccess.WRITE)
@@ -74,11 +76,12 @@ func load_from_file() -> void:
 		printerr("Something went wrong when trying to parse data for settings file '%s'" % file.get_path_absolute())
 		return
 	
-	volume_master = json.volume_master
-	volume_bgm = json.volume_bgm
-	volume_sfx = json.volume_sfx
-	camera_speed = json.camera_speed
-	camera_pan_factor = json.camera_pan_factor
+	volume_master = _load_setting(json, &"volume_master", volume_master)
+	volume_bgm = _load_setting(json, &"volume_bgm", volume_bgm)
+	volume_sfx = _load_setting(json, &"volume_sfx", volume_sfx)
+	camera_speed = _load_setting(json, &"camera_speed", camera_speed)
+	camera_pan_factor = _load_setting(json, &"camera_pan_factor", camera_pan_factor)
+	camera_zoom = _load_setting(json, &"camera_zoom", camera_zoom)
 	
 	InputMap.action_erase_events(&"move_up")
 	InputMap.action_erase_events(&"move_down")
@@ -91,3 +94,9 @@ func load_from_file() -> void:
 	InputMap.action_add_event(&"move_right", load("user://settings/event_move_right.tres"))
 	
 	print("LOADED SETTINGS FROM FILE '%s'" % file.get_path_absolute())
+
+
+func _load_setting(json: Dictionary, setting_name: String, default: Variant) -> Variant:
+	if json.has(setting_name):
+		return json[setting_name]
+	return default
