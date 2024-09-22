@@ -40,6 +40,9 @@ func next_turn() -> void:
 	_turn_idx = wrapi(_turn_idx + 1, 0, len(_controllers))
 	
 	var next := _controllers[_turn_idx]
+	if next.get_available_move_count() == 0:
+		next_turn.call_deferred()
+		return
 	next.begin_turn()
 	
 	var available_move_count := next.get_available_move_count()
