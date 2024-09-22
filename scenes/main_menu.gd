@@ -26,7 +26,7 @@ func _ready() -> void:
 
 
 func _input(event: InputEvent) -> void:
-	if event is InputEventKey and Progress.play_count > 0:
+	if event is InputEventKey and Progress.play_count > 1:
 		_show_menu.emit()
 		_intro_sequence.skip_intro0()
 
