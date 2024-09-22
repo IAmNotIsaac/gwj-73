@@ -138,7 +138,7 @@ func _on_tile_clicked(button_index: MouseButton, grid_position: Vector2i, board:
 		_click_func.call(button_index, grid_position, board)
 
 
-func _handle_click_root(button_index: MouseButton, grid_position: Vector2i, board: Board) -> void:
+func _handle_click_root(_button_index: MouseButton, grid_position: Vector2i, board: Board) -> void:
 	var selected_piece: Piece = board.get_piece(grid_position)
 	if selected_piece == null:
 		return
