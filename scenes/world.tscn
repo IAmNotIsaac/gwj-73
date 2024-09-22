@@ -51,9 +51,15 @@ position = Vector2(64, 96)
 grid_position = Vector2i(1, 2)
 
 [node name="Piece" parent="." node_paths=PackedStringArray("board") instance=ExtResource("1_k4efd")]
-position = Vector2(352, 160)
+position = Vector2(288, 160)
 direction = 3
-grid_position = Vector2i(4, 1)
+grid_position = Vector2i(3, 1)
+board = NodePath("../Board")
+
+[node name="Piece2" parent="." node_paths=PackedStringArray("board") instance=ExtResource("1_k4efd")]
+position = Vector2(288, 208)
+direction = 3
+grid_position = Vector2i(3, 2)
 board = NodePath("../Board")
 
 [node name="Piece6" parent="." node_paths=PackedStringArray("board") instance=ExtResource("1_k4efd")]

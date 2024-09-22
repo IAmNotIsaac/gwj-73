@@ -190,8 +190,9 @@ func _update_sprite() -> void:
 	if not is_node_ready():
 		await ready
 	
-	_sprite.frame_coords.x = clampi(int(type) - 1, 0, 5)
-	_sprite.frame_coords.y = clampi(int(team), 0, 1)
+	_shadow.visible = type != Type.WALL
+	_sprite.frame_coords.x = clampi(int(type) - 1, 0, 6)
+	_sprite.frame_coords.y = clampi(int(team), 0, 2)
 	var c := "w" if (grid_position.x + grid_position.y) % 2 == 0 else "b"
 	_direction_hint.play(str(direction) + "_" + c)
 	_direction_hint.visible = _is_pawn and not _is_moving
