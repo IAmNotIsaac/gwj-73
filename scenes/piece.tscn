@@ -982,16 +982,13 @@ colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 0)
 [node name="Piece" type="Node2D" groups=["pieces"]]
 z_index = 2
 script = ExtResource("1_jfn20")
-team = 2
-type = 7
 
 [node name="DirectionHint" type="AnimatedSprite2D" parent="."]
-visible = false
 texture_filter = 1
 position = Vector2(0, -24)
 sprite_frames = SubResource("SpriteFrames_riloh")
 animation = &"0_w"
-frame_progress = 0.593881
+frame_progress = 0.685207
 
 [node name="Shadow" type="Sprite2D" parent="."]
 texture = ExtResource("2_3o6u8")
@@ -1005,9 +1002,9 @@ centered = false
 offset = Vector2(-32, -80)
 hframes = 7
 vframes = 3
-frame = 20
 
 [node name="PowerHintPossess" type="Sprite2D" parent="Sprite2D"]
+visible = false
 material = SubResource("ShaderMaterial_jqf62")
 position = Vector2(-1.13687e-13, -80)
 rotation = 1.5708
@@ -1015,6 +1012,7 @@ scale = Vector2(5, 5)
 texture = ExtResource("4_mrg1g")
 
 [node name="PowerHintArchery" type="Sprite2D" parent="Sprite2D"]
+visible = false
 material = SubResource("ShaderMaterial_j7rc2")
 position = Vector2(-24, -88)
 rotation = 1.5708

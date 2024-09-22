@@ -7,6 +7,7 @@ const _ICON_MOVE_INTERFACE := preload("res://assets/textures/icon_move_interface
 const _ICON_STRIKE_INTERFACE := preload("res://assets/textures/icon_strike_interface.svg")
 const _ICON_POSSESS := preload("res://assets/textures/icon_possess.svg")
 const _ICON_ARCHERY := preload("res://assets/textures/icon_archery.svg")
+const _ICON_AMBHAMMER := preload("res://assets/textures/icon_ambhammer.svg")
 const _SELECTION_HINT := preload("res://scenes/instantiables/selection_hint.tscn")
 const _ARROW := preload("res://scenes/instantiables/arrow.tscn")
 const _ZOOM_DEFAULT := 1.0
@@ -143,6 +144,7 @@ func _handle_click_root(button_index: MouseButton, grid_position: Vector2i, boar
 	var strikeable_positions := selected_piece.get_strikeable_positions()
 	var possessable_positions := selected_piece.get_possessable_positions()
 	var archery_positions := selected_piece.get_archery_positions()
+	var ambhammer_positions := selected_piece.get_ambhammer_positions()
 	var movable_interfaces := selected_piece.get_movable_interfaces()
 	var strikeable_interfaces := selected_piece.get_strikeable_interfaces()
 	var possessable_interfaces := selected_piece.get_possessable_interfaces()
@@ -153,6 +155,7 @@ func _handle_click_root(button_index: MouseButton, grid_position: Vector2i, boar
 		strikeable_positions,
 		possessable_positions,
 		archery_positions,
+		ambhammer_positions,
 		movable_interfaces,
 		strikeable_interfaces,
 		possessable_interfaces,
@@ -206,6 +209,12 @@ func _handle_click_root(button_index: MouseButton, grid_position: Vector2i, boar
 		top_left = top_left.min(icon.position)
 		bot_right = bot_right.max(icon.position)
 	
+	for p in ambhammer_positions:
+		var icon := _create_icon(board, p, _ICON_AMBHAMMER)
+		icons.push_back(icon)
+		top_left = top_left.min(icon.position)
+		bot_right = bot_right.max(icon.position)
+	
 	top_left -= Vector2.ONE * 64.0
 	bot_right += Vector2.ONE * 64.0
 	var spread := bot_right - top_left
@@ -225,6 +234,7 @@ func _handle_click_move(
 		strikeable_positions: Array[Vector2i],
 		possessable_positions: Array[Vector2i],
 		archery_positions: Array[Vector2i],
+		ambhammer_positions: Array[Vector2i],
 		movable_interfaces: Array[BoardInterface],
 		strikeable_interfaces: Array[BoardInterface],
 		possessable_interfaces: Array[BoardInterface],
@@ -287,6 +297,14 @@ func _handle_click_move(
 		add_child(arrow)
 		selected_piece.remove_power(Piece.Power.ARCHERY)
 		new_selected_piece.kill()
+	
+	elif grid_position in ambhammer_positions:
+		_move_count += 1
+		#var ambhammer := _AMBHAMMER.instantiate()
+		#ambhammer.position = board.grid_to_world(grid_position)
+		#add_child(ambhammer)
+		selected_piece.remove_power(Piece.Power.AMBHAMMER)
+		new_selected_piece.team = get_team()
 	
 	for icon in icons:
 		icon.queue_free()

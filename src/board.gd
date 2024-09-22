@@ -177,6 +177,14 @@ func is_piece_strikeable(grid_position: Vector2i, striker_team: Piece.Team) -> b
 	return Piece.can_team_strike_team(striker_team, victim_team)
 
 
+func is_piece_neutral(grid_position: Vector2i) -> bool:
+	if not is_in_board(grid_position):
+		return false
+	if get_piece_type(grid_position) in [0, Piece.Type.WALL]:
+		return false
+	return true
+
+
 func get_interface(grid_position: Vector2i) -> BoardInterface:
 	for interface in _interfaces:
 		if interface.grid_position == grid_position:

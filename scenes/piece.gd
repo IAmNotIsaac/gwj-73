@@ -23,6 +23,7 @@ enum Type {
 enum Power {
 	POSSESS,
 	ARCHERY,
+	AMBHAMMER,
 }
 
 const _DELTAS_KNIGHT: Array[Vector2i] = [
@@ -72,11 +73,23 @@ const _DELTAS_ARCHERY: Array[Vector2i] = [
 	Vector2i(-1, 0),
 ]
 
+const _DELTAS_AMBHAMMER: Array[Vector2i] = [
+	Vector2i(-1, -1),
+	Vector2i(0, -1),
+	Vector2i(1, -1),
+	Vector2i(1, 0),
+	Vector2i(1, 1),
+	Vector2i(0, 1),
+	Vector2i(-1, 1),
+	Vector2i(-1, 0),
+]
+
 const _DISTANCE_BISHOP := 7
 const _DISTANCE_ROOK := 7
 const _DISTANCE_QUEEN := 7
 const _DISTANCE_KING := 1
 const _DISTANCE_ARCHERY := 7
+const _DISTANCE_AMBHAMMER := 1
 const _ANIM_TIME_PIECE_MOVE := 0.5
 const _ANIM_TIME_PIECE_KILL := 1.0
 
@@ -133,6 +146,8 @@ var _docache_possessable_positions := false
 var _cache_possessable_positions: Array[Vector2i] = []
 var _docache_archery_positions := false
 var _cache_archery_positions: Array[Vector2i] = []
+var _docache_ambhammer_positions := false
+var _cache_ambhammer_positions: Array[Vector2i] = []
 var _is_pawn := type == Type.PAWN:
 	set(v):
 		_is_pawn = v
@@ -466,6 +481,30 @@ func get_archery_positions() -> Array[Vector2i]:
 	return _cache_archery_positions
 
 
+func get_ambhammer_positions() -> Array[Vector2i]:
+	if board == null:
+		return []
+	
+	if not has_power(Power.AMBHAMMER):
+		return []
+	
+	if _docache_ambhammer_positions:
+		return _cache_ambhammer_positions
+	
+	_cache_ambhammer_positions = []
+	
+	for d in _DELTAS_AMBHAMMER:
+		for i in _DISTANCE_AMBHAMMER:
+			var p: Vector2i = grid_position + d * (i + 1)
+			if board.is_piece_neutral(p):
+				_cache_ambhammer_positions.push_back(p)
+				break
+			elif not board.is_open(p):
+				break
+	
+	return _cache_ambhammer_positions
+
+
 func get_movable_interfaces() -> Array[BoardInterface]:
 	if board == null:
 		return []
@@ -653,10 +692,12 @@ func kill() -> void:
 
 func add_power(power: Power) -> void:
 	powers.push_back(power)
+	_update_sprite()
 
 
 func remove_power(power: Power) -> void:
 	powers.erase(power)
+	_update_sprite()
 
 
 func has_power(power: Power) -> bool:
