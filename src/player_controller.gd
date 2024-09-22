@@ -327,7 +327,6 @@ func _handle_click_move(
 	_click_func = _handle_click_root
 	
 	_camera_controller.set_position(board.position + Vector2(grid_position) * Vector2(Board.TILE_WIDTH, Board.TILE_HEIGHT) + Vector2(Board.TILE_WIDTH, Board.TILE_HEIGHT) * 0.5)
-	await get_tree().create_timer(_TIME_COMPREHENSION).timeout
 	_camera_controller.reset_zoom()
 	_camera_controller.set_free(true)
 	
