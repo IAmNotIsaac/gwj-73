@@ -79,6 +79,7 @@ repeat_times = 5
 texture = ExtResource("5_nba2r")
 
 [node name="Crowns" type="Node2D" parent="."]
+visible = false
 
 [node name="Back" type="Parallax2D" parent="Crowns"]
 repeat_size = Vector2(512, 512)

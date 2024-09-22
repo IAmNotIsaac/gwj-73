@@ -21,6 +21,10 @@ enum Type {
 @onready var _crowns := $Crowns
 
 
+func _ready() -> void:
+	_update_background()
+
+
 func _update_background() -> void:
 	for child in get_children():
 		child.hide()
