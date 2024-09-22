@@ -1,10 +1,12 @@
-[gd_scene load_steps=6 format=3 uid="uid://cgut83635k6rj"]
+[gd_scene load_steps=8 format=3 uid="uid://cgut83635k6rj"]
 
 [ext_resource type="Script" path="res://scenes/instantiables/background.gd" id="1_3chxd"]
 [ext_resource type="Texture2D" uid="uid://dt51bfep5unc6" path="res://assets/textures/backgrounds/background_shapes_0.png" id="1_i6wgu"]
 [ext_resource type="Texture2D" uid="uid://bpnf58sr04402" path="res://assets/textures/backgrounds/background_shapes_1.png" id="2_elsta"]
 [ext_resource type="Texture2D" uid="uid://6ptf0vn7cr0q" path="res://assets/textures/backgrounds/background_shapes_2.png" id="3_pbrwm"]
 [ext_resource type="Texture2D" uid="uid://d0pkyxnwtl3la" path="res://assets/textures/backgrounds/starry_space_pattern.png" id="5_nba2r"]
+[ext_resource type="Texture2D" uid="uid://c1sbw7p4ss6yw" path="res://assets/textures/backgrounds/crosshatch.png" id="6_a2bll"]
+[ext_resource type="Texture2D" uid="uid://hcqlubms1d5w" path="res://assets/textures/backgrounds/crowns.png" id="7_v7k2x"]
 
 [node name="Background" type="Node2D"]
 z_index = -1000
@@ -75,3 +77,23 @@ repeat_times = 5
 
 [node name="Sprite2D" type="Sprite2D" parent="Space/Stars"]
 texture = ExtResource("5_nba2r")
+
+[node name="Crowns" type="Node2D" parent="."]
+
+[node name="Back" type="Parallax2D" parent="Crowns"]
+repeat_size = Vector2(512, 512)
+autoscroll = Vector2(10, 10)
+repeat_times = 5
+
+[node name="Sprite2D" type="Sprite2D" parent="Crowns/Back"]
+texture = ExtResource("6_a2bll")
+centered = false
+
+[node name="Crowns" type="Parallax2D" parent="Crowns"]
+repeat_size = Vector2(512, 512)
+autoscroll = Vector2(-10, 10)
+repeat_times = 5
+
+[node name="Sprite2D" type="Sprite2D" parent="Crowns/Crowns"]
+texture = ExtResource("7_v7k2x")
+centered = false

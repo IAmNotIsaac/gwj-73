@@ -1,0 +1,108 @@
+[gd_scene load_steps=13 format=3 uid="uid://br5bbd6s6aa10"]
+
+[ext_resource type="Script" path="res://scenes/world.gd" id="1_f6vbr"]
+[ext_resource type="Script" path="res://src/turn_manager.gd" id="2_3x3pr"]
+[ext_resource type="Script" path="res://src/player_controller.gd" id="3_h3xdh"]
+[ext_resource type="Script" path="res://src/ai_controller.gd" id="4_vgcsm"]
+[ext_resource type="Script" path="res://src/camera_controller.gd" id="5_c6x2j"]
+[ext_resource type="PackedScene" uid="uid://bey5grytf1drn" path="res://scenes/instantiables/level_camera.tscn" id="6_visj8"]
+[ext_resource type="PackedScene" uid="uid://cgut83635k6rj" path="res://scenes/instantiables/background.tscn" id="7_p68gt"]
+[ext_resource type="Script" path="res://src/board.gd" id="8_lf1bg"]
+[ext_resource type="PackedScene" uid="uid://bhm65qdan0ll2" path="res://scenes/piece.tscn" id="9_a6acb"]
+[ext_resource type="PackedScene" uid="uid://bck0o028i4kg1" path="res://scenes/instantiables/power_plate.tscn" id="9_xor61"]
+[ext_resource type="PackedScene" uid="uid://drcui3tw3c1k" path="res://scenes/instantiables/board_interface.tscn" id="10_hwiv3"]
+[ext_resource type="PackedScene" uid="uid://b4h06e2esvmcu" path="res://scenes/instantiables/next_level_plate.tscn" id="11_yjsdc"]
+
+[node name="Jimmy" type="Node2D"]
+script = ExtResource("1_f6vbr")
+
+[node name="TurnManager" type="Node" parent="."]
+script = ExtResource("2_3x3pr")
+
+[node name="PlayerController" type="Node" parent="."]
+script = ExtResource("3_h3xdh")
+moves_per_turn = 2
+
+[node name="AIController" type="Node" parent="."]
+script = ExtResource("4_vgcsm")
+
+[node name="CameraController" type="Node" parent="." node_paths=PackedStringArray("camera")]
+script = ExtResource("5_c6x2j")
+camera = NodePath("../LevelCamera")
+
+[node name="LevelCamera" parent="." instance=ExtResource("6_visj8")]
+
+[node name="Background" parent="." instance=ExtResource("7_p68gt")]
+
+[node name="Board" type="Node2D" parent="."]
+z_index = -1
+position = Vector2(-365, -175)
+script = ExtResource("8_lf1bg")
+size = Vector2i(4, 6)
+
+[node name="PowerPlate" parent="Board" instance=ExtResource("9_xor61")]
+position = Vector2(192, 144)
+power = 1
+grid_position = Vector2i(3, 3)
+
+[node name="BoardInterface" parent="Board" node_paths=PackedStringArray("to_board") instance=ExtResource("10_hwiv3")]
+grid_position = Vector2i(3, 0)
+to_board = NodePath("../../Board2")
+to_grid_position = Vector2i(0, 4)
+
+[node name="Board2" type="Node2D" parent="."]
+z_index = -1
+position = Vector2(477, -384)
+script = ExtResource("8_lf1bg")
+size = Vector2i(3, 5)
+
+[node name="NextLevelPlate" parent="Board2" instance=ExtResource("11_yjsdc")]
+position = Vector2(128, 192)
+grid_position = Vector2i(2, 4)
+
+[node name="PowerPlate2" parent="Board2" instance=ExtResource("9_xor61")]
+position = Vector2(64, 144)
+grid_position = Vector2i(1, 3)
+
+[node name="BlackPawn" parent="." node_paths=PackedStringArray("board") instance=ExtResource("9_a6acb")]
+position = Vector2(-205, 113)
+team = 1
+grid_position = Vector2i(2, 5)
+board = NodePath("../Board")
+
+[node name="WallPawn" parent="." node_paths=PackedStringArray("board") instance=ExtResource("9_a6acb")]
+position = Vector2(573, -144)
+team = 2
+type = 7
+grid_position = Vector2i(1, 4)
+board = NodePath("../Board2")
+
+[node name="WhiteRook" parent="." node_paths=PackedStringArray("board") instance=ExtResource("9_a6acb")]
+position = Vector2(573, -288)
+type = 4
+grid_position = Vector2i(1, 1)
+board = NodePath("../Board2")
+
+[node name="WhitePawn2" parent="." node_paths=PackedStringArray("board") instance=ExtResource("9_a6acb")]
+position = Vector2(637, -336)
+direction = 2
+grid_position = Vector2i(2, 0)
+move_count = 1
+board = NodePath("../Board2")
+
+[node name="BlackKnight" parent="." node_paths=PackedStringArray("board") instance=ExtResource("9_a6acb")]
+position = Vector2(-205, -127)
+team = 1
+type = 2
+grid_position = Vector2i(2, 0)
+board = NodePath("../Board")
+
+[node name="WhitePawn" parent="." node_paths=PackedStringArray("board") instance=ExtResource("9_a6acb")]
+position = Vector2(-205, 17)
+grid_position = Vector2i(2, 3)
+board = NodePath("../Board")
+
+[node name="WhiteQueen" parent="." node_paths=PackedStringArray("board") instance=ExtResource("9_a6acb")]
+position = Vector2(-333, -127)
+type = 5
+board = NodePath("../Board")
