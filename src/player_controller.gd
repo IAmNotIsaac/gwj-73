@@ -14,7 +14,7 @@ const _AMBHAMMER := preload("res://scenes/instantiables/ambhammer.tscn")
 const _INTERACT_SOUND := preload("res://assets/sounds_effects/interact.sfxr")
 const _ZOOM_DEFAULT := 1.0
 const _ZOOM_SELECTED := 1.1
-const _TIME_COMPREHENSION := 1.0
+const _TIME_COMPREHENSION := 0.5
 const _REASON_HOVER_BOARD := 1
 const _REASON_MY_TURN := 2
 const _REASON_CUTSCENE := 4
@@ -329,7 +329,7 @@ func _handle_click_move(
 	_camera_controller.set_position(board.position + Vector2(grid_position) * Vector2(Board.TILE_WIDTH, Board.TILE_HEIGHT) + Vector2(Board.TILE_WIDTH, Board.TILE_HEIGHT) * 0.5)
 	_camera_controller.reset_zoom()
 	_camera_controller.set_free(true)
-	await get_tree().create_timer(0.5).timeout
+	await get_tree().create_timer(_TIME_COMPREHENSION).timeout
 	
 	if get_available_move_count() == 0:
 		_pass_turn()
