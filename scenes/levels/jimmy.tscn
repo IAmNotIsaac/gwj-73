@@ -1,7 +1,8 @@
-[gd_scene load_steps=13 format=3 uid="uid://br5bbd6s6aa10"]
+[gd_scene load_steps=15 format=3 uid="uid://e06pdttl40g2"]
 
 [ext_resource type="Script" path="res://scenes/world.gd" id="1_f6vbr"]
 [ext_resource type="Script" path="res://src/turn_manager.gd" id="2_3x3pr"]
+[ext_resource type="AudioStream" uid="uid://dm8mq4gpk5xcc" path="res://assets/soundtrack/napalm_seed.mp3" id="2_wagvs"]
 [ext_resource type="Script" path="res://src/player_controller.gd" id="3_h3xdh"]
 [ext_resource type="Script" path="res://src/ai_controller.gd" id="4_vgcsm"]
 [ext_resource type="Script" path="res://src/camera_controller.gd" id="5_c6x2j"]
@@ -12,9 +13,11 @@
 [ext_resource type="PackedScene" uid="uid://bck0o028i4kg1" path="res://scenes/instantiables/power_plate.tscn" id="9_xor61"]
 [ext_resource type="PackedScene" uid="uid://drcui3tw3c1k" path="res://scenes/instantiables/board_interface.tscn" id="10_hwiv3"]
 [ext_resource type="PackedScene" uid="uid://b4h06e2esvmcu" path="res://scenes/instantiables/next_level_plate.tscn" id="11_yjsdc"]
+[ext_resource type="PackedScene" uid="uid://bn77po1rhcnjk" path="res://scenes/instantiables/speaker.tscn" id="14_0107j"]
 
 [node name="Jimmy" type="Node2D"]
 script = ExtResource("1_f6vbr")
+track = ExtResource("2_wagvs")
 
 [node name="TurnManager" type="Node" parent="."]
 script = ExtResource("2_3x3pr")
@@ -106,3 +109,8 @@ board = NodePath("../Board")
 position = Vector2(-333, -127)
 type = 5
 board = NodePath("../Board")
+
+[node name="Speaker" parent="." instance=ExtResource("14_0107j")]
+
+[node name="Speaker2" parent="." instance=ExtResource("14_0107j")]
+position = Vector2(576, -464)
