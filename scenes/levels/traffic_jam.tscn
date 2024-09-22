@@ -1,0 +1,139 @@
+[gd_scene load_steps=11 format=3 uid="uid://cwi788ci0gxxg"]
+
+[ext_resource type="Script" path="res://scenes/world.gd" id="1_1b4be"]
+[ext_resource type="Script" path="res://src/camera_controller.gd" id="2_snoti"]
+[ext_resource type="Script" path="res://src/player_controller.gd" id="3_hxidu"]
+[ext_resource type="Script" path="res://src/ai_controller.gd" id="4_6v4p8"]
+[ext_resource type="Script" path="res://src/turn_manager.gd" id="5_mioug"]
+[ext_resource type="PackedScene" uid="uid://bey5grytf1drn" path="res://scenes/instantiables/level_camera.tscn" id="6_wjvfx"]
+[ext_resource type="PackedScene" uid="uid://cgut83635k6rj" path="res://scenes/instantiables/background.tscn" id="7_rvfyh"]
+[ext_resource type="Script" path="res://src/board.gd" id="8_2cewp"]
+[ext_resource type="PackedScene" uid="uid://b4h06e2esvmcu" path="res://scenes/instantiables/next_level_plate.tscn" id="10_1ond8"]
+[ext_resource type="PackedScene" uid="uid://bhm65qdan0ll2" path="res://scenes/piece.tscn" id="11_j8ckj"]
+
+[node name="Traffic Jam" type="Node2D"]
+script = ExtResource("1_1b4be")
+
+[node name="CameraController" type="Node" parent="." node_paths=PackedStringArray("camera")]
+script = ExtResource("2_snoti")
+camera = NodePath("../LevelCamera")
+
+[node name="PlayerController" type="Node" parent="."]
+script = ExtResource("3_hxidu")
+
+[node name="AIController" type="Node" parent="."]
+script = ExtResource("4_6v4p8")
+
+[node name="TurnManager" type="Node" parent="."]
+script = ExtResource("5_mioug")
+
+[node name="LevelCamera" parent="." instance=ExtResource("6_wjvfx")]
+position = Vector2(128, 96)
+
+[node name="Background" parent="." instance=ExtResource("7_rvfyh")]
+
+[node name="Board" type="Node2D" parent="."]
+z_index = -1
+script = ExtResource("8_2cewp")
+size = Vector2i(4, 4)
+
+[node name="NextLevelPlate" parent="Board" instance=ExtResource("10_1ond8")]
+position = Vector2(64, 96)
+grid_position = Vector2i(1, 2)
+
+[node name="pawn 1" parent="." node_paths=PackedStringArray("board") instance=ExtResource("11_j8ckj")]
+position = Vector2(96, 48)
+team = 1
+direction = 2
+grid_position = Vector2i(1, 0)
+board = NodePath("../Board")
+
+[node name="pawn 2" parent="." node_paths=PackedStringArray("board") instance=ExtResource("11_j8ckj")]
+position = Vector2(96, 96)
+team = 1
+direction = 1
+grid_position = Vector2i(1, 1)
+board = NodePath("../Board")
+
+[node name="pawn 3" parent="." node_paths=PackedStringArray("board") instance=ExtResource("11_j8ckj")]
+position = Vector2(160, 96)
+team = 1
+grid_position = Vector2i(2, 1)
+board = NodePath("../Board")
+
+[node name="bishop 1" parent="." node_paths=PackedStringArray("board") instance=ExtResource("11_j8ckj")]
+position = Vector2(160, 48)
+team = 1
+type = 3
+grid_position = Vector2i(2, 0)
+board = NodePath("../Board")
+
+[node name="pawn 4" parent="." node_paths=PackedStringArray("board") instance=ExtResource("11_j8ckj")]
+position = Vector2(224, 96)
+team = 1
+direction = 2
+grid_position = Vector2i(3, 1)
+board = NodePath("../Board")
+
+[node name="knight 1" parent="." node_paths=PackedStringArray("board") instance=ExtResource("11_j8ckj")]
+position = Vector2(224, 144)
+team = 1
+type = 2
+grid_position = Vector2i(3, 2)
+board = NodePath("../Board")
+
+[node name="pawn 5" parent="." node_paths=PackedStringArray("board") instance=ExtResource("11_j8ckj")]
+position = Vector2(96, 192)
+team = 1
+direction = 3
+grid_position = Vector2i(1, 3)
+board = NodePath("../Board")
+
+[node name="knight 2" parent="." node_paths=PackedStringArray("board") instance=ExtResource("11_j8ckj")]
+position = Vector2(32, 192)
+team = 1
+type = 2
+grid_position = Vector2i(0, 3)
+board = NodePath("../Board")
+
+[node name="bishop 2" parent="." node_paths=PackedStringArray("board") instance=ExtResource("11_j8ckj")]
+position = Vector2(160, 144)
+team = 1
+type = 3
+grid_position = Vector2i(2, 2)
+board = NodePath("../Board")
+
+[node name="pawn 6" parent="." node_paths=PackedStringArray("board") instance=ExtResource("11_j8ckj")]
+position = Vector2(224, 192)
+team = 1
+direction = 3
+grid_position = Vector2i(3, 3)
+board = NodePath("../Board")
+
+[node name="pawn 7" parent="." node_paths=PackedStringArray("board") instance=ExtResource("11_j8ckj")]
+position = Vector2(160, 192)
+team = 1
+type = 2
+grid_position = Vector2i(2, 3)
+board = NodePath("../Board")
+
+[node name="rook" parent="." node_paths=PackedStringArray("board") instance=ExtResource("11_j8ckj")]
+position = Vector2(32, 96)
+team = 1
+type = 4
+grid_position = Vector2i(0, 1)
+board = NodePath("../Board")
+
+[node name="pawn 8" parent="." node_paths=PackedStringArray("board") instance=ExtResource("11_j8ckj")]
+position = Vector2(32, 144)
+team = 1
+grid_position = Vector2i(0, 2)
+board = NodePath("../Board")
+
+[node name="participation award" parent="." node_paths=PackedStringArray("board") instance=ExtResource("11_j8ckj")]
+position = Vector2(224, 48)
+team = 1
+type = 5
+direction = 3
+grid_position = Vector2i(3, 0)
+board = NodePath("../Board")
