@@ -112,5 +112,5 @@ scale = Vector2(0.333333, 0.333333)
 sprite_frames = SubResource("SpriteFrames_tqr0q")
 animation = &"0"
 autoplay = "default"
-frame_progress = 0.515552
+frame_progress = 0.101992
 centered = false

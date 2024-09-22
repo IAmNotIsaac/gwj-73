@@ -10,6 +10,7 @@ const _ICON_ARCHERY := preload("res://assets/textures/icon_archery.svg")
 const _ICON_AMBHAMMER := preload("res://assets/textures/icon_ambhammer.svg")
 const _SELECTION_HINT := preload("res://scenes/instantiables/selection_hint.tscn")
 const _ARROW := preload("res://scenes/instantiables/arrow.tscn")
+const _AMBHAMMER := preload("res://scenes/instantiables/ambhammer.tscn")
 const _ZOOM_DEFAULT := 1.0
 const _ZOOM_SELECTED := 1.1
 const _TIME_COMPREHENSION := 1.0
@@ -300,11 +301,11 @@ func _handle_click_move(
 	
 	elif grid_position in ambhammer_positions:
 		_move_count += 1
-		#var ambhammer := _AMBHAMMER.instantiate()
-		#ambhammer.position = board.grid_to_world(grid_position)
-		#add_child(ambhammer)
+		var ambhammer := _AMBHAMMER.instantiate()
+		ambhammer.position = board.grid_to_world(grid_position)
+		add_child(ambhammer)
 		selected_piece.remove_power(Piece.Power.AMBHAMMER)
-		new_selected_piece.team = get_team()
+		get_tree().create_timer(0.4).timeout.connect(func(): new_selected_piece.team = get_team())
 	
 	for icon in icons:
 		icon.queue_free()

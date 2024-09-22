@@ -182,7 +182,7 @@ func is_piece_neutral(grid_position: Vector2i) -> bool:
 		return false
 	if get_piece_type(grid_position) in [0, Piece.Type.WALL]:
 		return false
-	return true
+	return get_piece_team(grid_position) == Piece.Team.NEUTRAL
 
 
 func get_interface(grid_position: Vector2i) -> BoardInterface:
