@@ -65,7 +65,7 @@ func _enter_tree() -> void:
 		add_child(_line, false, Node.INTERNAL_MODE_BACK)
 
 
-func _process(delta):
+func _process(_delta: float) -> void:
 	if Engine.is_editor_hint():
 		_update_points()
 
