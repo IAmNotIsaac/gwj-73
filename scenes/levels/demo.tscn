@@ -1,10 +1,11 @@
-[gd_scene load_steps=6 format=3 uid="uid://bwdo5p2xyd06j"]
+[gd_scene load_steps=7 format=3 uid="uid://bwdo5p2xyd06j"]
 
 [ext_resource type="Script" path="res://scenes/world.gd" id="1_4pjgk"]
 [ext_resource type="Script" path="res://src/turn_manager.gd" id="2_of8y6"]
 [ext_resource type="Script" path="res://src/player_controller.gd" id="3_8jshg"]
 [ext_resource type="Script" path="res://src/ai_controller.gd" id="4_hby8j"]
 [ext_resource type="Script" path="res://src/camera_controller.gd" id="5_3cm0k"]
+[ext_resource type="PackedScene" uid="uid://bey5grytf1drn" path="res://scenes/instantiables/level_camera.tscn" id="6_hx6m0"]
 
 [node name="Demo" type="Node2D"]
 script = ExtResource("1_4pjgk")
@@ -21,4 +22,4 @@ script = ExtResource("4_hby8j")
 [node name="CameraController" type="Node" parent="."]
 script = ExtResource("5_3cm0k")
 
-[node name="Camera2D" type="Camera2D" parent="."]
+[node name="LevelCamera" parent="." instance=ExtResource("6_hx6m0")]
