@@ -1,4 +1,4 @@
-[gd_scene load_steps=37 format=3 uid="uid://buhlc6vmq4kta"]
+[gd_scene load_steps=52 format=3 uid="uid://buhlc6vmq4kta"]
 
 [ext_resource type="Texture2D" uid="uid://bpqrmpeodnpum" path="res://assets/textures/frame.png" id="1_6vkef"]
 [ext_resource type="Script" path="res://singletons/hud.gd" id="1_amupb"]
@@ -9,11 +9,25 @@
 [ext_resource type="FontFile" uid="uid://bmwb85xyahi2f" path="res://assets/fonts/bonk/Bonkit.ttf" id="6_p4j86"]
 [ext_resource type="AudioStream" uid="uid://cl3y074h2cc8i" path="res://assets/soundtrack/lullaby.mp3" id="7_6y2b8"]
 [ext_resource type="PackedScene" uid="uid://bhi0cnsm5tmbq" path="res://scenes/instantiables/settings_panel.tscn" id="7_e8c1b"]
+[ext_resource type="Texture2D" uid="uid://dj0e64wv5wo8q" path="res://assets/textures/next_level_tile.png" id="8_6k80e"]
 [ext_resource type="Texture2D" uid="uid://bdf0cww3lbthg" path="res://assets/textures/crossfade.png" id="8_o0c71"]
+[ext_resource type="Texture2D" uid="uid://dirbm1twqn2sg" path="res://assets/textures/thin_frame_purple.png" id="8_tv806"]
 [ext_resource type="Theme" uid="uid://c3d5oegbtblqx" path="res://resources/themes/default_theme.tres" id="9_aenb0"]
+[ext_resource type="Texture2D" uid="uid://cj3wib5i3jff" path="res://assets/textures/help/interface_locked.png" id="9_jsadv"]
 [ext_resource type="Texture2D" uid="uid://csdqi4ek0gt3c" path="res://assets/textures/crossfade_gradient.png" id="10_i1ohp"]
+[ext_resource type="Texture2D" uid="uid://b2c0meehy5ddj" path="res://assets/textures/help/interface_open.png" id="10_k6l1p"]
 [ext_resource type="FontFile" uid="uid://cpd7wgmg0lli1" path="res://assets/fonts/bonk/Bonkoff.TTF" id="11_86d32"]
+[ext_resource type="Texture2D" uid="uid://bn0mssqwxyvjh" path="res://assets/textures/help/hud.png" id="11_kmp36"]
+[ext_resource type="Texture2D" uid="uid://bmlgsi44alpsl" path="res://assets/textures/gem_possession.png" id="13_nthxl"]
+[ext_resource type="Texture2D" uid="uid://8u318te88cnj" path="res://assets/textures/gem_arrow.png" id="14_hh81k"]
 [ext_resource type="Texture2D" uid="uid://dom74xclkgnm1" path="res://assets/textures/frame_silver.png" id="14_o6j3n"]
+[ext_resource type="Texture2D" uid="uid://coq7ytqpw12l3" path="res://assets/textures/gem_hammer.png" id="15_wlq2a"]
+[ext_resource type="Texture2D" uid="uid://curik2w67poq3" path="res://assets/textures/help/pawn.png" id="16_i51dn"]
+[ext_resource type="Texture2D" uid="uid://b10h87t1wsmla" path="res://assets/textures/help/knight.png" id="17_2wqap"]
+[ext_resource type="Texture2D" uid="uid://ddhwcudiko8kc" path="res://assets/textures/help/bishop.png" id="18_2vi3w"]
+[ext_resource type="Texture2D" uid="uid://cgf4646w7qymn" path="res://assets/textures/help/rook.png" id="19_b7wnq"]
+[ext_resource type="Texture2D" uid="uid://dsr88nrwhkixx" path="res://assets/textures/help/queen.png" id="20_0v8rs"]
+[ext_resource type="Texture2D" uid="uid://clsusx2bctkre" path="res://assets/textures/help/king.png" id="21_sk3ni"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_son0n"]
 shader = ExtResource("1_gwte5")
@@ -54,6 +68,13 @@ font_size = 128
 [sub_resource type="LabelSettings" id="LabelSettings_bkyty"]
 font = ExtResource("4_x4ovu")
 font_size = 64
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_yk0lv"]
+texture = ExtResource("8_tv806")
+texture_margin_left = 16.0
+texture_margin_top = 16.0
+texture_margin_right = 16.0
+texture_margin_bottom = 16.0
 
 [sub_resource type="LabelSettings" id="LabelSettings_jgkso"]
 font = ExtResource("6_p4j86")
@@ -646,6 +667,351 @@ unique_name_in_owner = true
 visible = false
 layout_mode = 2
 
+[node name="HelpPanel" type="PanelContainer" parent="GameView/VBoxContainer/AspectRatioContainer/MarginContainer/MiddlePanel"]
+unique_name_in_owner = true
+visible = false
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxTexture_yk0lv")
+
+[node name="MarginContainer" type="MarginContainer" parent="GameView/VBoxContainer/AspectRatioContainer/MarginContainer/MiddlePanel/HelpPanel"]
+layout_mode = 2
+theme_override_constants/margin_left = 16
+theme_override_constants/margin_top = 16
+theme_override_constants/margin_right = 16
+theme_override_constants/margin_bottom = 16
+
+[node name="TabContainer" type="TabContainer" parent="GameView/VBoxContainer/AspectRatioContainer/MarginContainer/MiddlePanel/HelpPanel/MarginContainer"]
+layout_mode = 2
+current_tab = 8
+
+[node name="Goal" type="TabBar" parent="GameView/VBoxContainer/AspectRatioContainer/MarginContainer/MiddlePanel/HelpPanel/MarginContainer/TabContainer"]
+visible = false
+layout_mode = 2
+metadata/_tab_index = 0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="GameView/VBoxContainer/AspectRatioContainer/MarginContainer/MiddlePanel/HelpPanel/MarginContainer/TabContainer/Goal"]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="HBoxContainer" type="HBoxContainer" parent="GameView/VBoxContainer/AspectRatioContainer/MarginContainer/MiddlePanel/HelpPanel/MarginContainer/TabContainer/Goal/VBoxContainer"]
+layout_mode = 2
+
+[node name="Label0" type="Label" parent="GameView/VBoxContainer/AspectRatioContainer/MarginContainer/MiddlePanel/HelpPanel/MarginContainer/TabContainer/Goal/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+text = "In each level,  your goal is to get at least one of your pieces on the golden tile:"
+
+[node name="TextureRect" type="TextureRect" parent="GameView/VBoxContainer/AspectRatioContainer/MarginContainer/MiddlePanel/HelpPanel/MarginContainer/TabContainer/Goal/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+texture = ExtResource("8_6k80e")
+stretch_mode = 2
+
+[node name="Label1" type="Label" parent="GameView/VBoxContainer/AspectRatioContainer/MarginContainer/MiddlePanel/HelpPanel/MarginContainer/TabContainer/Goal/VBoxContainer"]
+layout_mode = 2
+text = "Sometimes it is not immediately reachable. You may have to get to another board to reach it first using an Interface."
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="GameView/VBoxContainer/AspectRatioContainer/MarginContainer/MiddlePanel/HelpPanel/MarginContainer/TabContainer/Goal/VBoxContainer"]
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="GameView/VBoxContainer/AspectRatioContainer/MarginContainer/MiddlePanel/HelpPanel/MarginContainer/TabContainer/Goal/VBoxContainer/HBoxContainer2"]
+layout_mode = 2
+
+[node name="TextureRect" type="TextureRect" parent="GameView/VBoxContainer/AspectRatioContainer/MarginContainer/MiddlePanel/HelpPanel/MarginContainer/TabContainer/Goal/VBoxContainer/HBoxContainer2/VBoxContainer"]
+layout_mode = 2
+texture = ExtResource("9_jsadv")
+
+[node name="Label" type="Label" parent="GameView/VBoxContainer/AspectRatioContainer/MarginContainer/MiddlePanel/HelpPanel/MarginContainer/TabContainer/Goal/VBoxContainer/HBoxContainer2/VBoxContainer"]
+layout_mode = 2
+text = "A locked interface cannot be traversed."
+
+[node name="VBoxContainer2" type="VBoxContainer" parent="GameView/VBoxContainer/AspectRatioContainer/MarginContainer/MiddlePanel/HelpPanel/MarginContainer/TabContainer/Goal/VBoxContainer/HBoxContainer2"]
+layout_mode = 2
+
+[node name="TextureRect" type="TextureRect" parent="GameView/VBoxContainer/AspectRatioContainer/MarginContainer/MiddlePanel/HelpPanel/MarginContainer/TabContainer/Goal/VBoxContainer/HBoxContainer2/VBoxContainer2"]
+layout_mode = 2
+texture = ExtResource("10_k6l1p")
+
+[node name="Label" type="Label" parent="GameView/VBoxContainer/AspectRatioContainer/MarginContainer/MiddlePanel/HelpPanel/MarginContainer/TabContainer/Goal/VBoxContainer/HBoxContainer2/VBoxContainer2"]
+layout_mode = 2
+text = "Destroy all enemies to unlock it!"
+
+[node name="Label" type="Label" parent="GameView/VBoxContainer/AspectRatioContainer/MarginContainer/MiddlePanel/HelpPanel/MarginContainer/TabContainer/Goal/VBoxContainer"]
+layout_mode = 2
+text = "You may be permitted a set number of moves per turn depending on the level. Check the hud to see how many you have!"
+
+[node name="TextureRect" type="TextureRect" parent="GameView/VBoxContainer/AspectRatioContainer/MarginContainer/MiddlePanel/HelpPanel/MarginContainer/TabContainer/Goal/VBoxContainer"]
+layout_mode = 2
+texture = ExtResource("11_kmp36")
+
+[node name="Power-Ups" type="TabBar" parent="GameView/VBoxContainer/AspectRatioContainer/MarginContainer/MiddlePanel/HelpPanel/MarginContainer/TabContainer"]
+visible = false
+layout_mode = 2
+metadata/_tab_index = 1
+
+[node name="VBoxContainer" type="VBoxContainer" parent="GameView/VBoxContainer/AspectRatioContainer/MarginContainer/MiddlePanel/HelpPanel/MarginContainer/TabContainer/Power-Ups"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Label" type="Label" parent="GameView/VBoxContainer/AspectRatioContainer/MarginContainer/MiddlePanel/HelpPanel/MarginContainer/TabContainer/Power-Ups/VBoxContainer"]
+layout_mode = 2
+text = "There are three different types of power-ups:"
+
+[node name="HBoxContainer" type="HBoxContainer" parent="GameView/VBoxContainer/AspectRatioContainer/MarginContainer/MiddlePanel/HelpPanel/MarginContainer/TabContainer/Power-Ups/VBoxContainer"]
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="GameView/VBoxContainer/AspectRatioContainer/MarginContainer/MiddlePanel/HelpPanel/MarginContainer/TabContainer/Power-Ups/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 6
+
+[node name="TextureRect" type="TextureRect" parent="GameView/VBoxContainer/AspectRatioContainer/MarginContainer/MiddlePanel/HelpPanel/MarginContainer/TabContainer/Power-Ups/VBoxContainer/HBoxContainer/VBoxContainer"]
+texture_filter = 1
+layout_mode = 2
+size_flags_horizontal = 4
+texture = ExtResource("13_nthxl")
+stretch_mode = 2
+
+[node name="Label" type="Label" parent="GameView/VBoxContainer/AspectRatioContainer/MarginContainer/MiddlePanel/HelpPanel/MarginContainer/TabContainer/Power-Ups/VBoxContainer/HBoxContainer/VBoxContainer"]
+layout_mode = 2
+text = "Possession"
+horizontal_alignment = 1
+
+[node name="Blurb" type="Label" parent="GameView/VBoxContainer/AspectRatioContainer/MarginContainer/MiddlePanel/HelpPanel/MarginContainer/TabContainer/Power-Ups/VBoxContainer/HBoxContainer/VBoxContainer"]
+layout_mode = 2
+text = "When you have the possession
+power-up on a piece, and that piece
+makes in attack, said attacked piece
+becomes yours.
+
+However, this is at the cost of your
+original attacking piece. Instead, the
+original piece dies and takes with it
+whatever powers you happened to
+pick up along the way.
+
+Use this carefully!"
+
+[node name="VBoxContainer2" type="VBoxContainer" parent="GameView/VBoxContainer/AspectRatioContainer/MarginContainer/MiddlePanel/HelpPanel/MarginContainer/TabContainer/Power-Ups/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 6
+
+[node name="TextureRect" type="TextureRect" parent="GameView/VBoxContainer/AspectRatioContainer/MarginContainer/MiddlePanel/HelpPanel/MarginContainer/TabContainer/Power-Ups/VBoxContainer/HBoxContainer/VBoxContainer2"]
+texture_filter = 1
+layout_mode = 2
+size_flags_horizontal = 4
+texture = ExtResource("14_hh81k")
+
+[node name="Label" type="Label" parent="GameView/VBoxContainer/AspectRatioContainer/MarginContainer/MiddlePanel/HelpPanel/MarginContainer/TabContainer/Power-Ups/VBoxContainer/HBoxContainer/VBoxContainer2"]
+layout_mode = 2
+text = "Archery"
+horizontal_alignment = 1
+
+[node name="Blurb" type="Label" parent="GameView/VBoxContainer/AspectRatioContainer/MarginContainer/MiddlePanel/HelpPanel/MarginContainer/TabContainer/Power-Ups/VBoxContainer/HBoxContainer/VBoxContainer2"]
+layout_mode = 2
+text = "Archery permits the piece of which
+it belongs to to attack like a queen...
+without moving.
+
+This pieces effectively allows
+attacking with a distance, leaving
+no real threat of danger.
+
+Suddenly, the weakest pawns have
+the strongest of queens cowering
+in fear!"
+
+[node name="VBoxContainer3" type="VBoxContainer" parent="GameView/VBoxContainer/AspectRatioContainer/MarginContainer/MiddlePanel/HelpPanel/MarginContainer/TabContainer/Power-Ups/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 6
+
+[node name="TextureRect" type="TextureRect" parent="GameView/VBoxContainer/AspectRatioContainer/MarginContainer/MiddlePanel/HelpPanel/MarginContainer/TabContainer/Power-Ups/VBoxContainer/HBoxContainer/VBoxContainer3"]
+texture_filter = 1
+layout_mode = 2
+size_flags_horizontal = 4
+texture = ExtResource("15_wlq2a")
+stretch_mode = 2
+
+[node name="Label" type="Label" parent="GameView/VBoxContainer/AspectRatioContainer/MarginContainer/MiddlePanel/HelpPanel/MarginContainer/TabContainer/Power-Ups/VBoxContainer/HBoxContainer/VBoxContainer3"]
+layout_mode = 2
+text = "Ambhammer"
+horizontal_alignment = 1
+
+[node name="Blurb" type="Label" parent="GameView/VBoxContainer/AspectRatioContainer/MarginContainer/MiddlePanel/HelpPanel/MarginContainer/TabContainer/Power-Ups/VBoxContainer/HBoxContainer/VBoxContainer3"]
+layout_mode = 2
+text = "This is your key to cracking
+more teammates out of that resin.
+
+Sometimes you're just at a material
+disadvantage and you need a boost.
+Picking up this amber hammer,
+(Ambhammer) you can use it once
+on any amber resin to gain a
+new teammate, and possibly a
+friend for life.
+
+Obviously it's one use. It's made of
+the same stuff you're trying to break."
+
+[node name="AI" type="TabBar" parent="GameView/VBoxContainer/AspectRatioContainer/MarginContainer/MiddlePanel/HelpPanel/MarginContainer/TabContainer"]
+visible = false
+layout_mode = 2
+metadata/_tab_index = 2
+
+[node name="Label" type="Label" parent="GameView/VBoxContainer/AspectRatioContainer/MarginContainer/MiddlePanel/HelpPanel/MarginContainer/TabContainer/AI"]
+layout_mode = 0
+offset_right = 545.0
+offset_bottom = 222.0
+text = "The AI is stupid simple. Its moves can and should be predicted.
+
+Firstly, the AI will always prioritize taking material.
+
+When it cannot take material, it will instead make a move that
+creates the least amount of distance between its piece and one of yours.
+
+The AI does NOT care if it is walking into an obvious trap. For the greater
+good, it will make any sacrifice... even a queen...
+
+The AI cannot use power-ups or interfaces, cannot think ahead and
+cannot remember the past. Outwitting it will not always be easy though!"
+
+[node name="Pawn" type="TabBar" parent="GameView/VBoxContainer/AspectRatioContainer/MarginContainer/MiddlePanel/HelpPanel/MarginContainer/TabContainer"]
+visible = false
+layout_mode = 2
+metadata/_tab_index = 3
+
+[node name="VBoxContainer" type="VBoxContainer" parent="GameView/VBoxContainer/AspectRatioContainer/MarginContainer/MiddlePanel/HelpPanel/MarginContainer/TabContainer/Pawn"]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="Label" type="Label" parent="GameView/VBoxContainer/AspectRatioContainer/MarginContainer/MiddlePanel/HelpPanel/MarginContainer/TabContainer/Pawn/VBoxContainer"]
+layout_mode = 2
+text = "The symbol of the chess board.
+Moments after birth, they chose a direction and have never stopped to think about another.
+On the pawn's opening move, it can optionally move two spaces forward.
+Interestingly, pawns will make an exception when it comes to bloodshed, and prefer to attack diagonally.
+Sorry chess-heads... no en passant!"
+
+[node name="TextureRect" type="TextureRect" parent="GameView/VBoxContainer/AspectRatioContainer/MarginContainer/MiddlePanel/HelpPanel/MarginContainer/TabContainer/Pawn/VBoxContainer"]
+layout_mode = 2
+texture = ExtResource("16_i51dn")
+stretch_mode = 2
+
+[node name="Knight" type="TabBar" parent="GameView/VBoxContainer/AspectRatioContainer/MarginContainer/MiddlePanel/HelpPanel/MarginContainer/TabContainer"]
+visible = false
+layout_mode = 2
+metadata/_tab_index = 4
+
+[node name="VBoxContainer" type="VBoxContainer" parent="GameView/VBoxContainer/AspectRatioContainer/MarginContainer/MiddlePanel/HelpPanel/MarginContainer/TabContainer/Knight"]
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="Label" type="Label" parent="GameView/VBoxContainer/AspectRatioContainer/MarginContainer/MiddlePanel/HelpPanel/MarginContainer/TabContainer/Knight/VBoxContainer"]
+layout_mode = 2
+text = "A valiant piece indeed.
+Unlike most other pieces, it moves in an L-like shape.
+The knight can also pass over walls or other pieces."
+
+[node name="TextureRect" type="TextureRect" parent="GameView/VBoxContainer/AspectRatioContainer/MarginContainer/MiddlePanel/HelpPanel/MarginContainer/TabContainer/Knight/VBoxContainer"]
+layout_mode = 2
+texture = ExtResource("17_2wqap")
+stretch_mode = 2
+
+[node name="Bishop" type="TabBar" parent="GameView/VBoxContainer/AspectRatioContainer/MarginContainer/MiddlePanel/HelpPanel/MarginContainer/TabContainer"]
+visible = false
+layout_mode = 2
+metadata/_tab_index = 5
+
+[node name="VBoxContainer" type="VBoxContainer" parent="GameView/VBoxContainer/AspectRatioContainer/MarginContainer/MiddlePanel/HelpPanel/MarginContainer/TabContainer/Bishop"]
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="Label" type="Label" parent="GameView/VBoxContainer/AspectRatioContainer/MarginContainer/MiddlePanel/HelpPanel/MarginContainer/TabContainer/Bishop/VBoxContainer"]
+layout_mode = 2
+text = "The Bishop is a sneaky and diagonally-obssessive KILLER.
+Alas, it is fated to roam the same colour of tile of which it was born on.
+That is unless it can sneak on another via an Interface..."
+
+[node name="TextureRect" type="TextureRect" parent="GameView/VBoxContainer/AspectRatioContainer/MarginContainer/MiddlePanel/HelpPanel/MarginContainer/TabContainer/Bishop/VBoxContainer"]
+custom_minimum_size = Vector2(500, 0)
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 0
+texture = ExtResource("18_2vi3w")
+expand_mode = 4
+stretch_mode = 4
+
+[node name="Rook" type="TabBar" parent="GameView/VBoxContainer/AspectRatioContainer/MarginContainer/MiddlePanel/HelpPanel/MarginContainer/TabContainer"]
+visible = false
+layout_mode = 2
+metadata/_tab_index = 6
+
+[node name="VBoxContainer" type="VBoxContainer" parent="GameView/VBoxContainer/AspectRatioContainer/MarginContainer/MiddlePanel/HelpPanel/MarginContainer/TabContainer/Rook"]
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="Label" type="Label" parent="GameView/VBoxContainer/AspectRatioContainer/MarginContainer/MiddlePanel/HelpPanel/MarginContainer/TabContainer/Rook/VBoxContainer"]
+layout_mode = 2
+text = "Formidable. Feared. The Rook is laid with the finest bricks Royalty can buy. Which is the finest.
+It is  the piece that completes The Bishop through its compulsion to the cardinal axes.
+Unfortunately, these bricks are not truly the finest because The Rook cannot castle."
+
+[node name="TextureRect" type="TextureRect" parent="GameView/VBoxContainer/AspectRatioContainer/MarginContainer/MiddlePanel/HelpPanel/MarginContainer/TabContainer/Rook/VBoxContainer"]
+custom_minimum_size = Vector2(500, 0)
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 0
+texture = ExtResource("19_b7wnq")
+expand_mode = 4
+stretch_mode = 4
+
+[node name="Queen" type="TabBar" parent="GameView/VBoxContainer/AspectRatioContainer/MarginContainer/MiddlePanel/HelpPanel/MarginContainer/TabContainer"]
+visible = false
+layout_mode = 2
+metadata/_tab_index = 7
+
+[node name="VBoxContainer" type="VBoxContainer" parent="GameView/VBoxContainer/AspectRatioContainer/MarginContainer/MiddlePanel/HelpPanel/MarginContainer/TabContainer/Queen"]
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="Label" type="Label" parent="GameView/VBoxContainer/AspectRatioContainer/MarginContainer/MiddlePanel/HelpPanel/MarginContainer/TabContainer/Queen/VBoxContainer"]
+layout_mode = 2
+text = "Some would say the true power lies not in The King but the King's most trusted.
+The Queen is truly the fear board, and a player who loses The Queen is truy unlikely to see a treaty on their terms.
+As a sort of glass cannon, The Queen may be the cause of victory, or the lackthereof."
+
+[node name="TextureRect" type="TextureRect" parent="GameView/VBoxContainer/AspectRatioContainer/MarginContainer/MiddlePanel/HelpPanel/MarginContainer/TabContainer/Queen/VBoxContainer"]
+custom_minimum_size = Vector2(500, 0)
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 0
+texture = ExtResource("20_0v8rs")
+expand_mode = 4
+stretch_mode = 4
+
+[node name="King" type="TabBar" parent="GameView/VBoxContainer/AspectRatioContainer/MarginContainer/MiddlePanel/HelpPanel/MarginContainer/TabContainer"]
+layout_mode = 2
+metadata/_tab_index = 8
+
+[node name="VBoxContainer" type="VBoxContainer" parent="GameView/VBoxContainer/AspectRatioContainer/MarginContainer/MiddlePanel/HelpPanel/MarginContainer/TabContainer/King"]
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="Label" type="Label" parent="GameView/VBoxContainer/AspectRatioContainer/MarginContainer/MiddlePanel/HelpPanel/MarginContainer/TabContainer/King/VBoxContainer"]
+layout_mode = 2
+text = "The most revered. In some ways holy, even.
+Yet, despite the eternal praise, The King is next to useless.
+Not even its quality as a quantity exists such as it does with a Pawn.
+However, one would still be obliged to protect his highness at all costs and with their own life."
+
+[node name="TextureRect" type="TextureRect" parent="GameView/VBoxContainer/AspectRatioContainer/MarginContainer/MiddlePanel/HelpPanel/MarginContainer/TabContainer/King/VBoxContainer"]
+layout_mode = 2
+texture = ExtResource("21_sk3ni")
+stretch_mode = 2
+
 [node name="GoldFrame" type="NinePatchRect" parent="GameView/VBoxContainer/AspectRatioContainer/MarginContainer/MiddlePanel"]
 layout_mode = 2
 texture = ExtResource("1_6vkef")
@@ -667,6 +1033,11 @@ text = "Forfeit"
 unique_name_in_owner = true
 layout_mode = 2
 text = "Settings"
+
+[node name="HelpButton" type="Button" parent="GameView/VBoxContainer/HBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Help"
 
 [node name="Crossfade" type="NinePatchRect" parent="."]
 texture_filter = 1
@@ -871,6 +1242,7 @@ patch_margin_bottom = 16
 [connection signal="pressed" from="GameView/VBoxContainer/AspectRatioContainer/MarginContainer/MiddlePanel/GameOverScreen/VBoxContainer/Buttons/VBoxContainer/GameOverQuitButton" to="." method="_on_game_over_quit_button_pressed"]
 [connection signal="pressed" from="GameView/VBoxContainer/HBoxContainer/ForfeitButton" to="." method="_on_forfeit_button_pressed"]
 [connection signal="pressed" from="GameView/VBoxContainer/HBoxContainer/SettingsButton" to="." method="_on_settings_button_pressed"]
+[connection signal="pressed" from="GameView/VBoxContainer/HBoxContainer/HelpButton" to="." method="_on_help_button_pressed"]
 [connection signal="finished" from="GameOverMusic" to="." method="_on_game_over_music_finished"]
 [connection signal="pressed" from="ProgressLossWarningConfirmPopup/MarginContainer/VBoxContainer/HBoxContainer/WarningCancelButton" to="." method="_on_warning_cancel_button_pressed"]
 [connection signal="pressed" from="ProgressLossWarningConfirmPopup/MarginContainer/VBoxContainer/HBoxContainer/WarningConfirmButton" to="." method="_on_warning_confirm_button_pressed"]

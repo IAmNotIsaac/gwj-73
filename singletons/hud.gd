@@ -39,6 +39,7 @@ const LEVELS := [
 @onready var _game_over_quit_button := %GameOverQuitButton
 @onready var _progress_loss_warning_confirm_popup = $ProgressLossWarningConfirmPopup
 @onready var _settings_panel := %SettingsPanel
+@onready var _help_panel := %HelpPanel
 @onready var _middle_panel := %MiddlePanel
 @onready var _forfeit_button := %ForfeitButton
 @onready var _settings_button := %SettingsButton
@@ -61,6 +62,7 @@ func _init() -> void:
 
 func _ready() -> void:
 	_settings_panel.hide()
+	_help_panel.hide()
 	_game_view.hide()
 
 
@@ -69,7 +71,13 @@ func _on_forfeit_button_pressed() -> void:
 
 
 func _on_settings_button_pressed() -> void:
+	_help_panel.visible = false
 	_settings_panel.visible = not _settings_panel.visible
+
+
+func _on_help_button_pressed() -> void:
+	_settings_panel.visible = false
+	_help_panel.visible = not _help_panel.visible
 
 
 func _on_game_over_retry_button_pressed() -> void:

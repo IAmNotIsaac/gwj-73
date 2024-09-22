@@ -79,11 +79,13 @@ func _turn_begun() -> void:
 		_pass_turn()
 		return
 	
+	Hud.report_remaining_moves(moves_per_turn)
 	_move_count = 0
 	_reason_show_selection_hint += _REASON_MY_TURN
 
 
 func _turn_ended() -> void:
+	Hud.report_remaining_moves(0)
 	_move_count = moves_per_turn
 	_reason_show_selection_hint -= _REASON_MY_TURN
 
@@ -326,6 +328,7 @@ func _handle_click_move(
 	selected_piece.mark_unselected()
 	_click_func = _handle_click_root
 	
+	Hud.report_remaining_moves(moves_per_turn - _move_count)
 	_camera_controller.set_position(board.position + Vector2(grid_position) * Vector2(Board.TILE_WIDTH, Board.TILE_HEIGHT) + Vector2(Board.TILE_WIDTH, Board.TILE_HEIGHT) * 0.5)
 	_camera_controller.reset_zoom()
 	_camera_controller.set_free(true)

@@ -1,10 +1,12 @@
-[gd_resource type="Theme" load_steps=13 format=3 uid="uid://c3d5oegbtblqx"]
+[gd_resource type="Theme" load_steps=20 format=3 uid="uid://c3d5oegbtblqx"]
 
 [ext_resource type="Texture2D" uid="uid://3p6h2h83m44n" path="res://assets/textures/button_disabled.png" id="1_brk24"]
 [ext_resource type="Texture2D" uid="uid://drsrna7fsfmhg" path="res://assets/textures/backgrounds/diamond.png" id="1_vew6t"]
 [ext_resource type="FontFile" uid="uid://dmy3xtkgmmgg2" path="res://assets/fonts/roboto_slab/RobotoSlab-VariableFont_wght.ttf" id="2_3rcfq"]
 [ext_resource type="Texture2D" uid="uid://xsvcsdstx7ut" path="res://assets/textures/button_hover.png" id="2_b4lu3"]
 [ext_resource type="Texture2D" uid="uid://dnw2gvegdr0i8" path="res://assets/textures/button_normal.png" id="3_ndkq4"]
+[ext_resource type="Texture2D" uid="uid://bbhvjpppea50p" path="res://assets/textures/thin_frame_neutral.png" id="5_eonvt"]
+[ext_resource type="Texture2D" uid="uid://chuv56sthwodi" path="res://assets/textures/thin_frame_neutral_silver.png" id="6_lf08m"]
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_04pun"]
 texture = ExtResource("1_brk24")
@@ -51,6 +53,36 @@ texture = ExtResource("1_vew6t")
 axis_stretch_horizontal = 1
 axis_stretch_vertical = 1
 
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_twdtu"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_8g87h"]
+texture = ExtResource("5_eonvt")
+texture_margin_left = 16.0
+texture_margin_top = 16.0
+texture_margin_right = 16.0
+texture_margin_bottom = 16.0
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_y3gpb"]
+texture = ExtResource("5_eonvt")
+texture_margin_left = 16.0
+texture_margin_top = 16.0
+texture_margin_right = 16.0
+texture_margin_bottom = 16.0
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_wt652"]
+texture = ExtResource("5_eonvt")
+texture_margin_left = 16.0
+texture_margin_top = 16.0
+texture_margin_right = 16.0
+texture_margin_bottom = 16.0
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_qkqmk"]
+texture = ExtResource("6_lf08m")
+texture_margin_left = 16.0
+texture_margin_top = 16.0
+texture_margin_right = 16.0
+texture_margin_bottom = 16.0
+
 [resource]
 default_font = ExtResource("2_3rcfq")
 Button/styles/disabled = SubResource("StyleBoxTexture_04pun")
@@ -60,3 +92,8 @@ Button/styles/normal = SubResource("StyleBoxTexture_1xr5h")
 Button/styles/pressed = SubResource("StyleBoxTexture_qlcf3")
 Panel/styles/panel = SubResource("StyleBoxTexture_rc5wq")
 PanelContainer/styles/panel = SubResource("StyleBoxTexture_xg4dq")
+TabContainer/styles/panel = SubResource("StyleBoxEmpty_twdtu")
+TabContainer/styles/tab_focus = SubResource("StyleBoxTexture_8g87h")
+TabContainer/styles/tab_hovered = SubResource("StyleBoxTexture_y3gpb")
+TabContainer/styles/tab_selected = SubResource("StyleBoxTexture_wt652")
+TabContainer/styles/tab_unselected = SubResource("StyleBoxTexture_qkqmk")
