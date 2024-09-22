@@ -602,10 +602,12 @@ func mark_unselected() -> void:
 
 
 func mark_movable() -> void:
+	prints(name, "movable")
 	_sprite.modulate = Color.WHITE
 
 
 func mark_immovable(do_wait := true) -> void:
+	prints(name, "immovable")
 	if do_wait:
 		await get_tree().create_timer(_ANIM_TIME_PIECE_MOVE).timeout
 	_sprite.modulate = Color("70707070")

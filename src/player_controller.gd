@@ -329,6 +329,7 @@ func _handle_click_move(
 	_camera_controller.set_position(board.position + Vector2(grid_position) * Vector2(Board.TILE_WIDTH, Board.TILE_HEIGHT) + Vector2(Board.TILE_WIDTH, Board.TILE_HEIGHT) * 0.5)
 	_camera_controller.reset_zoom()
 	_camera_controller.set_free(true)
+	await get_tree().create_timer(0.5).timeout
 	
 	if get_available_move_count() == 0:
 		_pass_turn()
