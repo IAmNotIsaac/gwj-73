@@ -1,14 +1,12 @@
 shader_type canvas_item;
 
-void vertex() {
-	// Called for every vertex the material is visible on.
-}
+uniform sampler2D tex_shine;
 
 void fragment() {
-	// Called for every pixel the material is visible on.
+	float stretch = 8.0;
+	vec4 color_a = texture(TEXTURE, UV);
+	vec2 uv2 = (UV / vec2(1.0, stretch)) + vec2(0.0, TIME * 0.75);
+	vec4 color_b = texture(tex_shine, fract(uv2));
+	COLOR.rgb = mix(color_a.rgb, color_b.rgb, color_b.a);
+	//COLOR = color_b;
 }
-
-//void light() {
-	// Called for every pixel for every light affecting the CanvasItem.
-	// Uncomment to replace the default light processing function with this one.
-//}

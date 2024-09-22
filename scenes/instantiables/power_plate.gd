@@ -3,7 +3,11 @@ class_name PowerPlate
 extends Node2D
 
 
-@export var power := Piece.Power.POSSESS
+@export var power := Piece.Power.POSSESS:
+	set(v):
+		power = v
+		if is_node_ready():
+			_update_sprite()
 @export var grid_position: Vector2i:
 	set(v):
 		grid_position = v
@@ -20,9 +24,9 @@ func _ready() -> void:
 		printerr("PowerPlate expects parent to be a Board")
 		return
 	
-	_sprite.play(str(power))
 	_board = get_parent()
 	_update_position()
+	_update_sprite()
 
 
 func _exit_tree() -> void:
@@ -35,3 +39,7 @@ func _update_position() -> void:
 		return
 	
 	position = grid_position * Vector2i(Board.TILE_WIDTH, Board.TILE_HEIGHT)
+
+
+func _update_sprite() -> void:
+	_sprite.play(str(power))
