@@ -16,11 +16,6 @@ enum Type {
 		_update_background()
 
 
-@onready var _shapes := $Shapes
-@onready var _space := $Space
-@onready var _crowns := $Crowns
-
-
 func _ready() -> void:
 	_update_background()
 
