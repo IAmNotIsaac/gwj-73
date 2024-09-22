@@ -133,6 +133,13 @@ func is_open(grid_position: Vector2i) -> bool:
 	return _board_state[grid_position.x + grid_position.y * size.x] & 15 == 0
 
 
+func can_shoot_over(grid_position: Vector2i) -> bool:
+	if not is_in_board(grid_position):
+		return false
+	var v := _board_state[grid_position.x + grid_position.y * size.x]
+	return v & 15 == 0 or v == 0b100111
+
+
 func get_piece_type(grid_position: Vector2i) -> Piece.Type:
 	if not is_in_board(grid_position):
 		return Piece.Type.WALL

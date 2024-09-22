@@ -3,6 +3,8 @@ class_name Piece
 extends Node2D
 
 
+signal killed
+
 enum Team {
 	WHITE,
 	BLACK,
@@ -130,11 +132,12 @@ const _ANIM_TIME_PIECE_KILL := 1.0
 		if board != null:
 			if not _suppress_board_update:
 				board.clear_piece(grid_position)
-			board.report_decrease(team)
+				board.report_decrease(team)
 			board.state_changed.disconnect(clear_caches)
 		board = v
 		if board != null:
-			board.report_increase(team)
+			if not _suppress_board_update:
+				board.report_increase(team)
 			board.state_changed.connect(clear_caches)
 		clear_caches()
 		_update_position()
@@ -495,7 +498,7 @@ func get_archery_positions() -> Array[Vector2i]:
 			if board.is_piece_strikeable(p, team):
 				_cache_archery_positions.push_back(p)
 				break
-			elif not board.is_open(p):
+			elif not board.can_shoot_over(p):
 				break
 	
 	return _cache_archery_positions
@@ -617,11 +620,14 @@ func mark_immovable(do_wait := true) -> void:
 func move(to: Vector2i, to_board: Board = null) -> void:
 	board.clear_piece(grid_position)
 	_suppress_board_update = true
+	var last_board := board
 	if to_board != null:
 		board = to_board
 	var pi := position
 	grid_position = to
 	var pf := position
+	board.report_increase(team)
+	last_board.report_decrease(team)
 	_suppress_board_update = false
 	board.set_piece(grid_position, type, team)
 	
@@ -714,6 +720,8 @@ func kill() -> void:
 			.set_delay(move_time)
 	tween.tween_method(spm, 1.0, 0.0, kill_time * 0.25) \
 			.set_delay(move_time)
+	tween.tween_callback(killed.emit) \
+			.set_delay(move_time + kill_time)
 	tween.tween_callback(queue_free) \
 			.set_delay(move_time + kill_time)
 

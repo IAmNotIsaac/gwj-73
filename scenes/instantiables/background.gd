@@ -8,6 +8,7 @@ enum Type {
 	SPACE,
 	CROWNS,
 	LETTERS,
+	THRONE,
 	NONE,
 }
 

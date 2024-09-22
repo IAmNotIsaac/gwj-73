@@ -7,6 +7,7 @@ enum GameOver {
 	DRAW,
 	FORFEIT,
 	NO_MATERIAL,
+	KING_DEATH,
 	TEST_MODE,
 }
 
@@ -277,6 +278,11 @@ func game_over(reason: GameOver) -> void:
 		GameOver.NO_MATERIAL:
 			_game_over_reason_label.text = "NO MATERIAL"
 			_game_over_reason_label.label_settings.font_color = Color.RED
+		
+		GameOver.KING_DEATH:
+			_game_over_reason_label.text = "DEATH OF KING"
+			_game_over_reason_label.label_settings.font_color = Color.RED
+	
 	
 	_game_over_music.play(0.0)
 	_anim.play(&"game_over_show")

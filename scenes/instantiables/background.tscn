@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://cgut83635k6rj"]
+[gd_scene load_steps=10 format=3 uid="uid://cgut83635k6rj"]
 
 [ext_resource type="Script" path="res://scenes/instantiables/background.gd" id="1_3chxd"]
 [ext_resource type="Texture2D" uid="uid://dt51bfep5unc6" path="res://assets/textures/backgrounds/background_shapes_0.png" id="1_i6wgu"]
@@ -8,6 +8,7 @@
 [ext_resource type="Texture2D" uid="uid://c1sbw7p4ss6yw" path="res://assets/textures/backgrounds/crosshatch.png" id="6_a2bll"]
 [ext_resource type="Texture2D" uid="uid://hcqlubms1d5w" path="res://assets/textures/backgrounds/crowns.png" id="7_v7k2x"]
 [ext_resource type="Texture2D" uid="uid://6gvtcm17o35y" path="res://assets/textures/backgrounds/letters.png" id="8_yq3a3"]
+[ext_resource type="Texture2D" uid="uid://buab51kv7yn6e" path="res://assets/textures/backgrounds/throne.png" id="9_rjxir"]
 
 [node name="Background" type="Node2D"]
 z_index = -1000
@@ -110,4 +111,45 @@ repeat_times = 5
 
 [node name="Sprite2D" type="Sprite2D" parent="Letters/Letters"]
 texture = ExtResource("8_yq3a3")
+centered = false
+
+[node name="Throne" type="Node2D" parent="."]
+
+[node name="Darkness" type="Parallax2D" parent="Throne"]
+repeat_size = Vector2(512, 512)
+repeat_times = 5
+
+[node name="ColorRect" type="ColorRect" parent="Throne/Darkness"]
+offset_right = 512.0
+offset_bottom = 512.0
+color = Color(0, 0, 0, 1)
+
+[node name="StarsDim" type="Parallax2D" parent="Throne"]
+scroll_scale = Vector2(0.7, 0.7)
+scroll_offset = Vector2(500, 500)
+repeat_size = Vector2(378, 378)
+autoscroll = Vector2(5, 5)
+repeat_times = 10
+
+[node name="Sprite2D" type="Sprite2D" parent="Throne/StarsDim"]
+modulate = Color(0.734854, 0.586391, 0.553312, 1)
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("5_nba2r")
+
+[node name="Stars" type="Parallax2D" parent="Throne"]
+modulate = Color(1, 1, 1, 0.603922)
+scroll_scale = Vector2(1.1, 1.1)
+repeat_size = Vector2(756, 756)
+autoscroll = Vector2(5, 5)
+repeat_times = 5
+
+[node name="Sprite2D" type="Sprite2D" parent="Throne/Stars"]
+texture = ExtResource("5_nba2r")
+
+[node name="Throne" type="Parallax2D" parent="Throne"]
+scroll_scale = Vector2(1.1, 1.1)
+repeat_times = 5
+
+[node name="Sprite2D" type="Sprite2D" parent="Throne/Throne"]
+texture = ExtResource("9_rjxir")
 centered = false

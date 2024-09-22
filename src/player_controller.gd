@@ -284,6 +284,15 @@ func _handle_click_move(
 		selected_piece.kill()
 		possessable_interfaces[0].play_use_sound()
 	
+	elif grid_position in archery_positions:
+		_move_count += 1
+		var arrow := _ARROW.instantiate()
+		arrow.position = board.grid_to_world(selected_piece.grid_position, true)
+		arrow.to = board.grid_to_world(grid_position, true)
+		add_child(arrow)
+		selected_piece.remove_power(Piece.Power.ARCHERY)
+		new_selected_piece.kill()
+	
 	elif grid_position in movable_positions:
 		_move_count += 1
 		selected_piece.move(grid_position)
@@ -299,15 +308,6 @@ func _handle_click_move(
 		selected_piece.mark_immovable()
 		_camera_controller.set_position(selected_piece.position)
 	
-	elif grid_position in archery_positions:
-		_move_count += 1
-		var arrow := _ARROW.instantiate()
-		arrow.position = board.grid_to_world(selected_piece.grid_position, true)
-		arrow.to = board.grid_to_world(grid_position, true)
-		add_child(arrow)
-		selected_piece.remove_power(Piece.Power.ARCHERY)
-		new_selected_piece.kill()
-	
 	elif grid_position in possessable_positions:
 		_move_count += 1
 		selected_piece.convert_piece(grid_position)
@@ -321,7 +321,10 @@ func _handle_click_move(
 		ambhammer.position = board.grid_to_world(grid_position)
 		add_child(ambhammer)
 		selected_piece.remove_power(Piece.Power.AMBHAMMER)
-		get_tree().create_timer(0.4).timeout.connect(func(): new_selected_piece.team = get_team())
+		get_tree().create_timer(0.4).timeout.connect(func():
+			new_selected_piece.team = get_team()
+			board.report_conversion(Piece.Team.NEUTRAL, get_team())
+		)
 	
 	for icon in icons:
 		icon.queue_free()
