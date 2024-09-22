@@ -307,14 +307,12 @@ func get_movable_positions() -> Array[Vector2i]:
 					_cache_movable_positions.push_back(p)
 		
 		Type.QUEEN:
-			print(_cache_movable_positions)
 			for d in _DELTAS_ROYALTY:
 				for i in _DISTANCE_QUEEN:
 					var p: Vector2i = grid_position + d * (i  + 1)
 					if not board.is_open(p):
 						break
 					_cache_movable_positions.push_back(p)
-			print(_cache_movable_positions)
 		
 		Type.KING:
 			for d in _DELTAS_ROYALTY:
