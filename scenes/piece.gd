@@ -165,6 +165,7 @@ var _is_moving := false:
 @onready var _power_hint_possess := $Sprite2D/PowerHintPossess
 @onready var _power_hint_archery := $Sprite2D/PowerHintArchery
 @onready var _power_hint_ambhammer := $Sprite2D/PowerHintAmbhammer
+@onready var _amber_resin := $AmberResin
 
 
 func _enter_tree() -> void:
@@ -233,6 +234,8 @@ func _update_sprite() -> void:
 	
 	_power_hint_archery.visible = has_power(Power.ARCHERY)
 	_power_hint_ambhammer.visible = has_power(Power.AMBHAMMER)
+	
+	_amber_resin.visible = team == Team.NEUTRAL and type != Type.WALL
 
 
 func _on_land() -> void:

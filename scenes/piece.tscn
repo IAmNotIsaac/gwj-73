@@ -1,4 +1,4 @@
-[gd_scene load_steps=145 format=3 uid="uid://bhm65qdan0ll2"]
+[gd_scene load_steps=146 format=3 uid="uid://bhm65qdan0ll2"]
 
 [ext_resource type="Script" path="res://scenes/piece.gd" id="1_jfn20"]
 [ext_resource type="Texture2D" uid="uid://bii5gpthli3mv" path="res://assets/textures/shadow.svg" id="2_3o6u8"]
@@ -10,6 +10,7 @@
 [ext_resource type="Texture2D" uid="uid://8u318te88cnj" path="res://assets/textures/gem_arrow.png" id="7_1lhob"]
 [ext_resource type="Shader" path="res://shaders/fire.gdshader" id="7_t6vxi"]
 [ext_resource type="Texture2D" uid="uid://coq7ytqpw12l3" path="res://assets/textures/gem_hammer.png" id="8_ywry4"]
+[ext_resource type="Texture2D" uid="uid://c1y22e1gnsx68" path="res://assets/textures/amber_resin.png" id="11_tc6kn"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_x1slp"]
 atlas = ExtResource("6_sflps")
@@ -1002,7 +1003,7 @@ texture_filter = 1
 position = Vector2(0, -24)
 sprite_frames = SubResource("SpriteFrames_riloh")
 animation = &"0_w"
-frame_progress = 0.206124
+frame_progress = 0.536952
 
 [node name="Shadow" type="Sprite2D" parent="."]
 texture = ExtResource("2_3o6u8")
@@ -1016,6 +1017,7 @@ centered = false
 offset = Vector2(-32, -80)
 hframes = 7
 vframes = 3
+frame = 14
 
 [node name="PowerHintPossess" type="Sprite2D" parent="Sprite2D"]
 visible = false
@@ -1026,6 +1028,7 @@ scale = Vector2(5, 5)
 texture = ExtResource("4_mrg1g")
 
 [node name="PowerHintArchery" type="Sprite2D" parent="Sprite2D"]
+visible = false
 material = SubResource("ShaderMaterial_j7rc2")
 position = Vector2(-24, -88)
 rotation = 1.5708
@@ -1040,6 +1043,7 @@ scale = Vector2(0.06, 0.06)
 texture = ExtResource("7_1lhob")
 
 [node name="PowerHintAmbhammer" type="Sprite2D" parent="Sprite2D"]
+visible = false
 material = SubResource("ShaderMaterial_w5s0b")
 position = Vector2(24, -88)
 rotation = 1.5708
@@ -1082,3 +1086,8 @@ initial_velocity_min = 10.0
 initial_velocity_max = 50.0
 scale_amount_curve = SubResource("Curve_aoy1r")
 color_ramp = SubResource("Gradient_g012n")
+
+[node name="AmberResin" type="Sprite2D" parent="."]
+visible = false
+position = Vector2(0, -40)
+texture = ExtResource("11_tc6kn")
