@@ -283,8 +283,8 @@ func warn(unsafe_action: Callable) -> void:
 	_progress_loss_warning_confirm_popup.popup()
 
 
-func message(message: String) -> void:
-	_message_popup_label.text = message
+func message(message_: String) -> void:
+	_message_popup_label.text = message_
 	_message_popup.transient = false
 	_message_popup.transient_to_focused = false
 	_message_popup.popup()
