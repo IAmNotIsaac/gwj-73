@@ -173,7 +173,6 @@ func _handle_click_root(button_index: MouseButton, grid_position: Vector2i, boar
 	)
 	
 	selected_piece.mark_selected()
-	var pos := (Vector2(grid_position) + Vector2.ONE * 0.5) * Vector2(Board.TILE_WIDTH, Board.TILE_HEIGHT)
 	var top_left := selected_piece.global_position
 	var bot_right := selected_piece.global_position
 	
