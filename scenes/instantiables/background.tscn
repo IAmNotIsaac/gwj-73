@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://cgut83635k6rj"]
+[gd_scene load_steps=9 format=3 uid="uid://cgut83635k6rj"]
 
 [ext_resource type="Script" path="res://scenes/instantiables/background.gd" id="1_3chxd"]
 [ext_resource type="Texture2D" uid="uid://dt51bfep5unc6" path="res://assets/textures/backgrounds/background_shapes_0.png" id="1_i6wgu"]
@@ -7,6 +7,7 @@
 [ext_resource type="Texture2D" uid="uid://d0pkyxnwtl3la" path="res://assets/textures/backgrounds/starry_space_pattern.png" id="5_nba2r"]
 [ext_resource type="Texture2D" uid="uid://c1sbw7p4ss6yw" path="res://assets/textures/backgrounds/crosshatch.png" id="6_a2bll"]
 [ext_resource type="Texture2D" uid="uid://hcqlubms1d5w" path="res://assets/textures/backgrounds/crowns.png" id="7_v7k2x"]
+[ext_resource type="Texture2D" uid="uid://6gvtcm17o35y" path="res://assets/textures/backgrounds/letters.png" id="8_yq3a3"]
 
 [node name="Background" type="Node2D"]
 z_index = -1000
@@ -97,4 +98,16 @@ repeat_times = 5
 
 [node name="Sprite2D" type="Sprite2D" parent="Crowns/Crowns"]
 texture = ExtResource("7_v7k2x")
+centered = false
+
+[node name="Letters" type="Node2D" parent="."]
+visible = false
+
+[node name="Letters" type="Parallax2D" parent="Letters"]
+repeat_size = Vector2(512, 512)
+autoscroll = Vector2(10, 10)
+repeat_times = 5
+
+[node name="Sprite2D" type="Sprite2D" parent="Letters/Letters"]
+texture = ExtResource("8_yq3a3")
 centered = false
