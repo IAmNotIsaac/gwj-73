@@ -75,7 +75,7 @@ to_grid_position = Vector2i(2, 4)
 
 [node name="Startboard" type="Node2D" parent="."]
 z_index = -1
-position = Vector2(256, 8)
+position = Vector2(256, -112)
 script = ExtResource("8_448xy")
 size = Vector2i(4, 3)
 
@@ -87,10 +87,11 @@ to_grid_position = Vector2i(6, 2)
 
 [node name="NextLevelPlate" parent="Startboard" instance=ExtResource("12_siukn")]
 position = Vector2(128, 48)
+next_level = 6
 grid_position = Vector2i(2, 1)
 
 [node name="the infiltrator" parent="." node_paths=PackedStringArray("board") instance=ExtResource("11_1usmi")]
-position = Vector2(416, 56)
+position = Vector2(416, -64)
 team = 1
 type = 3
 direction = 2
@@ -98,7 +99,7 @@ grid_position = Vector2i(2, 0)
 board = NodePath("../Startboard")
 
 [node name="poor sucker" parent="." node_paths=PackedStringArray("board") instance=ExtResource("11_1usmi")]
-position = Vector2(352, 104)
+position = Vector2(352, -16)
 type = 4
 grid_position = Vector2i(1, 1)
 board = NodePath("../Startboard")

@@ -157,6 +157,7 @@ texture = ExtResource("9_rjxir")
 centered = false
 
 [node name="MockMatrix" type="Node2D" parent="."]
+visible = false
 
 [node name="Darkness" type="Parallax2D" parent="MockMatrix"]
 repeat_size = Vector2(512, 512)

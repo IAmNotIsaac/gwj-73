@@ -59,7 +59,7 @@ to_grid_position = Vector2i(0, 4)
 z_index = -1
 position = Vector2(477, -384)
 script = ExtResource("8_lf1bg")
-size = Vector2i(3, 5)
+size = Vector2i(3, 6)
 
 [node name="NextLevelPlate" parent="Board2" instance=ExtResource("11_yjsdc")]
 position = Vector2(128, 192)

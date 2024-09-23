@@ -213,6 +213,7 @@ func load_level_data(level_data: Dictionary) -> void:
 	viewport.add_child(current_scene)
 	last_level_data = level_data
 	
+	_game_over_music.playing = false
 	_game_over_screen.hide()
 	_game_view.show()
 	
